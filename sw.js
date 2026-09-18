@@ -1,7 +1,7 @@
 /* Cache app untuk guna luar talian — HANYA fail daripada asalan yang sama.
    Panggilan Supabase (asalan luar) dan apa-apa bukan-GET dibiarkan terus
    ke rangkaian supaya data awan tidak pernah basi. */
-const VERSI = "pbd-biologi-v1";
+const VERSI = "pbd-biologi-v2";
 const ASET = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./icon-180.png"];
 
 self.addEventListener("install", function(e){

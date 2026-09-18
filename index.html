@@ -1302,6 +1302,8 @@ html[data-padat="1"] th{position:sticky;top:0}
 
     <div id="persediaanKad"></div>
 
+    <div id="pentaksiranKad"></div>
+
     <div class="grid g-kpi" id="kpis"></div>
 
     <div class="grid g-2" style="margin-top:var(--sp-4)">
@@ -1427,6 +1429,7 @@ html[data-padat="1"] th{position:sticky;top:0}
    pantas; awan ialah salinan rasmi yang menyeberang peranti.
    ========================================================= */
 const KEY = "pbd-biologi-v1";
+const KEY_BUKU = "pbd.buku.v1";
 const KEY_CFG = "pbd-supabase-config";
 const KEY_SESI = "pbd-supabase-sesi";
 let memoryOnly = false;
@@ -1436,21 +1439,55 @@ function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return memBuf
 function lsSet(k, v){ try{ localStorage.setItem(k, v); }catch(e){ memBuf[k] = v; memoryOnly = true; } }
 function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){ delete memBuf[k]; } }
 
-async function loadState(){
+/* ---------- Buku rekod berbilang ----------
+   Setiap buku = satu set data penuh (pelajar, kelas, topik, markah).
+   Buku pertama (b1) kekal pada kunci asal supaya data sedia ada
+   tidak berpindah. Buku lain menggunakan kunci sendiri. */
+let bukuAktif = "b1";
+function kunciBuku(id){ return id === "b1" ? KEY : "pbd-buku-" + id; }
+function daftarBuku(){
   try{
-    const r = await window.storage.get(KEY);
+    const r = JSON.parse(lsGet(KEY_BUKU) || "null");
+    if(r && Array.isArray(r.buku) && r.buku.length) return r;
+  }catch(e){}
+  return null;
+}
+function simpanDaftar(reg){ lsSet(KEY_BUKU, JSON.stringify(reg)); }
+function namaBukuAktif(){
+  const reg = daftarBuku();
+  const b = reg && reg.buku.find(x => x.id === bukuAktif);
+  return b ? b.nama : "";
+}
+async function bacaBuku(id){
+  try{
+    const r = await window.storage.get(kunciBuku(id));
     if(r && r.value) return JSON.parse(r.value);
-  }catch(e){ /* tiada window.storage, atau kunci belum wujud */ }
-  const v = lsGet(KEY);
+  }catch(e){}
+  const v = lsGet(kunciBuku(id));
   if(v){ try{ return JSON.parse(v); }catch(e){} }
   return null;
+}
+async function loadState(){
+  const reg = daftarBuku();
+  if(reg && reg.aktif) bukuAktif = reg.aktif;
+  return bacaBuku(bukuAktif);
 }
 async function saveState(){
   S._ubah = new Date().toISOString();
   const teks = JSON.stringify(S);
   let ok = false;
-  try{ await window.storage.set(KEY, teks); ok = true; }catch(e){}
-  if(!ok) lsSet(KEY, teks);
+  try{ await window.storage.set(kunciBuku(bukuAktif), teks); ok = true; }catch(e){}
+  if(!ok) lsSet(kunciBuku(bukuAktif), teks);
+  /* Daftar buku: cipta entri jika belum ada, rekod masa kemas kini */
+  const reg = daftarBuku() || {aktif: bukuAktif, buku: []};
+  let b = reg.buku.find(x => x.id === bukuAktif);
+  if(!b){
+    b = {id: bukuAktif, nama: (S.subjek || "Buku") + (S.tingkatan ? " · Tingkatan " + S.tingkatan : "")};
+    reg.buku.push(b);
+  }
+  b.dikemas = new Date().toISOString();
+  reg.aktif = bukuAktif;
+  simpanDaftar(reg);
   awanJadual();
 }
 
@@ -2248,26 +2285,29 @@ function dlgBina(isi, opt){
         '<div class="dlg-isi">' + isi + '</div>' +
         (opt.medan || "") +
         '<div class="dlg-btns">' +
-          '<button class="btn btn-sm" id="dlgTidak">' + (opt.tidak || "Batal") + '</button>' +
-          '<button class="btn btn-sm ' + (opt.bahaya ? "btn-danger" : "btn-primary") + '" id="dlgYa"' + (opt.semak ? " disabled" : "") + '>' + (opt.ya || "Teruskan") + '</button>' +
+          (opt.tidak === false ? "" : '<button class="btn btn-sm" id="dlgTidak">' + (opt.tidak || "Batal") + '</button>') +
+          (opt.pilihan
+            ? opt.pilihan.map((p, i) => '<button class="btn btn-sm btn-primary" data-pil="' + i + '">' + p.label + '</button>').join("")
+            : '<button class="btn btn-sm ' + (opt.bahaya ? "btn-danger" : "btn-primary") + '" id="dlgYa"' + (opt.semak ? " disabled" : "") + '>' + (opt.ya || "Teruskan") + '</button>') +
         '</div>' +
       '</div>';
     document.body.appendChild(ov);
     const ya = ov.querySelector("#dlgYa"), tidak = ov.querySelector("#dlgTidak");
+    ov.querySelectorAll("[data-pil]").forEach(b => b.onclick = () => dlgTutup(opt.pilihan[+b.dataset.pil].nilai));
     const medan = ov.querySelector("input, textarea");
-    if(medan && opt.semak){
+    if(medan && opt.semak && ya){
       const kemas = () => { ya.disabled = !opt.semak(medan.value); };
       medan.oninput = kemas;
       medan.onkeydown = e => { if(e.key === "Enter"){ e.preventDefault(); if(!ya.disabled) ya.click(); } };
       kemas();
     }
-    ya.onclick = () => { if(ya.disabled) return; dlgTutup(opt.nilai ? opt.nilai(medan) : true); };
-    tidak.onclick = () => dlgTutup(false);
+    if(ya) ya.onclick = () => { if(ya.disabled) return; dlgTutup(opt.nilai ? opt.nilai(medan) : true); };
+    if(tidak) tidak.onclick = () => dlgTutup(false);
     ov.addEventListener("mousedown", e => { if(e.target === ov) dlgTutup(false); });
     dlgKunci = e => { if(e.key === "Escape"){ e.preventDefault(); e.stopPropagation(); dlgTutup(false); } };
     document.addEventListener("keydown", dlgKunci, true);
     /* Tunda fokus ke tugasan seterusnya — sama seperti papan kekunci TP. */
-    setTimeout(() => { (medan || ya).focus(); }, 0);
+    setTimeout(() => { const f = medan || ya || ov.querySelector(".dlg-btns button"); if(f) f.focus(); }, 0);
   });
 }
 function tanya(soalan, opt){
@@ -2482,11 +2522,16 @@ function renderUtama(){
     $("kpis").innerHTML = '<div class="card" style="grid-column:1/-1;margin:0"><p class="empty">Belum ada kelas. Buka <b>Tetapan</b> (ikon gear di atas kanan) dan tambah kelas serta pelajar anda.</p></div>';
     $("gredBars").innerHTML = ""; $("gpmpChart").innerHTML = "";
     $("riskCount").textContent = "—"; $("riskList").innerHTML = "";
+    $("pentaksiranKad").innerHTML = "";
     paparPersediaan();
     return;
   }
   $("utamaSub").textContent = k.nama + " · " + list.length + " pelajar · " + S.subjek;
   paparPersediaan();
+  $("pentaksiranKad").innerHTML = kadPentaksiran();
+  $("pentaksiranKad").querySelectorAll("[data-buka-asmt]").forEach(b => b.onclick = () => {
+    S.aktifAsmt = b.dataset.bukaAsmt; carian = ""; saveState(); go("markah");
+  });
   $("gredSrc").textContent = a ? a.nama : "—";
   $("lblPurata").textContent = puratLabel();
   $("notaPurata").textContent = (tinggiLebihBaik() ? puratLabel() + " tinggi = lebih baik." : puratLabel() + " rendah = lebih baik.") +
@@ -2539,6 +2584,31 @@ function renderUtama(){
       }).join("") + '</tbody></table></div>';
     $("riskList").querySelectorAll("[data-open]").forEach(b => b.onclick = () => openPelajar(b.dataset.open));
   }
+}
+
+/* Peringatan pentaksiran: yang akan datang (14 hari) + tertunggak markahnya */
+function kadPentaksiran(){
+  const kini = Date.now();
+  const sep = (t) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(t || "")); return m ? new Date(+m[1], +m[2] - 1, +m[3]).getTime() : NaN; };
+  const akan = S.asmt.filter(a => { const t = sep(a.tarikh); return !isNaN(t) && t >= kini - 86400000 && t <= kini + 14 * 86400000; })
+    .sort((x, y) => sep(x.tarikh) - sep(y.tarikh)).slice(0, 4);
+  const tunggak = S.asmt.filter(a => {
+    const t = sep(a.tarikh);
+    if(isNaN(t) || t >= kini) return false;
+    return !Object.keys(S.markah[a.id] || {}).length;
+  }).sort((x, y) => sep(x.tarikh) - sep(y.tarikh)).slice(0, 4);
+  if(!akan.length && !tunggak.length) return "";
+  const tar = t => new Date(t).toLocaleDateString("ms-MY", {day:"numeric", month:"short"});
+  const hariLagi = t => Math.ceil((sep(t) - kini) / 86400000);
+  const baris = (t, h, b) =>
+    '<div style="display:flex;gap:10px;align-items:center;padding:var(--sp-2) 0;border-bottom:1px solid var(--line)">' +
+      '<span style="flex:1;min-width:0"><b style="display:block;font-size:13.5px">' + esc(t) + '</b><span class="hint" style="display:block;margin:0">' + h + '</span></span>' +
+      (b ? '<button class="btn btn-sm no-print" style="flex:none" data-buka-asmt="' + b + '">Buka</button>' : "") +
+    '</div>';
+  return '<div class="card" style="margin-bottom:var(--sp-4)"><h2>Pentaksiran <span class="sub">tarikh & markah</span></h2>' +
+    akan.map(a => { const d = hariLagi(a.tarikh); return baris(a.nama, esc(a.tarikh) + " · <b>" + (d <= 0 ? "hari ini" : d + " hari lagi") + "</b>", a.id); }).join("") +
+    tunggak.map(a => baris(a.nama, "Markah belum dimasukkan · " + tar(a.tarikh) + " (berlalu " + Math.abs(hariLagi(a.tarikh)) + " hari)", a.id)).join("") +
+    "</div>";
 }
 
 /* Senarai semak persediaan — hilang sendiri apabila semua langkah selesai,
@@ -3265,6 +3335,24 @@ function renderMarkah(){
       }
       saveState(); segarBarisMarkah(pid);
     };
+    /* Enter / ↑ / ↓ — bergerak antara pelajar dalam lajur yang sama */
+    inp.addEventListener("keydown", e => {
+      if(e.key !== "Enter" && e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+      e.preventDefault();
+      const cur = e.target;
+      const bid = cur.dataset.mark.split("|")[1] || "";
+      const sama = Array.from($("markahArea").querySelectorAll("[data-mark]"))
+        .filter(x => (x.dataset.mark.split("|")[1] || "") === bid);
+      const arah = e.key === "ArrowUp" ? -1 : 1;
+      let i = sama.indexOf(cur) + arah;
+      while(sama[i] && sama[i].disabled) i += arah;
+      const sasar = sama[i];
+      if(sasar){
+        sasar.focus();
+        try{ sasar.select(); }catch(_){}
+        try{ sasar.scrollIntoView({block:"nearest"}); }catch(_){}
+      }
+    });
   });
 
   $("markahArea").querySelectorAll("[data-th]").forEach(b => b.onclick = async () => {
@@ -3648,6 +3736,7 @@ function openPelajar(pid){
 
   openDrawer(p.nama, p.noMaktab + " · " + (S.kelas.find(k => k.id === p.kelasId) || {}).nama, body,
     '<button class="btn btn-sm" id="dSlip">Slip laporan</button>' +
+    '<button class="btn btn-sm" id="dRingkas">Salin ringkasan</button>' +
     '<button class="btn btn-sm btn-accent" id="dAddInt">Rekod intervensi</button>');
 
   $("drawerBody").querySelectorAll("[data-sasaran]").forEach(sel => sel.onchange = e => {
@@ -3656,6 +3745,46 @@ function openPelajar(pid){
   });
   $("dAddInt").onclick = () => addIntervensi(pid);
   $("dSlip").onclick = () => cetakSlip(pid);
+  $("dRingkas").onclick = () => salinRingkasan(pid);
+}
+
+/* Ringkasan teks pelajar — untuk kongsi pantas (WhatsApp, emel) */
+function ringkasanTeks(pid){
+  const p = S.pelajar.find(x => x.id === pid);
+  const k = S.kelas.find(x => x.id === p.kelasId) || {};
+  const urut = asmtUrut();
+  const akhir = urut.filter(a => pct(a, pid) !== null).pop();
+  const v = akhir ? pct(akhir, pid) : null;
+  const g = v === null ? null : gredOf(v);
+  const tp = tpPurata(pid);
+  const topikArr = S.topik.map(t => ({t, v:(S.pbd[t.id] && S.pbd[t.id][pid]) || 0})).filter(x => x.v);
+  topikArr.sort((x, y) => y.v - x.v);
+  const kuat = topikArr.slice(0, 2).map(x => x.t.nama);
+  const lemah = topikArr.slice(-2).reverse().map(x => x.t.nama).filter(n => kuat.indexOf(n) < 0);
+  return [
+    "Rekod PBD " + S.subjek + " — " + p.nama + " (" + (k.nama || "—") + ")",
+    akhir ? "Terkini: " + akhir.nama + " — " + v + "%" + (g ? " (gred " + g.g + ")" : "") : "Belum ada markah pentaksiran.",
+    "TP purata: " + (tp === null ? "—" : tp.toFixed(1)),
+    kuat.length ? "Kukuh: " + kuat.join(", ") : "",
+    lemah.length ? "Perlu tumpuan: " + lemah.join(", ") : "",
+    "— " + S.guru
+  ].filter(Boolean).join("\n");
+}
+function salinFallback(teks, siap){
+  const ta = document.createElement("textarea");
+  ta.value = teks;
+  ta.style.position = "fixed"; ta.style.opacity = "0";
+  document.body.appendChild(ta);
+  ta.select();
+  try{ document.execCommand("copy"); siap(); }catch(e){ toast("Gagal menyalin"); }
+  ta.remove();
+}
+function salinRingkasan(pid){
+  const teks = ringkasanTeks(pid);
+  const siap = () => toast("Ringkasan disalin — tampal dalam WhatsApp");
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(teks).then(siap).catch(() => salinFallback(teks, siap));
+  } else salinFallback(teks, siap);
 }
 
 /* Kop maktab pada dokumen cetak (slip pelajar & laporan panitia) */
@@ -3752,16 +3881,53 @@ function cetakSlip(pid){
   $("slipArea").innerHTML = slipHtml(pid);
   cetakMula("cetak-slip");
 }
-/* Cetak slip untuk seluruh senarai semasa — setiap pelajar satu halaman */
+/* Cetak slip — kelas ini, semua kelas, atau pilih pelajar sendiri */
 async function cetakSlipPukal(){
-  const list = tapis(pelajarNow());
-  if(!list.length){ toast("Tiada pelajar untuk dicetak"); return; }
-  const kk = kelasNow();
-  if(!(await tanya("Cetak slip laporan untuk <b>" + list.length + " pelajar</b>" +
-    (kk ? " (" + esc(kk.nama) + ")" : "") + (carian ? " — mengikut carian semasa" : "") +
-    "?<br><br>Setiap slip keluar pada halaman berasingan.", {ya:"Cetak " + list.length + " slip"}))) return;
+  const dalamKelas = tapis(pelajarNow());
+  const semua = tapis(S.pelajar);
+  if(!semua.length){ toast("Tiada pelajar untuk dicetak"); return; }
+  const jaw = await tanya("Cetak slip laporan untuk…<br><br>Setiap slip keluar pada halaman berasingan.", {
+    tajuk: "Cetak slip",
+    pilihan: [
+      { label: "Kelas ini (" + dalamKelas.length + ")" + (carian ? " · carian" : ""), nilai: "kelas" },
+      { label: "Semua kelas (" + semua.length + ")", nilai: "semua" },
+      { label: "Pilih pelajar…", nilai: "pilih" }
+    ]
+  });
+  if(!jaw) return;
+  if(jaw === "pilih"){ pilihPelajarSlip(); return; }
+  const list = jaw === "semua" ? semua : dalamKelas;
+  if(!list.length){ toast("Tiada pelajar"); return; }
   $("slipArea").innerHTML = list.map(p => slipHtml(p.id, "slip-halaman")).join("");
   cetakMula("cetak-slip");
+  toast("Menyediakan " + list.length + " slip untuk cetakan");
+}
+/* Pilih pelajar tertentu untuk slip */
+function pilihPelajarSlip(){
+  const semua = tapis(S.pelajar);
+  const baris = semua.map(p => {
+    const k = S.kelas.find(x => x.id === p.kelasId) || {};
+    return '<label style="display:flex;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line)">' +
+      '<input type="checkbox" class="plPil" value="' + p.id + '" style="width:18px;height:18px" checked>' +
+      '<span style="flex:1;min-width:0"><b style="font-size:13.5px">' + esc(p.nama) + '</b><span class="hint" style="display:block;margin:0">' + esc(k.nama || "—") + ' · ' + esc(p.noMaktab || "—") + '</span></span></label>';
+  }).join("");
+  openDrawer("Cetak slip — pilih pelajar", semua.length + " pelajar dalam senarai", baris +
+    '<div class="row-actions" style="margin-top:var(--sp-3)">' +
+    '<button class="btn btn-sm" id="plSemua">Pilih semua</button>' +
+    '<button class="btn btn-sm" id="plKosong">Kosongkan</button></div>',
+    '<button class="btn btn-sm" id="plBatal">Batal</button>' +
+    '<button class="btn btn-sm btn-primary" id="plCetak">Cetak terpilih</button>');
+  $("plSemua").onclick = () => $("drawerBody").querySelectorAll(".plPil").forEach(c => c.checked = true);
+  $("plKosong").onclick = () => $("drawerBody").querySelectorAll(".plPil").forEach(c => c.checked = false);
+  $("plBatal").onclick = closeDrawer;
+  $("plCetak").onclick = () => {
+    const ids = Array.from($("drawerBody").querySelectorAll(".plPil")).filter(c => c.checked).map(c => c.value);
+    if(!ids.length){ toast("Tiada pelajar dipilih"); return; }
+    closeDrawer();
+    $("slipArea").innerHTML = ids.map(id => slipHtml(id, "slip-halaman")).join("");
+    cetakMula("cetak-slip");
+    toast("Menyediakan " + ids.length + " slip untuk cetakan");
+  };
 }
 
 function addIntervensi(pid){
@@ -4012,6 +4178,33 @@ function wireSubjek(){
 }
 
 /* ---------- UMUM ---------- */
+/* Buku rekod — beberapa set data dalam satu aplikasi */
+function secBuku(){
+  const reg = daftarBuku() || {buku:[{id:bukuAktif, nama:"Buku 1"}]};
+  return '<div class="mini-head">Buku Rekod</div>' +
+    (reg.buku.length > 1
+      ? '<label class="fld"><span>Buku aktif</span><select id="bukuPick">' +
+          reg.buku.map(b => '<option value="' + b.id + '"' + (b.id === bukuAktif ? " selected" : "") + '>' + esc(b.nama) + '</option>').join("") +
+        '</select><span class="hint">Setiap buku ada pelajar, kelas, topik dan markahnya sendiri.' +
+        (Awan.aktif() ? ' Awan menyegerakkan <b>buku yang aktif sahaja</b>.' : '') + '</span></label>'
+      : '<p class="hint" style="margin-top:0">Anda boleh menyimpan beberapa set data berasingan (contoh: satu buku setiap subjek atau tingkatan).' +
+        (Awan.aktif() ? ' Awan menyegerakkan <b>buku yang aktif sahaja</b>.' : '') + '</p>') +
+    '<div class="row-actions">' +
+    '<button class="btn btn-sm" id="bukuTambah">Buku baharu</button>' +
+    (reg.buku.length > 1
+      ? '<button class="btn btn-sm" id="bukuNama">Namakan semula</button>' +
+        '<button class="btn btn-sm" id="bukuHapus">Padam buku ini</button>'
+      : "") +
+    '</div>';
+}
+function wireBuku(){
+  const sel = $("bukuPick");
+  if(sel) sel.onchange = () => bukuTukar(sel.value);
+  const t = $("bukuTambah"); if(t) t.onclick = () => bukuBaharu();
+  const n = $("bukuNama"); if(n) n.onclick = () => bukuNamakan(bukuAktif);
+  const h = $("bukuHapus"); if(h) h.onclick = () => bukuPadam(bukuAktif);
+}
+
 /* Kop dokumen — nama & logo maktab pada slip dan laporan */
 function secKop(){
   const k = S.kop || {};
@@ -4051,7 +4244,8 @@ function wireKop(){
   if(buang) buang.onclick = () => { S.kop.logo = ""; saveState(); drawSettings(); toast("Logo dibuang"); };
 }
 function secUmum(){
-  return '<label class="fld"><span>Nama guru</span><input type="text" id="sGuru" value="' + esc(S.guru) + '"></label>' +
+  return secBuku() +
+    '<label class="fld"><span>Nama guru</span><input type="text" id="sGuru" value="' + esc(S.guru) + '"></label>' +
     secKop() +
     secSubjek() +
     (() => { return '<label class="fld"><span>Tingkatan</span><select id="sTingkatan">' +
@@ -4085,6 +4279,7 @@ function secUmum(){
 }
 function wireUmum(){
   $("sGuru").onchange = e => { S.guru = e.target.value.trim() || "Cikgu"; saveState(); paintHeader(); };
+  wireBuku();
   wireKop();
   wireSubjek();
   $("sTingkatan").onchange = e => {
@@ -4579,6 +4774,7 @@ function secAwan(){
       ? '<div class="mini-head">Tindakan</div>' +
         '<div class="row-actions">' +
         '<button class="btn btn-sm" id="cbSelaras">Selaraskan sekarang</button>' +
+        '<button class="btn btn-sm" id="cbUji">Uji sambungan</button>' +
         '<button class="btn btn-sm" id="cbTurun">Ambil versi awan</button>' +
         '<button class="btn btn-sm" id="cbKeluar">Log keluar</button></div>' +
         '<p class="hint">“Ambil versi awan” menimpa data pada peranti ini. Muat turun sandaran dahulu jika ragu.</p>'
@@ -4597,6 +4793,25 @@ function wireAwan(){
   if(b) b.onclick = async () => {
     if(!(await tanya("Putuskan sambungan awan? Data pada peranti ini kekal.", {ya:"Putuskan"}))) return;
     Awan.keluar(); Awan.simpanCfg(null, null); drawSettings(); lukisStatus(); toast("Sambungan diputuskan");
+  };
+
+  const uj = $("cbUji");
+  if(uj) uj.onclick = async () => {
+    const cfg = Awan.cfg;
+    if(!cfg){ toast("Tetapan awan belum diisi"); return; }
+    uj.disabled = true;
+    try{
+      const r = await fetch(cfg.url + "/rest/v1/rekod?select=semakan&limit=5", {headers:{apikey:cfg.kunci, Authorization:"Bearer " + cfg.kunci}});
+      if(r.ok){
+        const d = await r.json().catch(() => []);
+        await tanya("Sambungan berjaya ✓<br>Kunci diterima dan jadual <b>rekod</b> boleh dibaca." + (Array.isArray(d) && d.length ? "<br>Baris kelihatan: " + d.length : ""), {tajuk:"Ujian sambungan", ya:"Tutup", tidak:false});
+      } else {
+        await tanya("Sambungan gagal — status <b>" + r.status + "</b>.<br>" + ((r.status === 401 || r.status === 403) ? "Kunci anon mungkin salah, atau Row Level Security menghalang akses." : "Semak URL projek dan sambungan rangkaian."), {bahaya:true, tajuk:"Ujian sambungan", ya:"Tutup", tidak:false});
+      }
+    }catch(err){
+      await tanya("Tidak dapat menghubungi pelayan:<br><i>" + esc(String((err && err.message) || err)) + "</i>", {bahaya:true, tajuk:"Ujian sambungan", ya:"Tutup", tidak:false});
+    }
+    uj.disabled = false;
   };
 
   const masuk = async (baharu) => {
@@ -4667,6 +4882,226 @@ function migrasi(){
   if(S._rev === undefined) S._rev = 0;
 }
 
+/* ---------- Tukar / urus buku rekod ---------- */
+function bukuKosong(){
+  return {
+    guru: S.guru,
+    kop: S.kop ? JSON.parse(JSON.stringify(S.kop)) : {nama:"", alamat:"", logo:""},
+    subjek:"", tingkatan:null, kelas:[], pelajar:[], topik:[],
+    asmt:[], markah:{}, pbd:{}, pbdLog:[], etr:{}, oti1:{}, oti2:{},
+    intervensi:[], tpKeseluruhan:{}, ulasan:{}, tafsiranTP:{},
+    ambang: S.ambang ? JSON.parse(JSON.stringify(S.ambang)) : undefined,
+    skala: S.skala ? JSON.parse(JSON.stringify(S.skala)) : undefined,
+    sandaranTerakhir:null, _rev:0, aktifKelas:null, aktifAsmt:null, demo:false
+  };
+}
+async function bukuTukar(id){
+  if(id === bukuAktif) return;
+  await saveState();
+  bukuAktif = id;
+  const d = await bacaBuku(id);
+  S = d || bukuKosong();
+  migrasi();
+  await saveState();
+  carian = "";
+  render(); lukisStatus();
+  if($("drawer").classList.contains("on")) drawSettings();
+  toast("Buku: " + (namaBukuAktif() || "—"));
+}
+async function bukuBaharu(){
+  const nama = await tanyaTeks("Nama buku baharu (contoh: Biologi Tingkatan 5):", {tajuk:"Buku baharu", ya:"Cipta", label:"Nama buku", semak: v => String(v || "").trim().length >= 2});
+  if(!nama) return;
+  await saveState();
+  const id = "b" + Date.now();
+  const reg0 = daftarBuku() || {aktif: bukuAktif, buku: []};
+  reg0.buku.push({id, nama: String(nama).trim(), dikemas: new Date().toISOString()});
+  reg0.aktif = id;
+  simpanDaftar(reg0);
+  bukuAktif = id;
+  S = bukuKosong();
+  migrasi();
+  await saveState();
+  render(); lukisStatus();
+  if($("drawer").classList.contains("on")) drawSettings();
+  toast("Buku “" + String(nama).trim() + "” dicipta");
+}
+async function bukuNamakan(id){
+  const reg = daftarBuku();
+  const b = reg && reg.buku.find(x => x.id === id);
+  if(!b) return;
+  const nama = await tanyaTeks("Nama baharu untuk buku ini:", {tajuk:"Namakan semula", ya:"Simpan", label:"Nama buku", semak: v => String(v || "").trim().length >= 2});
+  if(!nama) return;
+  b.nama = String(nama).trim();
+  simpanDaftar(reg);
+  paintHeader();
+  drawSettings();
+  toast("Nama buku dikemas kini");
+}
+async function bukuPadam(id){
+  const reg = daftarBuku();
+  if(!reg || reg.buku.length <= 1){ toast("Perlu sekurang-kurangnya satu buku"); return; }
+  const b = reg.buku.find(x => x.id === id);
+  if(!b) return;
+  if(!(await tanya("Padam buku “<b>" + esc(b.nama) + "</b>” berserta semua datanya? Tindakan ini tidak boleh dibatalkan.", {bahaya:true, ya:"Padam buku"}))) return;
+  if(id === bukuAktif){
+    const lain = reg.buku.find(x => x.id !== id);
+    if(lain) await bukuTukar(lain.id);
+  }
+  lsDel(kunciBuku(id));
+  const reg2 = daftarBuku();
+  if(reg2 && reg2.buku){
+    reg2.buku = reg2.buku.filter(x => x.id !== id);
+    reg2.aktif = bukuAktif;
+    simpanDaftar(reg2);
+  }
+  render();
+  if($("drawer").classList.contains("on")) drawSettings();
+  toast("Buku dipadam");
+}
+
+/* ---------- B5 — Semak Rekod (audit data) ---------- */
+function auditRekod(){
+  const isu = [];
+  const pids = {}; S.pelajar.forEach(p => pids[p.id] = p);
+  const kids = {}; S.kelas.forEach(k => kids[k.id] = true);
+  const tids = {}; S.topik.forEach(t => tids[t.id] = true);
+  const aids = {}; S.asmt.forEach(a => aids[a.id] = a);
+
+  const tanpaKelas = S.pelajar.filter(p => !kids[p.kelasId]);
+  if(tanpaKelas.length) isu.push({
+    t: tanpaKelas.length + " pelajar tiada kelas sah",
+    h: "Kelas yang dirujuk sudah dipadam." + (kelasNow() ? " Boleh dipindahkan ke kelas aktif (“" + esc(kelasNow().nama) + "”)." : " Cipta kelas dahulu."),
+    bil: tanpaKelas.length,
+    baik: kelasNow() ? () => { tanpaKelas.forEach(p => p.kelasId = kelasNow().id); } : null
+  });
+
+  const noKosong = S.pelajar.filter(p => !String(p.noMaktab || "").trim());
+  if(noKosong.length) isu.push({t: noKosong.length + " pelajar tanpa no. maktab", h: "Isi dalam Tetapan → Pelajar supaya import Excel memadankan dengan tepat.", bil: noKosong.length, baik: null});
+
+  const kiraNo = {};
+  S.pelajar.forEach(p => { const n = String(p.noMaktab || "").trim().toLowerCase(); if(n) kiraNo[n] = (kiraNo[n] || 0) + 1; });
+  const pendua = Object.keys(kiraNo).filter(n => kiraNo[n] > 1);
+  if(pendua.length) isu.push({t: pendua.length + " no. maktab berulang", h: "Contoh: " + esc(pendua.slice(0, 3).join(", ")) + ". Betulkan dalam Tetapan → Pelajar.", bil: pendua.length, baik: null});
+
+  let yatimM = 0;
+  Object.keys(S.markah || {}).forEach(aid => {
+    const m = S.markah[aid] || {};
+    Object.keys(m).forEach(pid => { if(!aids[aid] || !pids[pid]) yatimM++; });
+  });
+  if(yatimM) isu.push({
+    t: yatimM + " rekod markah yatim", h: "Markah milik pelajar / pentaksiran yang sudah dipadam. Selamat dibuang.",
+    bil: yatimM,
+    baik: () => { Object.keys(S.markah).forEach(aid => { if(!aids[aid]){ delete S.markah[aid]; return; } const m = S.markah[aid]; Object.keys(m).forEach(pid => { if(!pids[pid]) delete m[pid]; }); }); }
+  });
+
+  let yatimT = 0;
+  Object.keys(S.pbd || {}).forEach(tid => {
+    const m = S.pbd[tid] || {};
+    Object.keys(m).forEach(pid => { if(!tids[tid] || !pids[pid]) yatimT++; });
+  });
+  if(yatimT) isu.push({
+    t: yatimT + " rekod TP yatim", h: "TP milik topik / pelajar yang sudah dipadam. Selamat dibuang.",
+    bil: yatimT,
+    baik: () => { Object.keys(S.pbd).forEach(tid => { if(!tids[tid]){ delete S.pbd[tid]; return; } const m = S.pbd[tid]; Object.keys(m).forEach(pid => { if(!pids[pid]) delete m[pid]; }); }); }
+  });
+
+  const yatimI = (S.intervensi || []).filter(i => !pids[i.pelajarId]);
+  if(yatimI.length) isu.push({
+    t: yatimI.length + " rekod intervensi yatim", h: "Untuk pelajar yang sudah dipadam. Selamat dibuang.",
+    bil: yatimI.length,
+    baik: () => { S.intervensi = S.intervensi.filter(i => pids[i.pelajarId]); }
+  });
+
+  const yatimL = (S.pbdLog || []).filter(l => !pids[l.pelajarId] || !tids[l.topikId]);
+  if(yatimL.length) isu.push({
+    t: yatimL.length + " catatan sejarah TP yatim", h: "Jejak lama milik pelajar / topik yang sudah dipadam. Selamat dibuang.",
+    bil: yatimL.length,
+    baik: () => { S.pbdLog = (S.pbdLog || []).filter(l => pids[l.pelajarId] && tids[l.topikId]); }
+  });
+
+  let tpRosak = 0;
+  Object.keys(S.pbd || {}).forEach(tid => Object.keys(S.pbd[tid] || {}).forEach(pid => {
+    const v = S.pbd[tid][pid];
+    if(!(typeof v === "number" && isFinite(v) && v >= 1 && v <= 6)) tpRosak++;
+  }));
+  if(tpRosak) isu.push({
+    t: tpRosak + " nilai TP luar julat (1–6)", h: "Nilai > 6 dikunci ke 6; nilai tidak sah dibuang.",
+    bil: tpRosak,
+    baik: () => { Object.keys(S.pbd).forEach(tid => Object.keys(S.pbd[tid] || {}).forEach(pid => {
+      const v = S.pbd[tid][pid];
+      if(typeof v === "number" && isFinite(v) && v > 6) S.pbd[tid][pid] = 6;
+      else if(!(typeof v === "number" && isFinite(v) && v >= 1)) delete S.pbd[tid][pid];
+    })); }
+  });
+
+  let mRosak = 0;
+  Object.keys(S.markah || {}).forEach(aid => {
+    const a = aids[aid]; if(!a) return;
+    const penuh = penuhOf(a);
+    Object.keys(S.markah[aid] || {}).forEach(pid => {
+      const v = S.markah[aid][pid];
+      if(v === "TH" || v === null || v === undefined) return;
+      if(typeof v === "number"){ if(!isFinite(v) || v < 0 || v > penuh) mRosak++; }
+      else if(typeof v === "object"){
+        Object.keys(v).forEach(bid => {
+          const b = (a.bahagian || []).find(x => x.id === bid);
+          if(!b || typeof v[bid] !== "number" || !isFinite(v[bid]) || v[bid] < 0 || v[bid] > b.penuh) mRosak++;
+        });
+      } else mRosak++;
+    });
+  });
+  if(mRosak) isu.push({
+    t: mRosak + " markah luar julat / rosak", h: "Markah > penuh dikunci pada penuh; nilai tidak sah dan bahagian basi dibuang.",
+    bil: mRosak,
+    baik: () => {
+      Object.keys(S.markah).forEach(aid => {
+        const a = aids[aid]; if(!a) return;
+        const penuh = penuhOf(a);
+        const m = S.markah[aid];
+        Object.keys(m).forEach(pid => {
+          const v = m[pid];
+          if(v === "TH" || v === null || v === undefined) return;
+          if(typeof v === "number"){
+            if(!isFinite(v) || v < 0) delete m[pid];
+            else if(v > penuh) m[pid] = penuh;
+          } else if(typeof v === "object" && v){
+            const bset = {}; (a.bahagian || []).forEach(b => bset[b.id] = b);
+            Object.keys(v).forEach(bid => {
+              const b = bset[bid];
+              if(!b || typeof v[bid] !== "number" || !isFinite(v[bid]) || v[bid] < 0) delete v[bid];
+              else if(v[bid] > b.penuh) v[bid] = b.penuh;
+            });
+            if(!Object.keys(v).length) delete m[pid];
+          } else delete m[pid];
+        });
+      });
+    }
+  });
+  return isu;
+}
+function bukaAudit(){
+  const isu = auditRekod();
+  const boleh = isu.filter(x => x.baik);
+  const isi = isu.length
+    ? isu.map(x =>
+      '<div style="display:flex;gap:10px;align-items:flex-start;padding:var(--sp-2) 0;border-bottom:1px solid var(--line)">' +
+        '<span style="flex:1;min-width:0"><b style="display:block;font-size:13.5px">' + x.t + '</b><span class="hint" style="display:block;margin:0">' + x.h + '</span></span>' +
+        (x.baik ? '<span class="tag tag-siap" style="flex:none">boleh dibetulkan</span>' : '<span class="tag" style="flex:none">semak manual</span>') +
+      '</div>').join("")
+    : '<p class="empty">Rekod bersih — tiada isu ditemui.</p>';
+  openDrawer("Semak Rekod", isu.length ? isu.reduce((n, x) => n + x.bil, 0) + " isu ditemui" : "Selesai", isi,
+    (boleh.length ? '<button class="btn btn-sm" id="auBetul">Betulkan (' + boleh.length + ')</button>' : "") +
+    '<button class="btn btn-sm btn-primary" id="auTutup">Tutup</button>');
+  const b = $("auBetul");
+  if(b) b.onclick = () => {
+    boleh.forEach(x => x.baik());
+    saveState(); render();
+    toast("Rekod dibetulkan");
+    bukaAudit();
+  };
+  $("auTutup").onclick = closeDrawer;
+}
+
 /* ---------- DATA ---------- */
 function secData(){
   return '<div class="mini-head">Sandaran</div>' +
@@ -4687,6 +5122,9 @@ function secData(){
       .map(r => '<tr><td>' + r[0] + '</td><td class="num"><b>' + r[1] + '</b></td></tr>').join("") +
     '</tbody></table></div>' +
     (memoryOnly ? '<div class="notice warn" style="margin-top:var(--sp-3)"><span>Pelayar ini tidak membenarkan simpanan kekal. Data hanya wujud sehingga tab ditutup — <b>muat turun sandaran sekarang</b>.</span></div>' : "") +
+    '<div class="mini-head">Penyelenggaraan</div>' +
+    '<div class="row-actions"><button class="btn btn-sm" id="sAudit">Semak Rekod…</button></div>' +
+    '<p class="hint">Mengesan markah / TP yatim, nilai rosak dan no. maktab berulang.</p>' +
     '<div class="mini-head">Mulakan Semula</div>' +
     '<button class="btn btn-sm" id="sReset" style="border-color:#FCA5A5;color:var(--danger)">Kosongkan semua, kembali ke data contoh</button>';
 }
@@ -4697,6 +5135,7 @@ function wireData(){
     toast("Sandaran dimuat turun");
   };
   $("sCsv").onclick = exportCsv;
+  $("sAudit").onclick = bukaAudit;
   $("sImport").onclick = () => $("sFile").click();
   $("sFile").onchange = ev => {
     const f = ev.target.files[0]; if(!f) return;
@@ -5236,7 +5675,9 @@ function laporanPanitia(){
 }
 
 function paintHeader(){
-  $("hdrSubject").textContent = S.subjek;
+  const _reg = daftarBuku();
+  const _banyak = _reg && _reg.buku.length > 1;
+  $("hdrSubject").textContent = (_banyak && namaBukuAktif()) ? namaBukuAktif() : S.subjek;
   $("hdrTeacher").textContent = S.guru + (S.tingkatan ? " · Tingkatan " + S.tingkatan : "") + (memoryOnly ? " · simpanan sementara" : "");
 }
 function render(){
@@ -5250,6 +5691,16 @@ function render(){
   if(view === "intervensi") renderIntervensi();
 }
 
+/* Lompatan pantas daripada pintasan PWA (#tp / #markah / #import) */
+function lompatHash(){
+  try{
+    const h = (location.hash || "").replace("#", "");
+    if(h === "tp"){ pbdMode = "topic"; go("pbd"); }
+    else if(h === "markah") go("markah");
+    else if(h === "import"){ go("markah"); importMarkah(); }
+    if(h) history.replaceState(null, "", location.pathname + location.search);
+  }catch(e){}
+}
 async function init(){
   const saved = await loadState();
   S = saved || seed();
@@ -5259,6 +5710,10 @@ async function init(){
 
   renderNav(); render(); lukisStatus();
   if(Awan.aktif()) awanSelaras();
+
+  /* Pintasan PWA: #tp · #markah · #import (juga bila hash berubah) */
+  lompatHash();
+  window.addEventListener("hashchange", lompatHash);
 
   $("classPick").onchange = e => { S.aktifKelas = e.target.value; carian = ""; saveState(); render(); };
   $("asmtPick").onchange = e => { S.aktifAsmt = e.target.value; saveState(); render(); };
@@ -5460,6 +5915,12 @@ const Premium = (function(){
     HALAMAN.forEach(([id,nama,ikon]) =>
       tambah("Halaman", nama, "Buka halaman " + nama.toLowerCase(), ikon, "", () => go(id)));
 
+    /* -- Buku -- */
+    const _reg = daftarBuku();
+    if(_reg && _reg.buku.length > 1) _reg.buku.forEach(b =>
+      tambah("Buku", "Buku: " + b.nama,
+        b.id === bukuAktif ? "Sedang aktif" : "Tukar buku rekod",
+        "kelas", "", () => bukuTukar(b.id)));
     /* -- Kelas -- */
     (S.kelas || []).forEach(k =>
       tambah("Kelas", "Kelas " + k.nama,
