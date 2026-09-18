@@ -1,0 +1,17 @@
+{
+  "name": "Rekod PBD Biologi — MRSM",
+  "short_name": "PBD Biologi",
+  "description": "Rekod Pentaksiran Bilik Darjah, markah dan intervensi Biologi (MRSM). Berfungsi luar talian.",
+  "lang": "ms",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F1F3F2",
+  "theme_color": "#143D6E",
+  "icons": [
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
