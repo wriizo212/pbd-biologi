@@ -1099,6 +1099,16 @@ html[data-royale="1"]{--accent-ink:#C9A227;--accent-soft:rgba(201,162,39,.18);--
   .kk-bawah .btn{font-size:15px;padding:10px 22px}
   .jadual td{min-width:92px;height:34px;font-size:12px}
   .jadual th.lapis{white-space:nowrap;font-weight:600;font-size:11.5px}
+  /* --- Fasa 13 --- */
+  .slip-poster{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .poster-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+  .poster-tile{border:1.6px solid;border-radius:8px;padding:7px 8px;display:flex;flex-direction:column;gap:1px;min-height:62px}
+  .poster-nama{font-size:8pt;font-weight:600;line-height:1.2}
+  .poster-gred{font-size:16pt;font-weight:700;line-height:1.05}
+  .poster-mk{font-size:7pt;color:#4E5A64}
+  .poster-bar{height:5px;border-radius:3px;background:#ECE7DC;overflow:hidden;margin-top:3px}
+  .poster-bar i{display:block;height:100%}
+  .slip-rasmi table td{padding-top:5px;padding-bottom:5px}
 .sijil *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .menu-tema{position:fixed;z-index:13000;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 14px 40px rgba(8,18,30,.3);padding:6px;display:flex;flex-direction:column;min-width:212px}
 .menu-tema button{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;border:none;background:none;color:var(--ink);font-size:13.5px;border-radius:var(--r-xs);cursor:pointer;text-align:left;width:100%}
@@ -1674,7 +1684,7 @@ html[data-padat="1"] th{position:sticky;top:0}
    ========================================================= */
 const KEY = "pbd-biologi-v1";
 const KEY_BUKU = "pbd.buku.v1";
-const VERSI_APP = "Fasa 12 · 21 Sep 2026";
+const VERSI_APP = "Fasa 13 · 21 Sep 2026";
 const URL_APP = "https://wriizo212.github.io/pbd-biologi/";
 const QR_APP = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASgAAAEoAQMAAADRyf5aAAAABlBMVEUUPW7///+/1iNXAAABRklEQVR42u2ayw7CMAwEV/z/PxtE/ErblBxBTCpVpPJpZK/XFrKdI6KIIoqo74zSOK/LeM9fX+ehnfMPUSq0b1KBeXCLO7wOvCK7/KeNJFNQg9clL/OyVEMHrw/5NW7k14Z+DQELFUO/lryqP/aH/rjg1f2Fa9f8HV7HetSUY+oKBq9zfpWJqA7Z8gxex3p0Nkp27iiox6WfcEh1q9EIXsd6jAkosypqEV5XfsJS30PCmLd35m3n5fhSweA112MYieQUoOC1qMdQLOWttUd4neYha77eNaw0H15XvHwv0cQeP7Huj7mfbpvVtBvwOuWXTYIvm/oBvC73E8121SoMXnf7r4ZK8PrkV3Pkrg0rer+at9NNSD3l4HXDK/c5mVrk15pXyZbUxnB4LfTLwkdYjNvMj7f9MSchw09s+C/+eUMUUUT9UNQTL+itheYoi98AAAAASUVORK5CYII=";
 const KEY_CFG = "pbd-supabase-config";
@@ -3664,7 +3674,7 @@ function renderMarkah(){
       (markahUndo.length ? '<button class="btn btn-sm no-print" id="btnUndoMarkah">Buat asal markah</button>' : '') +
       '<button class="btn btn-sm no-print" id="btnSlipPukal">Cetak slip kelas</button>' +
       '<button class="btn btn-sm no-print" id="btnIcs">Eksport kalendar (.ics)</button>' +
-      '<button class="btn btn-sm no-print" id="btnDupAsmt">Duplikasi</button><button class="btn btn-sm no-print" id="btnSijil">Sijil</button><button class="btn btn-sm no-print" id="btnItemAsmt">Item</button><button class="btn btn-sm no-print" id="btnAmali">Amali</button><button class="btn btn-sm no-print" id="btnLapIndividu">Laporan</button>' +
+      '<button class="btn btn-sm no-print" id="btnDupAsmt">Duplikasi</button><button class="btn btn-sm no-print" id="btnSijil">Sijil</button><button class="btn btn-sm no-print" id="btnItemAsmt">Item</button><button class="btn btn-sm no-print" id="btnAmali">Amali</button><button class="btn btn-sm no-print" id="btnUlangan">Ulangan</button><button class="btn btn-sm no-print" id="btnLapIndividu">Laporan</button>' +
       '<button class="btn btn-sm no-print" id="btnEditAsmt" style="margin-left:auto">Sunting</button>' +
       '<button class="btn btn-sm no-print" id="btnDelAsmt" style="border-color:#E0BDB8;color:var(--rose)">Padam</button>' +
     '</div>' +
@@ -3760,6 +3770,7 @@ function renderMarkah(){
   $("btnSijil").onclick = sijilPenghargaan;
   const bia = $("btnItemAsmt"); if(bia) bia.onclick = bukaItemAnalisis;
   const bam = $("btnAmali"); if(bam) bam.onclick = bukaAmali;
+  const bul = $("btnUlangan"); if(bul) bul.onclick = bukaUlangan;
   const bse = $("btnSesi"); if(bse) bse.onclick = bukaSesi;
     const bli = $("btnLapIndividu"); if(bli) bli.onclick = pilihLaporanIndividu;
   $("btnDupAsmt").onclick = async () => {
@@ -4045,11 +4056,12 @@ function renderAnalisis(){
     '<p class="hint" style="margin-top:var(--sp-4)">Ini penilaian guru. Analisis Bahagian di atas ialah bukti markah. Bila kedua-duanya sepakat, kesimpulannya kukuh.</p></div>' +
     '<div class="card"><h2>Headcount <span class="sub">' + bilCapai + ' / ' + bilAda + ' sudah mencapai ETR</span></h2>' + headHtml +
     '<p class="hint" style="margin-top:var(--sp-3)">TOV daripada pentaksiran terawal. OTI1 dan OTI2 ialah sasaran berperingkat menuju ETR — tetapkan melalui panel pelajar. Jurang positif bermakna masih di bawah sasaran akhir.</p></div>' +
-    kadUnjuran() + kadRisikoTopik() + kadPerjalanan() + '<div class="card"><h2>Perbandingan Antara Kelas <span class="sub">' + esc(a ? a.nama : "—") + '</span></h2>' + kelasHtml + '<div class="row-actions" style="margin-top:var(--sp-3)"><button class="btn btn-sm" id="btnHaba">Peta haba kelas × topik…</button></div>' + '</div>';
+    kadUnjuran() + kadRasmi() + kadRisikoTopik() + kadPerjalanan() + '<div class="card"><h2>Perbandingan Antara Kelas <span class="sub">' + esc(a ? a.nama : "—") + '</span></h2>' + kelasHtml + '<div class="row-actions" style="margin-top:var(--sp-3)"><button class="btn btn-sm" id="btnHaba">Peta haba kelas × topik…</button></div>' + '</div>';
 
   $("analisisArea").querySelectorAll("[data-open]").forEach(b => b.onclick = () => openPelajar(b.dataset.open));
   const bh = $("btnHaba"); if(bh) bh.onclick = petaHabaTopik;
   const brc = $("btnRisikoCetak"); if(brc) brc.onclick = cetakRisiko;
+  const brb = $("btnRasmiBuka"); if(brb) brb.onclick = bukaMarkahRasmi;
 }
 
 /* Gelung intervensi: bandingkan gred sebelum dan selepas setiap tindakan */
@@ -4222,6 +4234,7 @@ function openPelajar(pid){
   }).join("");
 
   let body =
+    '<div class="row-actions" style="margin-bottom:6px"><button class="btn btn-sm" data-logibu="' + pid + '">📞 Log ibu bapa</button><button class="btn btn-sm" data-pngsijil="' + pid + '">⬇ Sijil PNG</button></div>' +
     '<div class="mini-head">Sasaran berperingkat</div>' +
     '<div class="row-actions" style="gap:var(--sp-2);align-items:flex-start">' + sasaranSel + '</div>' +
     '<p class="hint" style="margin-top:0">OTI1 dan OTI2 ialah batu tanda pertengahan menuju ETR. Sasaran berperingkat lebih berkesan daripada satu sasaran akhir yang jauh.</p>' +
@@ -6240,7 +6253,7 @@ function cetakKitKongsi(){
   cetakMula("cetak-slip");
 }
 /* ---------- VERSI & CHANGELOG ---------- */
-const VERSI_APLIKASI = "Fasa 12 · 21 Sep 2026";
+const VERSI_APLIKASI = "Fasa 13 · 21 Sep 2026";
 const APA_BAHARU = [
   {v:"Fasa 10 · Sep 2026", p:["Pemilih 3 gaya sijil (Klasik Emas / Navy / Minimal)", "Lencana murid automatik + helaian lencana", "Denyut Rekod (streak) + Kalendar PBD", "Mod Kiosk auto-slaid untuk majlis", "Carian murid dalam palet (Ctrl+K)", "Pusat Cetak Pantas di Utama", "Tandatangan Ketua Panitia & Pengetua di skrin"]},
   {v:"Fasa 9.1 · Sep 2026", p:["Butang tema kini menu pilihan penuh (auto/siang/malam/royale)", "Tandatangan guru boleh dilukis terus di skrin — tiada muat naik gambar", "Template sijil premium baharu (bingkai emas, mohor, no. rekod)"]},
@@ -6620,6 +6633,12 @@ document.addEventListener("click", e => {
   const cpX8 = t.closest("#cpPakej"); if(cpX8){ bukaPakej(); return; }
   const cpX9 = t.closest("#cpJadual"); if(cpX9){ bukaJadual(); return; }
   const cpX10 = t.closest("#cpKonsol"); if(cpX10){ bukaKonsultasi(); return; }
+  const cpX11 = t.closest("#cpRasmi"); if(cpX11){ bukaMarkahRasmi(); return; }
+  const cpX12 = t.closest("#cpPoster"); if(cpX12){ cetakPoster(); return; }
+  const cpX13 = t.closest("#cpSimulasi"); if(cpX13){ bukaSimulasi(); return; }
+  const cpX14 = t.closest("#cpProfil"); if(cpX14){ cetakProfilKelas(); return; }
+  const cli2 = t.closest("[data-logibu]"); if(cli2){ bukaLogIbu(cli2.dataset.logibu); return; }
+  const cpng = t.closest("[data-pngsijil]"); if(cpng){ janaSijilPNG(cpng.dataset.pngsijil); return; }
   const cpSl = t.closest("#cpSlip"); if(cpSl){ go("markah"); setTimeout(() => { const b2 = document.getElementById("btnSlipPukal"); if(b2) b2.click(); }, 300); return; }
 });
 document.addEventListener("change", e => {
@@ -6881,8 +6900,364 @@ function kadCetakPantas(){
     '<button class="btn btn-sm btn-accent" id="cpSlip">\uD83D\uDDA8 Slip kelas</button>' +
     '<button class="btn btn-sm" id="cpSijil">\uD83C\uDFC5 Sijil</button>' +
     '<button class="btn btn-sm" id="cpMatriks">\uD83D\uDCCB Matriks</button>' +
-    '<button class="btn btn-sm" id="cpLapor">\uD83D\uDCCA Pelaporan</button><button class="btn btn-sm" id="cpSasaran">\uD83C\uDFAF Papan Sasaran</button><button class="btn btn-sm" id="cpTugas">\u2705 Tugas</button><button class="btn btn-sm" id="cpMinggu">\uD83D\uDCDD Ringkasan minggu</button><button class="btn btn-sm" id="cpMingguWA">\uD83D\uDCAC WhatsApp minggu</button><button class="btn btn-sm" id="cpQR">📱 QR ibu bapa</button><button class="btn btn-sm" id="cpPakej">📦 Pakej cetak</button><button class="btn btn-sm" id="cpJadual">🗓 Jadual waktu</button><button class="btn btn-sm" id="cpLabel">🏷 Label meja</button><button class="btn btn-sm" id="cpKonsol">👨‍👩‍👧 Konsultasi</button></div>' +
+    '<button class="btn btn-sm" id="cpLapor">\uD83D\uDCCA Pelaporan</button><button class="btn btn-sm" id="cpSasaran">\uD83C\uDFAF Papan Sasaran</button><button class="btn btn-sm" id="cpTugas">\u2705 Tugas</button><button class="btn btn-sm" id="cpMinggu">\uD83D\uDCDD Ringkasan minggu</button><button class="btn btn-sm" id="cpMingguWA">\uD83D\uDCAC WhatsApp minggu</button><button class="btn btn-sm" id="cpQR">📱 QR ibu bapa</button><button class="btn btn-sm" id="cpPakej">📦 Pakej cetak</button><button class="btn btn-sm" id="cpJadual">🗓 Jadual waktu</button><button class="btn btn-sm" id="cpLabel">🏷 Label meja</button><button class="btn btn-sm" id="cpKonsol">👨‍👩‍👧 Konsultasi</button><button class="btn btn-sm" id="cpRasmi">📊 Markah rasmi</button><button class="btn btn-sm" id="cpPoster">🖼 Poster kelas</button><button class="btn btn-sm" id="cpSimulasi">🔮 Simulasi naik gred</button><button class="btn btn-sm" id="cpProfil">👥 Profil kelas</button></div>' +
     '<p class="hint">Slip = untuk HBMP \u00b7 Matriks & Pelaporan = fail panitia \u00b7 Sijil = pengiktirafan.</p></div>';
+}
+/* ================= FASA 13 ================= */
+/* ---------- Markah rasmi SPMRSM ---------- */
+function wajaranData(){ if(!S.wajaran) S.wajaran = {sumatif: 60, setara: 20, pbd: 20}; return S.wajaran; }
+function kategoriNama(k){ return k === "sumatif" ? "Sumatif" : k === "setara" ? "Ujian Setara" : k === "pbd" ? "PBD / PBL" : "\u2014"; }
+function markahRasmiData(){
+  const list = pelajarNow();
+  const W = wajaranData();
+  const ber = asmtUrut();
+  const hasil = list.map(p2 => {
+    const kat = {sumatif: [], setara: [], pbd: []};
+    ber.forEach(a => { if(!a.kat || !kat[a.kat]) return; const v = pct(a, p2.id); if(v === null) return; kat[a.kat].push(v); });
+    const avg = {};
+    Object.keys(kat).forEach(k => { avg[k] = kat[k].length ? kat[k].reduce((x, y) => x + y, 0) / kat[k].length : null; });
+    let jumlah = 0, wj = 0;
+    Object.keys(kat).forEach(k => { if(avg[k] !== null){ jumlah += avg[k] * W[k]; wj += W[k]; } });
+    const akhir = wj ? jumlah / wj : null;
+    return {p: p2, avg, akhir, lengkap: wj};
+  });
+  const berMarkah = hasil.filter(x => x.akhir !== null).slice().sort((a, b) => b.akhir - a.akhir);
+  const pangkat = {};
+  berMarkah.forEach((x, i2) => { pangkat[x.p.id] = i2 + 1; });
+  return {hasil, pangkat, W};
+}
+function kadRasmi(){
+  const R = markahRasmiData();
+  const ada = R.hasil.filter(x => x.akhir !== null);
+  if(!ada.length) return '<div class="card"><h2>Markah Rasmi SPMRSM <span class="sub">belum dikira</span></h2><p class="hint">Tandakan kategori setiap pentaksiran (Sumatif / Setara / PBD) untuk mengira markah akhir rasmi 60/20/20.</p><div class="row-actions" style="margin-top:var(--sp-2)"><button class="btn btn-sm" id="btnRasmiBuka">Tetapkan kategori &amp; pemberat</button></div></div>';
+  const pur = ada.reduce((x, y) => x + y.akhir, 0) / ada.length;
+  const len = Math.round(ada.reduce((x, y) => x + Math.min(y.lengkap, 100), 0) / ada.length);
+  const g = gredOf(pur);
+  return '<div class="card"><h2>Markah Rasmi SPMRSM <span class="sub">' + R.W.sumatif + '% sumatif \u00b7 ' + R.W.setara + '% setara \u00b7 ' + R.W.pbd + '% PBD</span></h2>' +
+    '<div class="chip-list"><span class="tag tag-siap">Purata kelas ' + (Math.round(pur * 10) / 10) + '%</span><span class="tag">' + (g ? g.g : "\u2014") + '</span><span class="tag">Kategori diisi ' + len + '%</span></div>' +
+    '<p class="hint" style="margin-top:6px">Tandakan kategori setiap pentaksiran supaya markah akhir rasmi dikira (cth: Ujian 1 = Sumatif, Ujian Setara = Setara, PBL = PBD).</p>' +
+    '<div class="row-actions" style="margin-top:var(--sp-2)"><button class="btn btn-sm" id="btnRasmiBuka">Urus &amp; cetak markah rasmi</button></div></div>';
+}
+function bukaMarkahRasmi(){
+  const bina = () => {
+    const R = markahRasmiData();
+    const W = R.W;
+    const ber = asmtUrut();
+    const peta = ber.map(a => '<div style="display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)"><span style="flex:1;min-width:0;font-size:13px">' + esc(a.nama) + '</span><select data-rasmi-kat="' + a.id + '" style="max-width:175px"><option value="">\u2014 tiada \u2014</option>' + ["sumatif", "setara", "pbd"].map(k => '<option value="' + k + '"' + (a.kat === k ? " selected" : "") + '>' + kategoriNama(k) + '</option>').join("") + '</select></div>').join("");
+    const baris = R.hasil.slice().sort((x, y) => (y.akhir === null ? -1 : y.akhir) - (x.akhir === null ? -1 : x.akhir)).map(x => '<tr><td>' + esc(x.p.nama) + '</td>' +
+      ["sumatif", "setara", "pbd"].map(k => '<td class="num">' + (x.avg[k] === null ? "\u2014" : Math.round(x.avg[k] * 10) / 10 + "%") + '</td>').join("") +
+      '<td class="num"><b>' + (x.akhir === null ? "\u2014" : Math.round(x.akhir * 10) / 10 + "%") + '</b></td><td class="num">' + (x.akhir === null ? "\u2014" : ((gredOf(x.akhir) || {}).g || "\u2014")) + '</td><td class="num">' + (R.pangkat[x.p.id] || "\u2014") + '</td></tr>').join("");
+    return '<div class="mini-head">Pemberat (%)</div>' +
+      '<div style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap">' +
+      ["sumatif", "setara", "pbd"].map(k => '<label class="fld" style="margin:0"><span>' + kategoriNama(k) + '</span><input type="number" min="0" max="100" id="wr-' + k + '" value="' + W[k] + '" style="width:84px" class="mono"></label>').join("") +
+      '<button class="btn btn-sm" id="wrSimpan" style="flex:none">Simpan pemberat</button></div>' +
+      '<div class="mini-head">Kategori setiap pentaksiran</div>' + (peta || '<p class="hint">Tiada pentaksiran.</p>') +
+      '<div class="mini-head">Markah akhir rasmi (' + R.hasil.length + ' murid)</div>' +
+      '<div class="tw" style="max-height:270px;overflow:auto"><table class="ig"><thead><tr><th class="lapis">Pelajar</th><th class="num">Sumatif</th><th class="num">Setara</th><th class="num">PBD</th><th class="num">Akhir</th><th class="num">Gred</th><th class="num">Ked.</th></tr></thead><tbody>' + baris + '</tbody></table></div>' +
+      '<p class="hint">Kiraan: purata setiap kategori \u00d7 pemberat (dinormalkan jika ada kategori kosong). Sahkan pemberat dengan panitia.</p>';
+  };
+  openDrawer("Markah Rasmi SPMRSM", "60% sumatif + 20% ujian setara + 20% PBD/PBL (boleh ubah)", '<div id="mrIsi">' + bina() + '</div>',
+    '<button class="btn btn-sm" id="mrCetak">Cetak slip semua murid</button><button class="btn btn-sm" id="mrJadual">Cetak jadual kelas</button><button class="btn btn-sm btn-primary" id="mrTutup">Tutup</button>');
+  const pasang = () => {
+    $("mrTutup").onclick = closeDrawer;
+    $("mrCetak").onclick = () => cetakRasmiSemua();
+    $("mrJadual").onclick = () => cetakRasmiJadual();
+    $("wrSimpan").onclick = () => {
+      const W2 = wajaranData();
+      ["sumatif", "setara", "pbd"].forEach(k => { const v = +($("wr-" + k).value); W2[k] = isNaN(v) ? W2[k] : Math.max(0, Math.min(100, v)); });
+      saveState(); $("mrIsi").innerHTML = bina(); pasang(); render(); toast("Pemberat disimpan");
+    };
+    $("drawerBody").querySelectorAll("[data-rasmi-kat]").forEach(s => s.onchange = () => { const a = S.asmt.find(x => x.id === s.dataset.rasmiKat); if(a){ a.kat = s.value || ""; saveState(); render(); } });
+  };
+  pasang();
+}
+function slipRasmiMurid(pid){
+  const R = markahRasmiData();
+  const W = R.W;
+  const x = R.hasil.find(y => y.p.id === pid);
+  if(!x) return "";
+  const ber = asmtUrut().filter(a => a.kat);
+  const k2 = S.kelas.find(z => z.id === x.p.kelasId) || {};
+  const senarai = ber.map(a => '<tr><td>' + esc(a.nama) + '</td><td>' + kategoriNama(a.kat) + '</td><td class="num">' + (isTH(a, pid) ? "TH" : (pct(a, pid) === null ? "\u2014" : pct(a, pid) + "%")) + '</td></tr>').join("");
+  return '<div class="slip slip-halaman slip-rasmi">' + kopHtml() +
+    '<header class="slip-head"><div><h1>' + hd("Markah Rasmi SPMRSM", "Official SPMRSM Mark") + '</h1><p>' + esc(x.p.nama) + " \u00b7 " + esc(k2.nama || "") + " \u00b7 " + esc(S.subjek) + '</p></div><div class="slip-cop">RASMI</div></header>' +
+    (senarai ? '<table><thead><tr><th>Pentaksiran</th><th>Kategori</th><th class="num">Markah</th></tr></thead><tbody>' + senarai + '</tbody></table>' : "") +
+    '<table style="margin-top:6px"><tbody>' +
+    ["sumatif", "setara", "pbd"].map(k => '<tr><td>Purata ' + kategoriNama(k) + ' (wajaran ' + W[k] + '%)</td><td class="num"><b>' + (x.avg[k] === null ? "\u2014" : Math.round(x.avg[k] * 10) / 10 + "%") + '</b></td></tr>').join("") +
+    '<tr><td><b>Markah akhir</b></td><td class="num"><b style="font-size:13pt">' + (x.akhir === null ? "\u2014" : Math.round(x.akhir * 10) / 10 + "%  (" + ((gredOf(x.akhir) || {}).g || "\u2014") + ")") + '</b></td></tr>' +
+    '<tr><td>Kedudukan kelas</td><td class="num">' + (R.pangkat[pid] || "\u2014") + '</td></tr></tbody></table>' +
+    '<p class="slip-kaki">Pemberat ' + W.sumatif + "/" + W.setara + "/" + W.pbd + ' \u00b7 Dijana ' + new Date().toLocaleDateString("ms-MY") + ' \u00b7 Dokumen ini tidak sah tanpa tandatangan guru.</p>' +
+    (qrHTMLMurid(pid, 92) ? '<div class="slip-qr">' + qrHTMLMurid(pid, 92) + '<span>Imbas untuk ringkasan ibu bapa</span></div>' : "") + '</div>';
+}
+function cetakRasmiSemua(){ const list = pelajarNow(); if(!list.length){ toast("Tiada pelajar"); return; } $("slipArea").innerHTML = list.map(p2 => slipRasmiMurid(p2.id)).join(""); closeDrawer(); cetakMula("cetak-slip"); }
+function cetakRasmiJadual(){
+  const R = markahRasmiData();
+  const baris = R.hasil.slice().sort((x, y) => (y.akhir === null ? -1 : y.akhir) - (x.akhir === null ? -1 : x.akhir)).map(x => '<tr><td>' + esc(x.p.nama) + '</td>' + ["sumatif", "setara", "pbd"].map(k => '<td class="num">' + (x.avg[k] === null ? "\u2014" : Math.round(x.avg[k] * 10) / 10 + "%") + '</td>').join("") + '<td class="num"><b>' + (x.akhir === null ? "\u2014" : Math.round(x.akhir * 10) / 10 + "%") + '</b></td><td class="num">' + (x.akhir === null ? "\u2014" : ((gredOf(x.akhir) || {}).g || "\u2014")) + '</td><td class="num">' + (R.pangkat[x.p.id] || "\u2014") + '</td></tr>').join("");
+  $("slipArea").innerHTML = '<div class="slip slip-halaman slip-rasmi">' + kopHtml() + '<header class="slip-head"><div><h1>' + hd("Markah Rasmi SPMRSM", "Official SPMRSM Marks") + ' \u2014 Kelas</h1><p>' + esc(kelasNow() ? kelasNow().nama : "") + " \u00b7 " + esc(S.subjek) + " \u00b7 " + esc(S.guru) + '</p></div><div class="slip-cop">RASMI</div></header>' +
+    '<table><thead><tr><th>Pelajar</th><th class="num">Sumatif</th><th class="num">Setara</th><th class="num">PBD</th><th class="num">Akhir</th><th class="num">Gred</th><th class="num">Ked.</th></tr></thead><tbody>' + baris + '</tbody></table>' +
+    '<p class="slip-kaki">Pemberat ' + R.W.sumatif + "/" + R.W.setara + "/" + R.W.pbd + ' \u00b7 Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+  closeDrawer(); cetakMula("cetak-slip");
+}
+/* ---------- Poster prestasi kelas ---------- */
+function cetakPoster(){
+  const list = pelajarNow();
+  if(!list.length){ toast("Tiada pelajar"); return; }
+  const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+  const akhir = ber.length ? ber[ber.length - 1] : null;
+  const GP = GREDS();
+  const warna = g => { const y = GP.find(z => z.g === g); const pt = y ? y.pt : 0; return pt >= 3.33 ? "var(--accent-ink)" : pt >= 2.0 ? "var(--amber)" : "var(--rose)"; };
+  const tile = p2 => {
+    const v = akhir ? pct(akhir, p2.id) : null;
+    const g = v === null ? null : gredOf(v);
+    const e = sasaranOf(p2.id, "etr");
+    const gt = (e === undefined || e === null) ? null : (GP.find(z => z.i === e) || null);
+    const w = g ? warna(g.g) : "var(--ink-3)";
+    return '<div class="poster-tile" style="border-color:' + w + '">' +
+      '<span class="poster-nama">' + esc(p2.nama) + '</span>' +
+      '<span class="poster-gred" style="color:' + w + '">' + (g ? g.g : "\u2014") + '</span>' +
+      '<span class="poster-mk">' + (v === null ? "tiada markah" : Math.round(v) + "%") + (gt ? " \u00b7 sasaran " + gt.g : "") + '</span>' +
+      '<div class="poster-bar"><i style="width:' + (v === null ? 0 : Math.max(4, Math.min(100, v))) + '%;background:' + w + '"></i></div></div>';
+  };
+  const gp = akhir ? gpmpOf(akhir, list) : null;
+  $("slipArea").innerHTML = '<div class="slip slip-halaman slip-poster">' + kopHtml() +
+    '<header class="slip-head"><div><h1>Papan Prestasi Kelas</h1><p>' + esc(kelasNow() ? kelasNow().nama : "") + " \u00b7 " + esc(S.subjek) + (akhir ? " \u00b7 " + esc(akhir.nama) : "") + " \u00b7 " + esc(S.guru) + '</p></div><div class="slip-cop">PBD</div></header>' +
+    '<div class="poster-grid">' + list.map(tile).join("") + '</div>' +
+    '<p class="slip-kaki">' + (gp !== null ? "GPMP kelas: " + gp.toFixed(2) + " \u00b7 " : "") + 'Hijau = B ke atas \u00b7 Kuning = C \u00b7 Merah = D ke bawah \u00b7 Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+  closeDrawer(); cetakMula("cetak-slip");
+}
+/* ---------- Log komunikasi ibu bapa ---------- */
+function logIbuData(pid){ S.logIbu = S.logIbu || {}; S.logIbu[pid] = S.logIbu[pid] || []; return S.logIbu[pid]; }
+function bukaLogIbu(pid){
+  const p2 = S.pelajar.find(x => x.id === pid);
+  if(!p2){ toast("Murid tidak dijumpai"); return; }
+  const bina = () => {
+    const arr = logIbuData(pid).slice().sort((x, y) => String(y.tarikh).localeCompare(String(x.tarikh)));
+    return '<div class="mini-head">' + esc(p2.nama) + ' \u2014 ' + arr.length + ' catatan</div>' +
+      (arr.length ? arr.map(x => '<div style="display:flex;gap:9px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--line)">' +
+        '<span style="flex:1;min-width:0"><b style="font-size:13px">' + esc(x.cara) + ' \u00b7 ' + esc(x.tarikh) + '</b>' + (x.susulan && !x.selesai ? ' <span class="badge b-mid">susulan</span>' : "") + (x.selesai ? ' <span class="badge b-ok">selesai</span>' : "") +
+        '<span class="hint" style="display:block;margin:2px 0 0">' + esc(x.isi || "") + (x.tindakan ? " \u2192 " + esc(x.tindakan) : "") + '</span></span>' +
+        (x.susulan && !x.selesai ? '<button class="btn btn-sm" data-li-selesai="' + x.id + '">Selesai</button>' : "") +
+        '<button class="btn btn-sm" data-li-del="' + x.id + '" style="border-color:#E0BDB8;color:var(--rose)">Padam</button></div>').join("")
+        : '<p class="hint">Belum ada catatan komunikasi dengan ibu bapa / penjaga.</p>') +
+      '<div class="mini-head">Catatan baharu</div>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+      '<input type="date" id="liTarikh" value="' + new Date().toISOString().slice(0, 10) + '" style="max-width:160px">' +
+      '<select id="liCara" style="max-width:180px">' + ["WhatsApp", "Panggilan telefon", "Bersemuka", "Surat / buku penghubung"].map(c => '<option>' + c + '</option>').join("") + '</select>' +
+      '</div>' +
+      '<input type="text" id="liIsi" placeholder="Isu / perkara (cth: markah ujian menurun)" style="margin-top:6px">' +
+      '<input type="text" id="liTindakan" placeholder="Tindakan / persetujuan (pilihan)" style="margin-top:6px">' +
+      '<label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="liSusulan"><span>Perlu susulan</span></label>' +
+      '<div class="row-actions" style="margin-top:10px"><button class="btn btn-sm btn-accent" id="liSimpan">Simpan catatan</button><button class="btn btn-sm" id="liCetak">Cetak log murid ini</button></div>';
+  };
+  openDrawer("Log Komunikasi Ibu Bapa", "Dokumentasi setiap komunikasi dengan penjaga", '<div id="liIsi">' + bina() + '</div>', '<button class="btn btn-sm btn-primary" id="liTutup">Tutup</button>');
+  const pasang = () => {
+    $("liTutup").onclick = closeDrawer;
+    $("liSimpan").onclick = () => {
+      const isi = $("liIsi").value.trim();
+      if(!isi){ toast("Isi perkara dahulu"); return; }
+      logIbuData(pid).push({id: "li" + Date.now(), tarikh: $("liTarikh").value || new Date().toISOString().slice(0, 10), cara: $("liCara").value, isi, tindakan: $("liTindakan").value.trim(), susulan: $("liSusulan").checked, selesai: false});
+      saveState(); $("liIsi").innerHTML = bina(); pasang(); toast("Catatan disimpan");
+    };
+    $("liCetak").onclick = () => cetakLogIbu(pid);
+    $("drawerBody").querySelectorAll("[data-li-del]").forEach(b => b.onclick = () => { S.logIbu[pid] = logIbuData(pid).filter(x => x.id !== b.dataset.liDel); saveState(); $("liIsi").innerHTML = bina(); pasang(); });
+    $("drawerBody").querySelectorAll("[data-li-selesai]").forEach(b => b.onclick = () => { const x = logIbuData(pid).find(y => y.id === b.dataset.liSelesai); if(x){ x.selesai = true; saveState(); $("liIsi").innerHTML = bina(); pasang(); } });
+  };
+  pasang();
+}
+function cetakLogIbu(pid){
+  const p2 = S.pelajar.find(x => x.id === pid);
+  const arr = logIbuData(pid).slice().sort((x, y) => String(x.tarikh).localeCompare(String(y.tarikh)));
+  if(!arr.length){ toast("Tiada catatan"); return; }
+  $("slipArea").innerHTML = '<div class="slip slip-halaman">' + kopHtml() +
+    '<header class="slip-head"><div><h1>' + hd("Log Komunikasi Ibu Bapa", "Parent Communication Log") + '</h1><p>' + esc(p2.nama) + " \u00b7 " + esc(S.subjek) + " \u00b7 " + esc(S.guru) + '</p></div><div class="slip-cop">LOG</div></header>' +
+    '<table><thead><tr><th>Tarikh</th><th>Cara</th><th>Perkara</th><th>Tindakan</th><th>Status</th></tr></thead><tbody>' +
+    arr.map(x => '<tr><td>' + esc(x.tarikh) + '</td><td>' + esc(x.cara) + '</td><td>' + esc(x.isi) + '</td><td>' + esc(x.tindakan || "\u2014") + '</td><td>' + (x.selesai ? "Selesai" : x.susulan ? "Susulan" : "\u2014") + '</td></tr>').join("") +
+    '</tbody></table><p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+  closeDrawer(); cetakMula("cetak-slip");
+}
+/* ---------- Rekod ujian ulangan ---------- */
+function ulanganData(aid){ S.ulangan = S.ulangan || {}; S.ulangan[aid] = S.ulangan[aid] || {}; return S.ulangan[aid]; }
+function bukaUlangan(){
+  const a = asmtNow();
+  if(!a){ toast("Tiada pentaksiran"); return; }
+  const list = pelajarNow();
+  const perluSet = ["C-", "D+", "D", "E", "F", "G"];
+  const bina = () => {
+    const u = ulanganData(a.id);
+    const baris = list.slice().sort((x, y) => (pct(a, x.id) === null ? 999 : pct(a, x.id)) - (pct(a, y.id) === null ? 999 : pct(a, y.id))).map(p2 => {
+      const v = pct(a, p2.id);
+      const g = v === null ? null : gredOf(v);
+      const perlu = g && perluSet.indexOf(String(g.g).trim()) >= 0;
+      const o = u[p2.id] || {};
+      return '<tr><td>' + esc(p2.nama) + (perlu ? ' <span class="badge b-mid">ulangan</span>' : "") + '</td><td class="num">' + (v === null ? "\u2014" : v + "%") + '</td><td class="num">' + (g ? g.g : "\u2014") + '</td>' +
+        '<td><input type="date" data-ul-t="' + p2.id + '" value="' + esc(o.tarikh || "") + '"></td>' +
+        '<td><input type="number" min="0" max="100" step="0.5" data-ul-m="' + p2.id + '" value="' + (o.markah !== undefined ? o.markah : "") + '"></td>' +
+        '<td class="num">' + (o.markah !== undefined ? ((gredOf(+o.markah) || {}).g || "\u2014") : "\u2014") + '</td></tr>';
+    }).join("");
+    return '<div class="chip-list" style="margin-bottom:6px"><span class="tag">' + esc(a.nama) + '</span><span class="tag">Gred maksimum selepas ulangan: B (dasar MRSM)</span></div>' +
+      '<div class="tw" style="max-height:340px;overflow:auto"><table class="ig"><thead><tr><th class="lapis">Pelajar</th><th class="num">Markah</th><th class="num">Gred</th><th>Tarikh ulangan</th><th class="num">Markah ulangan</th><th class="num">Gred baharu</th></tr></thead><tbody>' + baris + '</tbody></table></div>' +
+      '<p class="hint">Murid C- ke bawah ditandakan "ulangan". Isi tarikh & markah selepas ujian ulangan dijalankan.</p>';
+  };
+  openDrawer("Rekod Ujian Ulangan", "Murid perlu ulangan & markah selepas ulangan", '<div id="ulIsi">' + bina() + '</div>',
+    '<button class="btn btn-sm" id="ulCetak">Cetak senarai</button><button class="btn btn-sm btn-primary" id="ulTutup">Tutup</button>');
+  const pasang = () => {
+    $("ulTutup").onclick = closeDrawer;
+    $("ulCetak").onclick = cetakUlangan;
+    $("drawerBody").querySelectorAll("[data-ul-t]").forEach(i2 => i2.onchange = () => { const u = ulanganData(a.id); u[i2.dataset.ulT] = u[i2.dataset.ulT] || {}; u[i2.dataset.ulT].tarikh = i2.value; saveState(); });
+    $("drawerBody").querySelectorAll("[data-ul-m]").forEach(i2 => i2.onchange = () => { const u = ulanganData(a.id); u[i2.dataset.ulM] = u[i2.dataset.ulM] || {}; let v = i2.value.trim(); if(v === ""){ delete u[i2.dataset.ulM].markah; } else { v = Math.max(0, Math.min(100, +v)); i2.value = v; u[i2.dataset.ulM].markah = v; } saveState(); $("ulIsi").innerHTML = bina(); pasang(); });
+  };
+  pasang();
+}
+function cetakUlangan(){
+  const a = asmtNow();
+  if(!a){ toast("Tiada pentaksiran"); return; }
+  const list = pelajarNow();
+  const u = ulanganData(a.id);
+  const senarai = list.filter(p2 => (u[p2.id] && (u[p2.id].markah !== undefined || u[p2.id].tarikh))).map(p2 => {
+    const v = pct(a, p2.id);
+    const g = v === null ? null : gredOf(v);
+    const o = u[p2.id];
+    return '<tr><td>' + esc(p2.nama) + '</td><td class="num">' + (v === null ? "\u2014" : v + "%") + '</td><td class="num">' + (g ? g.g : "\u2014") + '</td><td>' + esc(o.tarikh || "\u2014") + '</td><td class="num">' + (o.markah !== undefined ? o.markah : "\u2014") + '</td><td class="num">' + (o.markah !== undefined ? ((gredOf(+o.markah) || {}).g || "\u2014") : "\u2014") + '</td></tr>';
+  }).join("");
+  if(!senarai){ toast("Tiada rekod ulangan diisi"); return; }
+  $("slipArea").innerHTML = '<div class="slip slip-halaman">' + kopHtml() + '<header class="slip-head"><div><h1>Rekod Ujian Ulangan \u2014 ' + esc(a.nama) + '</h1><p>' + esc(kelasNow() ? kelasNow().nama : "") + " \u00b7 " + esc(S.subjek) + '</p></div><div class="slip-cop">ULANGAN</div></header>' +
+    '<table><thead><tr><th>Pelajar</th><th class="num">Markah asal</th><th class="num">Gred</th><th>Tarikh ulangan</th><th class="num">Markah ulangan</th><th class="num">Gred baharu</th></tr></thead><tbody>' + senarai + '</tbody></table>' +
+    '<p class="slip-kaki">Gred maksimum selepas ulangan: B \u00b7 Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+  closeDrawer(); cetakMula("cetak-slip");
+}
+/* ---------- Profil kelas ---------- */
+function cetakProfilKelas(){
+  const list = pelajarNow();
+  if(!list.length){ toast("Tiada pelajar"); return; }
+  const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+  const akhir = ber.length ? ber[ber.length - 1] : null;
+  const val = list.map(p2 => ({p: p2, v: akhir ? pct(akhir, p2.id) : null})).filter(x => x.v !== null).slice().sort((x, y) => y.v - x.v);
+  const GP = GREDS();
+  const dist = GP.map(g => ({g: g.g, n: val.filter(x => gredOf(x.v).g === g.g).length})).filter(x => x.n);
+  const top5 = val.slice(0, 5);
+  const risk5 = val.slice(-5).reverse();
+  const topikStat = S.topik.map(t => { const vals = list.map(p2 => S.pbd[t.id] && S.pbd[t.id][p2.id]).filter(Boolean); return {t, avg: vals.length ? vals.reduce((x, y) => x + y, 0) / vals.length : null}; }).filter(x => x.avg !== null);
+  const kuat2 = topikStat.slice().sort((x, y) => y.avg - x.avg).slice(0, 3);
+  const lemah2 = topikStat.slice().sort((x, y) => x.avg - y.avg).slice(0, 3);
+  const gp = akhir ? gpmpOf(akhir, list) : null;
+  $("slipArea").innerHTML = '<div class="slip slip-halaman">' + kopHtml() +
+    '<header class="slip-head"><div><h1>' + hd("Profil Kelas", "Class Profile") + '</h1><p>' + esc(kelasNow() ? kelasNow().nama : "") + " \u00b7 " + esc(S.subjek) + " \u00b7 " + esc(S.guru) + (akhir ? " \u00b7 " + esc(akhir.nama) : "") + '</p></div><div class="slip-cop">PBD</div></header>' +
+    '<table><tbody><tr><td>Bilangan murid</td><td class="num"><b>' + list.length + '</b></td><td>GPMP kelas</td><td class="num"><b>' + (gp === null ? "\u2014" : gp.toFixed(2)) + '</b></td></tr>' +
+    '<tr><td>Lulus</td><td class="num"><b>' + (val.length ? Math.round(val.filter(x => x.v >= ambangLulus()).length / val.length * 100) + "%" : "\u2014") + '</b></td><td>Cemerlang (A- ke atas)</td><td class="num"><b>' + val.filter(x => (gredOf(x.v).i <= 2)).length + '</b></td></tr></tbody></table>' +
+    '<div class="mini-head">Taburan gred</div>' + (dist.length ? barRows(dist.map(x => ({k: x.g, v: x.n, lbl: x.n + " murid", c: "var(--accent-ink)"})), Math.max.apply(null, dist.map(x => x.n))) : "") +
+    '<div class="mini-head">5 Terbaik</div>' + (top5.length ? '<p style="font-size:10.5pt;margin:4px 0">' + top5.map(x => esc(x.p.nama) + " (" + Math.round(x.v) + "%, " + gredOf(x.v).g + ")").join(" \u00b7 ") + '</p>' : '\u2014') +
+    '<div class="mini-head">5 Perlu Perhatian</div>' + (risk5.length ? '<p style="font-size:10.5pt;margin:4px 0">' + risk5.map(x => esc(x.p.nama) + " (" + Math.round(x.v) + "%, " + gredOf(x.v).g + ")").join(" \u00b7 ") + '</p>' : '\u2014') +
+    '<div class="mini-head">Topik terkuat / terlemah (purata TP)</div>' +
+    '<p style="font-size:10.5pt;margin:4px 0">Kuat: ' + (kuat2.map(x => esc(x.t.kod) + " (" + (Math.round(x.avg * 10) / 10) + ")").join(", ") || "\u2014") + '</p>' +
+    '<p style="font-size:10.5pt;margin:4px 0">Lemah: ' + (lemah2.map(x => esc(x.t.kod) + " (" + (Math.round(x.avg * 10) / 10) + ")").join(", ") || "\u2014") + '</p>' +
+    '<p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + ' \u00b7 Untuk mesyuarat panitia / minggu pertama sesi</p></div>';
+  closeDrawer(); cetakMula("cetak-slip");
+}
+/* ---------- Simulasi naik gred ---------- */
+let __sim = {pid: "", gi: null};
+function bukaSimulasi(){
+  const list = pelajarNow();
+  if(!list.length){ toast("Tiada pelajar"); return; }
+  const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+  const akhir = ber.length ? ber[ber.length - 1] : null;
+  if(!akhir){ toast("Tiada pentaksiran ber-markah"); return; }
+  const GP = GREDS();
+  const vals = list.map(p2 => ({p: p2, v: pct(akhir, p2.id)}));
+  const hitung = ubah => {
+    const arr = vals.map(x => { let v = x.v; if(ubah && ubah[x.p.id] !== undefined) v = Math.max(v === null ? 0 : v, ubah[x.p.id]); return v; }).filter(v => v !== null);
+    if(!arr.length) return null;
+    const gp = arr.reduce((n, v) => n + gredOf(v).pt, 0) / arr.length;
+    const lulus = Math.round(arr.filter(v => v >= ambangLulus()).length / arr.length * 100);
+    return {gp, lulus};
+  };
+  const bina = () => {
+    const ubah = (__sim.pid && __sim.gi !== null) ? (function(){ const o = {}; o[__sim.pid] = markahMinGred(__sim.gi); return o; })() : null;
+    const s0 = hitung(null), s1 = hitung(ubah);
+    const x = vals.find(z => z.p.id === __sim.pid);
+    return '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end">' +
+      '<label class="fld" style="margin:0"><span>Murid</span><select id="smMurid" style="min-width:200px"><option value="">\u2014 pilih murid \u2014</option>' + list.map(p2 => '<option value="' + p2.id + '"' + (__sim.pid === p2.id ? " selected" : "") + '>' + esc(p2.nama) + '</option>').join("") + '</select></label>' +
+      '<label class="fld" style="margin:0"><span>Naik ke gred</span><select id="smGred" style="min-width:150px"><option value="">\u2014 pilih gred \u2014</option>' + GP.map(g => '<option value="' + g.i + '"' + (__sim.gi === g.i ? " selected" : "") + '>' + g.g + ' (' + g.pt.toFixed(2) + ')</option>').join("") + '</select></label>' +
+      '</div>' +
+      '<div class="mini-head">Kesan simulasi</div>' +
+      '<table><tbody>' +
+      '<tr><td>GPMP kelas</td><td class="num"><b>' + (s0 ? s0.gp.toFixed(2) : "\u2014") + '</b></td><td class="num">\u2192</td><td class="num"><b style="color:var(--accent-ink)">' + (s1 ? s1.gp.toFixed(2) : "\u2014") + '</b></td></tr>' +
+      '<tr><td>% lulus</td><td class="num">' + (s0 ? s0.lulus + "%" : "\u2014") + '</td><td class="num">\u2192</td><td class="num">' + (s1 ? s1.lulus + "%" : "\u2014") + '</td></tr>' +
+      '</tbody></table>' +
+      (ubah && x ? '<ul style="margin:6px 0 0;padding-left:20px;font-size:12.5px"><li>' + esc(x.p.nama) + ': ' + (x.v === null ? "\u2014" : Math.round(x.v) + "%") + ' (' + ((gredOf(x.v) || {}).g || "\u2014") + ') \u2192 ' + Math.round(ubah[__sim.pid]) + '% (' + ((gredOf(ubah[__sim.pid]) || {}).g || "\u2014") + ')</li></ul>' : "") +
+      '<p class="hint">Murid dipilih dianggap mendapat markah minimum gred sasaran. Untuk perancangan intervensi \u2014 markah sebenar tidak diubah.</p>';
+  };
+  openDrawer("Simulasi Naik Gred", "\"Apa jadi jika murid ini naik ke gred X?\" \u2014 lihat kesan pada kelas", '<div id="smIsi">' + bina() + '</div>', '<button class="btn btn-sm btn-primary" id="smTutup">Tutup</button>');
+  const pasang = () => {
+    $("smTutup").onclick = closeDrawer;
+    $("smMurid").onchange = e => { __sim.pid = e.target.value; $("smIsi").innerHTML = bina(); pasang(); };
+    $("smGred").onchange = e => { __sim.gi = e.target.value === "" ? null : +e.target.value; $("smIsi").innerHTML = bina(); pasang(); };
+  };
+  pasang();
+}
+/* ---------- Sijil PNG untuk WhatsApp ---------- */
+function svgSijilPNG(pid){
+  const p2 = S.pelajar.find(x => x.id === pid);
+  if(!p2) return null;
+  const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+  const akhir = ber.length ? ber[ber.length - 1] : null;
+  const v = akhir ? pct(akhir, pid) : null;
+  const g = v === null ? null : gredOf(v);
+  const tema = (S.sijilTema === "navy") ? {warna: "#16233F", aksen: "#C9A227", latar: "#FFFDF8"} : (S.sijilTema === "minimal") ? {warna: "#222222", aksen: "#9AA0A8", latar: "#FFFFFF"} : {warna: "#6B5320", aksen: "#C9A227", latar: "#FFFDF6"};
+  const k2 = S.kelas.find(z => z.id === p2.kelasId) || {};
+  const noSij = "PBD-" + new Date().getFullYear() + "-" + String(p2.id || "X").slice(-4).toUpperCase();
+  const sekolah = (S.kop && S.kop.sekolah) ? esc(S.kop.sekolah) : "Sekolah Menengah";
+  return {svg: '<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1131" viewBox="0 0 1600 1131">' +
+    '<rect width="1600" height="1131" fill="' + tema.latar + '"/>' +
+    '<rect x="26" y="26" width="1548" height="1079" fill="none" stroke="' + tema.aksen + '" stroke-width="7"/>' +
+    '<rect x="46" y="46" width="1508" height="1039" fill="none" stroke="' + tema.aksen + '" stroke-width="2"/>' +
+    '<text x="800" y="152" text-anchor="middle" font-family="Georgia,serif" font-size="30" letter-spacing="6" fill="' + tema.warna + '">SIJIL PENGHARGAAN</text>' +
+    '<text x="800" y="198" text-anchor="middle" font-family="Georgia,serif" font-size="16" letter-spacing="4" fill="#8A7B55">CERTIFICATE OF ACHIEVEMENT</text>' +
+    '<line x1="560" y1="230" x2="1040" y2="230" stroke="' + tema.aksen + '" stroke-width="2"/>' +
+    '<text x="800" y="292" text-anchor="middle" font-family="Georgia,serif" font-size="19" fill="#4E5A64">Dengan ini disahkan bahawa</text>' +
+    '<text x="800" y="404" text-anchor="middle" font-family="Georgia,serif" font-size="58" font-weight="bold" fill="' + tema.warna + '">' + esc(String(p2.nama || "").toUpperCase()) + '</text>' +
+    '<text x="800" y="474" text-anchor="middle" font-family="Georgia,serif" font-size="21" fill="#4E5A64">' + esc(k2.nama || "") + " \u00b7 " + esc(S.subjek) + '</text>' +
+    '<text x="800" y="550" text-anchor="middle" font-family="Georgia,serif" font-size="20" fill="#333333">telah menunjukkan prestasi cemerlang' + (akhir ? " dalam " + esc(akhir.nama) : "") + (v !== null ? " \u2014 " + Math.round(v) + "%" + (g ? " (" + g.g + ")" : "") : "") + '</text>' +
+    '<text x="800" y="592" text-anchor="middle" font-family="Georgia,serif" font-size="17" fill="#8A7B55">' + sekolah + '</text>' +
+    '<circle cx="800" cy="815" r="86" fill="none" stroke="' + tema.aksen + '" stroke-width="4"/>' +
+    '<circle cx="800" cy="815" r="72" fill="none" stroke="' + tema.aksen + '" stroke-width="1.5"/>' +
+    '<text x="800" y="806" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="' + tema.warna + '">PBD MRSM</text>' +
+    '<text x="800" y="834" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="' + tema.warna + '">' + esc(noSij) + '</text>' +
+    '<text x="330" y="1002" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#4E5A64">' + esc(S.guru) + '</text>' +
+    '<line x1="150" y1="1018" x2="510" y2="1018" stroke="#8A7B55" stroke-width="1.2"/>' +
+    '<text x="330" y="1042" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#8A7B55">Guru Mata Pelajaran</text>' +
+    '<text x="1270" y="1002" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#4E5A64">' + new Date().toLocaleDateString("ms-MY") + '</text>' +
+    '<line x1="1090" y1="1018" x2="1450" y2="1018" stroke="#8A7B55" stroke-width="1.2"/>' +
+    '<text x="1270" y="1042" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#8A7B55">Tarikh</text>' +
+    '</svg>', nama: p2.nama, namaFail: "sijil-" + String(p2.nama || "murid").replace(/[^A-Za-z0-9]+/g, "-") + ".png", teks: "Sijil penghargaan " + p2.nama + " \u2014 " + S.subjek};
+}
+function kanvasDaripadaSVG(svg, lebar, tinggi, cb){
+  try{
+    const blob = new Blob([svg], {type: "image/svg+xml;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const im = new Image();
+    im.onload = () => { try{ const cv = document.createElement("canvas"); cv.width = lebar; cv.height = tinggi; const cx = cv.getContext("2d"); cx.fillStyle = "#FFFFFF"; cx.fillRect(0, 0, lebar, tinggi); cx.drawImage(im, 0, 0, lebar, tinggi); cb(cv); }catch(e){ toast("Gagal jana imej"); } URL.revokeObjectURL(url); };
+    im.onerror = () => { URL.revokeObjectURL(url); toast("Gagal jana imej"); };
+    im.src = url;
+  }catch(e){ toast("Gagal jana imej"); }
+}
+function muatTurunDataURL(dataURL, namaFail){ const a = document.createElement("a"); a.href = dataURL; a.download = namaFail; document.body.appendChild(a); a.click(); a.remove(); }
+async function kongsiPNG(dataURL, namaFail, teks){
+  try{
+    const blob = await (await fetch(dataURL)).blob();
+    const f = new File([blob], namaFail, {type: "image/png"});
+    if(navigator.canShare && navigator.canShare({files: [f]})){ await navigator.share({files: [f], text: teks}); toast("Sijil dikongsi"); return; }
+  }catch(e){}
+  muatTurunDataURL(dataURL, namaFail);
+  toast("Imej dimuat turun \u2014 lampirkan dalam WhatsApp");
+}
+function janaSijilPNG(pid){
+  const info = svgSijilPNG(pid);
+  if(!info){ toast("Murid tidak dijumpai"); return; }
+  kanvasDaripadaSVG(info.svg, 1600, 1131, cv => {
+    let du = "";
+    try{ du = cv.toDataURL("image/png"); }catch(e){ toast("Gagal jana imej"); return; }
+    kongsiPNG(du, info.namaFail, info.teks);
+  });
 }
 /* ================= FASA 12 — Enjin QR (mod bait, ECC L, versi 1–13) ================= */
 let IBU_PAYLOAD = (function(){ try{ const h = location.hash || ""; return h.indexOf("#r=") === 0 ? decodeURIComponent(h.slice(3)) : ""; }catch(e){ return ""; } })();
@@ -7136,20 +7511,21 @@ function bukaPakej(){
   const opt = (id, nama, def) => '<label style="display:flex;gap:8px;align-items:center;padding:5px 0"><input type="checkbox" id="' + id + '"' + (def ? " checked" : "") + '><span>' + nama + '</span></label>';
   openDrawer("Pakej Cetak Semua Murid", "Dokumen untuk HBMP / Hari Ibu Bapa \u2014 " + list.length + " murid",
     '<div class="card" style="margin:0 0 10px"><b style="font-size:13px">Pilih dokumen</b>' +
-    opt("pkSlip", "Slip laporan (HBMP)", true) + opt("pkLap", "Laporan prestasi individu (bergraf)", true) + opt("pkSijil", "Sijil penghargaan", false) + opt("pkSasaran", "Kad sasaran murid", false) + opt("pkQR", "Kad QR ibu bapa", false) +
+    opt("pkSlip", "Slip laporan (HBMP)", true) + opt("pkLap", "Laporan prestasi individu (bergraf)", true) + opt("pkSijil", "Sijil penghargaan", false) + opt("pkSasaran", "Kad sasaran murid", false) + opt("pkQR", "Kad QR ibu bapa", false) + opt("pkRasmi", "Slip markah rasmi SPMRSM", false) +
     '<p class="hint">Setiap dokumen dicetak sebagai halaman berasingan, untuk SEMUA murid kelas ini mengikut susunan senarai nama.</p></div>' +
     '<div class="row-actions"><button class="btn btn-sm btn-accent" id="pkJana">Jana &amp; cetak (' + list.length + ' murid)</button></div>',
     '<button class="btn btn-sm btn-primary" id="pkTutup">Tutup</button>');
   $("pkTutup").onclick = closeDrawer;
   $("pkJana").onclick = () => {
-    const pilih = {slip: $("pkSlip").checked, lap: $("pkLap").checked, sijil: $("pkSijil").checked, sasaran: $("pkSasaran").checked, qr: $("pkQR").checked};
-    if(!pilih.slip && !pilih.lap && !pilih.sijil && !pilih.sasaran && !pilih.qr){ toast("Pilih sekurang-kurangnya satu dokumen"); return; }
+    const pilih = {slip: $("pkSlip").checked, lap: $("pkLap").checked, sijil: $("pkSijil").checked, sasaran: $("pkSasaran").checked, qr: $("pkQR").checked, rasmi: $("pkRasmi").checked};
+    if(!pilih.slip && !pilih.lap && !pilih.sijil && !pilih.sasaran && !pilih.qr && !pilih.rasmi){ toast("Pilih sekurang-kurangnya satu dokumen"); return; }
     const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
     const akhir = ber.length ? ber[ber.length - 1] : null;
     let html = "";
     list.forEach(p2 => {
       const v = akhir ? pct(akhir, p2.id) : null;
       if(pilih.slip) html += '<div class="slip-pembalut">' + slipHtml(p2.id) + '</div>';
+      if(pilih.rasmi) html += slipRasmiMurid(p2.id);
       if(pilih.lap){ try{ html += laporanIndividuHtml(p2.id); }catch(e){} }
       if(pilih.sijil && v !== null) html += sijilHtml({p: p2, v, g: gredOf(v)});
       if(pilih.sasaran) html += kadSasaranSlipMurid(p2.id);
@@ -7796,13 +8172,13 @@ function bukaItemAnalisis(){
     return '<div class="mini-head">Analisis</div>' +
       barRows(stat.map(x => ({
         k: x.x.nama.slice(0, 12), v: x.purata === null ? 0 : Math.round(x.purata * 100),
-        lbl: x.purata === null ? "—" : Math.round(x.purata * 100) + "%",
+        lbl: x.purata === null ? "—" : Math.round(x.purata * 100) + "%" + (x.purata >= 0.75 ? " · Mudah" : x.purata >= 0.5 ? " · Sederhana" : " · Sukar"),
         c: x.purata === null ? "var(--surface-2)" : (x.purata < 0.5 ? "var(--rose)" : x.purata < 0.75 ? "var(--amber)" : "var(--accent-ink)")
       })), 100) +
       stat.filter(x => x.purata !== null && x.purata < 0.6 && x.gagal.length)
         .map(x => '<details style="margin-top:6px"><summary>' + esc(x.x.nama) + ' — ' + x.gagal.length + ' murid bawah 50%</summary><ul style="margin:6px 0 0;padding-left:20px">' +
           x.gagal.slice(0, 10).map(g => '<li>' + esc(g.p.nama) + ' — ' + g.v + '/' + x.x.penuh + '</li>').join("") + '</ul></details>').join("") +
-      '<p class="hint">Merah = bawah 50%. Soalan merah dengan senarai murid panjang = sasaran ulang kaji kelas seterusnya.</p>';
+      (stat.filter(x => x.purata !== null).length > 1 ? '<div class="mini-head">Turutan keutamaan ulang kaji</div><ol style="margin:4px 0 0;padding-left:20px;font-size:12.5px">' + stat.filter(x => x.purata !== null).slice().sort((x, y) => x.purata - y.purata).map(x => '<li><b>' + esc(x.x.nama) + '</b> — ' + Math.round(x.purata * 100) + '% (' + x.gagal.length + ' murid <50%)</li>').join("") + '</ol>' : "") + '<p class="hint">Merah = bawah 50%. Soalan merah dengan senarai murid panjang = sasaran ulang kaji kelas seterusnya.</p>';
   };
   openDrawer("Analisis Item", "Markah per soalan — cari punca sebenar markah hilang",
     '<div id="iaIsi">' + tetapanHtml() + markahHtml() + '<div id="iaAnalisis">' + analisisHtml() + '</div></div>' +
