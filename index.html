@@ -5954,6 +5954,8 @@ const mulaiObs = () => { try{ const db2 = document.getElementById("drawerBody");
 if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", mulaiObs); else mulaiObs();
 /* ---------- WALKTHROUGH ---------- */
 function bukaWalkthrough(){
+  /* pastikan tiada walkthrough bertindan */
+  document.querySelectorAll(".tour-kad, .tour-lubang").forEach(el => el.remove());
   const langkah = [
     {sel:"#btnSettings", t:"1. Tetapan", p:"Isi nama guru & nama maktab, kemudian tambah kelas dan pelajar. Ini asas semua dokumen."},
     {sel:"[data-nav='pbd']", t:"2. Rekod PBD", p:"Ketuk sel atau taip 1–6 untuk merekod Tahap Penguasaan setiap Standard Kandungan. 0 mengosongkan."},
