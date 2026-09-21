@@ -1109,6 +1109,58 @@ html[data-royale="1"]{--accent-ink:#C9A227;--accent-soft:rgba(201,162,39,.18);--
   .poster-bar{height:5px;border-radius:3px;background:#ECE7DC;overflow:hidden;margin-top:3px}
   .poster-bar i{display:block;height:100%}
   .slip-rasmi table td{padding-top:5px;padding-bottom:5px}
+  /* --- Fasa 14: Sentuhan Studio --- */
+  ::view-transition-old(root){animation:vtKeluar .16s ease both}
+  ::view-transition-new(root){animation:vtMasuk .26s cubic-bezier(.2,.7,.3,1) both}
+  @keyframes vtMasuk{from{opacity:.35;transform:translateY(7px)}to{opacity:1;transform:none}}
+  @keyframes vtKeluar{to{opacity:.35}}
+  .drawer.tutup{display:flex;animation:slideDown 210ms cubic-bezier(.4,0,.9,.5) forwards}
+  @keyframes slideDown{to{transform:translateY(13%);opacity:.4}}
+  .scrim.tutup{display:block;animation:fadeKeluar 200ms ease forwards}
+  @keyframes fadeKeluar{to{opacity:0}}
+  header.top.skrol .top-in{height:calc(var(--hdr-h) - 10px)}
+  .top-in{transition:height .25s cubic-bezier(.2,.7,.3,1)}
+  header.top.skrol .brand-mark{transform:scale(.88) rotate(-2deg)}
+  .brand-mark{transition:transform .25s cubic-bezier(.2,.7,.3,1)}
+  .view .mini-head{position:sticky;top:60px;z-index:5;background:var(--canvas);padding-top:4px}
+  #drawerBody .mini-head{position:sticky;top:0;z-index:5;background:var(--surface);padding-top:4px}
+  body.mod-fokus header.top, body.mod-fokus #navBottom{display:none !important}
+  body.mod-fokus{padding-bottom:0 !important}
+  body.mod-fokus::before{display:none}
+  #fokusKeluar{position:fixed;right:16px;bottom:16px;z-index:350;display:none;box-shadow:var(--sh-2,0 10px 24px rgba(16,32,40,.18))}
+  body.mod-fokus #fokusKeluar{display:inline-flex}
+  #rangka{position:fixed;inset:0;z-index:395;background:var(--canvas);display:grid;place-content:center;gap:14px;padding:24px;transition:opacity .35s ease}
+  #rangka .rk{width:min(680px,86vw);height:15px;border-radius:8px;background:linear-gradient(90deg,var(--surface-2) 25%,var(--surface-3) 37%,var(--surface-2) 63%);background-size:400% 100%;animation:rkKira 1.15s linear infinite}
+  #rangka .rk.tajuk{height:26px;width:min(340px,58vw)}
+  body.sedia #rangka{opacity:0;pointer-events:none}
+  @keyframes rkKira{from{background-position:100% 0}to{background-position:0 0}}
+  #tipCarta{position:fixed;z-index:390;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);border-radius:8px;padding:5px 10px;font-size:12px;box-shadow:0 10px 24px rgba(16,32,40,.16);pointer-events:none;transform:translate(-50%,-100%);white-space:nowrap}
+  .gelang{position:relative;display:inline-grid;place-items:center;flex:none}
+  .gelang svg{grid-area:1/1}
+  .gelang-t{grid-area:1/1;text-align:center;line-height:1.1}
+  .gelang-t b{font-size:17px;display:block}
+  .gelang-t span{font-size:9.5px;color:var(--ink-3)}
+  .segar .lencana-ikon{animation:lencanaPop .55s cubic-bezier(.2,1.5,.4,1) both}
+  .segar .lencana-ikon::after{content:"";position:absolute;inset:-7px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,39,.4),transparent 62%);opacity:0;animation:kilau 1.1s ease .3s 1}
+  .lencana-ikon{position:relative;display:inline-block}
+  .lencana-baris:nth-child(2) .lencana-ikon{animation-delay:.09s}
+  .lencana-baris:nth-child(3) .lencana-ikon{animation-delay:.17s}
+  @keyframes lencanaPop{from{transform:scale(.35);opacity:0}to{transform:scale(1);opacity:1}}
+  @keyframes kilau{0%{opacity:0;transform:scale(.6)}40%{opacity:1}100%{opacity:0;transform:scale(1.35)}}
+  .denyut b{display:inline-block;animation:nyala 2.4s ease-in-out infinite}
+  @keyframes nyala{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+  html[data-theme="kertas"]{--canvas:#F5EEDF;--canvas-2:#EFE6D3;--surface:#FCF7EB;--surface-2:#F3EAD8;--surface-3:#EADFC8;--ink:#3B3427;--ink-2:#6B6252;--ink-3:#8B8170;--line:rgba(94,78,44,.15);--line-2:rgba(94,78,44,.24);--line-3:rgba(94,78,44,.32);--accent-ink:#8A6D1F;--accent-deep:#A8871F;--accent-bright:#C9A227;--accent-soft:rgba(201,162,39,.18);--primary:#8A6D1F}
+  @media (prefers-reduced-motion:reduce){
+    ::view-transition-old(root),::view-transition-new(root){animation:none}
+    #rangka .rk{animation:none}
+    .denyut b{animation:none}
+    .segar .lencana-ikon{animation:none}
+  }
+  @media print{ #drawer,#scrim,#rangka,#tipCarta,#fokusKeluar{display:none !important} }
+  .kosong{display:grid;place-items:center;gap:7px;text-align:center;padding:26px 16px;color:var(--ink-2)}
+  .kosong b{font-size:14.5px}
+  .kosong span{font-size:12.5px;color:var(--ink-3);max-width:430px;line-height:1.55}
+  .kosong .btn{margin-top:4px}
 .sijil *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .menu-tema{position:fixed;z-index:13000;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 14px 40px rgba(8,18,30,.3);padding:6px;display:flex;flex-direction:column;min-width:212px}
 .menu-tema button{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;border:none;background:none;color:var(--ink);font-size:13.5px;border-radius:var(--r-xs);cursor:pointer;text-align:left;width:100%}
@@ -1488,6 +1540,10 @@ html[data-padat="1"] th{position:sticky;top:0}
 
 <a class="skip" href="#main">Langkau ke kandungan</a>
 
+<div id="rangka" aria-hidden="true"><div class="rk tajuk"></div><div class="rk"></div><div class="rk" style="width:min(520px,70vw)"></div><div class="rk" style="width:min(600px,80vw)"></div></div>
+<div id="tipCarta" hidden></div>
+<button class="btn btn-sm" id="fokusKeluar">Keluar Mod Fokus (Esc)</button>
+
 <header class="top">
   <div class="shell top-in">
     <div class="brand">
@@ -1502,6 +1558,7 @@ html[data-padat="1"] th{position:sticky;top:0}
     <button class="sync-pil" id="syncPil" style="display:none" aria-live="polite"></button>
     <label class="sr-only" for="classPick">Pilih kelas</label>
     <select id="classPick" style="width:auto;min-width:130px"></select>
+    <button class="btn btn-ghost btn-icon" id="btnFokus" aria-label="Mod Fokus" title="Mod Fokus (F)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M4 9V5.5A1.5 1.5 0 0 1 5.5 4H9M15 4h3.5A1.5 1.5 0 0 1 20 5.5V9M20 15v3.5a1.5 1.5 0 0 1-1.5 1.5H15M9 20H5.5A1.5 1.5 0 0 1 4 18.5V15"/></svg></button>
     <button class="btn btn-ghost btn-icon" id="btnSettings" aria-label="Tetapan" title="Tetapan">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M3.5 7.5h8M17 7.5h3.5M3.5 16.5h3.5M13 16.5h7.5"/><circle cx="14.2" cy="7.5" r="2.3"/><circle cx="9.8" cy="16.5" r="2.3"/></svg>
     </button>
@@ -1531,19 +1588,15 @@ html[data-padat="1"] th{position:sticky;top:0}
       </button>
     </div>
 
-    <div id="persediaanKad"></div>
-
-    <div id="streakKad"></div>
-
-    <div id="pentaksiranKad"></div>
-
-    <div id="semuaKelasKad"></div>
-
-    <div id="cetakPantasKad"></div>
-
-    <div id="lencanaKad"></div>
-
-    <div id="kiraDetikKad"></div>
+    <div id="kadUtamaWrap">
+      <div id="persediaanKad"></div>
+      <div id="streakKad"></div>
+      <div id="kiraDetikKad"></div>
+      <div id="pentaksiranKad"></div>
+      <div id="semuaKelasKad"></div>
+      <div id="cetakPantasKad"></div>
+      <div id="lencanaKad"></div>
+    </div>
 
     <div class="grid g-kpi" id="kpis"></div>
 
@@ -1684,7 +1737,7 @@ html[data-padat="1"] th{position:sticky;top:0}
    ========================================================= */
 const KEY = "pbd-biologi-v1";
 const KEY_BUKU = "pbd.buku.v1";
-const VERSI_APP = "Fasa 13 · 21 Sep 2026";
+const VERSI_APP = "Fasa 14 · 21 Sep 2026";
 const URL_APP = "https://wriizo212.github.io/pbd-biologi/";
 const QR_APP = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASgAAAEoAQMAAADRyf5aAAAABlBMVEUUPW7///+/1iNXAAABRklEQVR42u2ayw7CMAwEV/z/PxtE/ErblBxBTCpVpPJpZK/XFrKdI6KIIoqo74zSOK/LeM9fX+ehnfMPUSq0b1KBeXCLO7wOvCK7/KeNJFNQg9clL/OyVEMHrw/5NW7k14Z+DQELFUO/lryqP/aH/rjg1f2Fa9f8HV7HetSUY+oKBq9zfpWJqA7Z8gxex3p0Nkp27iiox6WfcEh1q9EIXsd6jAkosypqEV5XfsJS30PCmLd35m3n5fhSweA112MYieQUoOC1qMdQLOWttUd4neYha77eNaw0H15XvHwv0cQeP7Huj7mfbpvVtBvwOuWXTYIvm/oBvC73E8121SoMXnf7r4ZK8PrkV3Pkrg0rer+at9NNSD3l4HXDK/c5mVrk15pXyZbUxnB4LfTLwkdYjNvMj7f9MSchw09s+C/+eUMUUUT9UNQTL+itheYoi98AAAAASUVORK5CYII=";
 const KEY_CFG = "pbd-supabase-config";
@@ -2575,7 +2628,7 @@ function toast(msg, jenis){
 }
 /* Haptik lembut — getaran hanya bila peranti menyokong & gerakan tidak dikurangkan */
 const kurangGerakMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
-function getar(ms){ try{ if(navigator.vibrate && !kurangGerakMQ.matches) navigator.vibrate(ms || 8); }catch(e){} }
+function getar(ms){ try{ if(navigator.vibrate && !kurangGerakMQ.matches) navigator.vibrate(ms || 8); if(S.bunyi) bunyiUI("tap"); }catch(e){} }
 /* Pendengar premium global — sel TP berdenyut + getar, haptik papan kekunci & markah */
 document.addEventListener("click", e => {
   const tp = e.target.closest && e.target.closest("button.tp");
@@ -2773,7 +2826,7 @@ function lineChart(series, labels, opts){
   opts = opts || {};
   const W = 560, H = 200, P = {t:14, r:14, b:30, l:32};
   const all = series.flatMap(s => s.data).filter(v => v !== null);
-  if(!all.length) return '<p class="empty">Belum cukup data untuk graf.</p>';
+  if(!all.length) return kosongBlok("Belum cukup data", "Rekod sekurang-kurangnya dua pentaksiran untuk melihat graf trend.");
   const J = juzPt();
   const lo = opts.lo !== undefined ? opts.lo : J.lo;
   const hi = opts.hi !== undefined ? opts.hi : J.hi;
@@ -2794,9 +2847,9 @@ function lineChart(series, labels, opts){
     g += '<text class="lc-axis" x="' + x(i) + '" y="' + (H-8) + '" text-anchor="middle">' + esc(l) + '</text>';
   });
   series.forEach(s => {
-    const pts = s.data.map((v,i) => v === null ? null : [x(i), y(v)]).filter(Boolean);
+    const pts = s.data.map((v,i) => v === null ? null : [x(i), y(v), i, v]).filter(Boolean);
     if(pts.length > 1) g += '<path class="lc-path' + (s.dash ? " target" : "") + '" d="M' + pts.map(p => p[0].toFixed(1)+","+p[1].toFixed(1)).join("L") + '"/>';
-    if(!s.dash) pts.forEach(p => { g += '<circle class="lc-dot" cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="4"/>'; });
+    if(!s.dash) pts.forEach(p => { g += '<circle class="lc-dot lc-ada-tip" data-tip="' + esc(String(labels[p[2]] || "") + " — " + (Math.round(p[3] * 10) / 10)) + '" cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="4.5"/>'; });
   });
   const tbl = '<details class="a11y"><summary>Lihat data graf sebagai jadual</summary><div class="tw"><table><thead><tr><th>Pentaksiran</th>' +
     series.map(s => '<th class="num">' + esc(s.nama) + '</th>').join("") + '</tr></thead><tbody>' +
@@ -2841,10 +2894,16 @@ function spotlight(el){
 }
 
 function go(v){
-  view = v;
-  document.querySelectorAll(".view").forEach(s => s.classList.toggle("on", s.id === "v"+"-"+v));
-  renderNav();
-  render();
+  const tukar = () => {
+    view = v;
+    document.querySelectorAll(".view").forEach(s => s.classList.toggle("on", s.id === "v"+"-"+v));
+    renderNav();
+    render();
+    try{ naikSemua(document.body); }catch(e){}
+  };
+  try{
+    if(document.startViewTransition && !kurangGerakMQ.matches){ document.startViewTransition(tukar); } else { tukar(); }
+  }catch(e){ tukar(); }
   window.scrollTo({top:0, behavior:"instant"});
 }
 
@@ -2893,7 +2952,7 @@ function renderUtama(){
   const list = pelajarNow(), a = asmtNow(), k = kelasNow();
   if(!k){
     $("utamaSub").textContent = "Belum ada kelas";
-    $("kpis").innerHTML = '<div class="card" style="grid-column:1/-1;margin:0"><p class="empty">Belum ada kelas. Buka <b>Tetapan</b> (ikon gear di atas kanan) dan tambah kelas serta pelajar anda.</p></div>';
+    $("kpis").innerHTML = kosongBlok("Belum ada kelas", "Buka Tetapan (ikon gear di atas kanan) dan tambah kelas serta pelajar anda.", '<button class="btn btn-sm btn-accent" data-buka-tetapan>Buka Tetapan</button>');
     $("gredBars").innerHTML = ""; $("gpmpChart").innerHTML = "";
     $("riskCount").textContent = "—"; $("riskList").innerHTML = "";
     $("pentaksiranKad").innerHTML = "";
@@ -2901,6 +2960,7 @@ function renderUtama(){
     $("streakKad").innerHTML = kadStreak();
     $("kiraDetikKad").innerHTML = kadKiraDetik();
     const kd2 = $("kdSet"); if(kd2) kd2.onclick = openSettings;
+    susunUtamaApply();
     $("lencanaKad").innerHTML = "";
     $("cetakPantasKad").innerHTML = "";
     paparPersediaan();
@@ -2919,6 +2979,7 @@ function renderUtama(){
   $("streakKad").innerHTML = kadStreak();
     $("kiraDetikKad").innerHTML = kadKiraDetik();
     const kd2 = $("kdSet"); if(kd2) kd2.onclick = openSettings;
+    susunUtamaApply();
   $("lencanaKad").innerHTML = kadLencana();
   $("cetakPantasKad").innerHTML = kadCetakPantas();
   $("gredSrc").textContent = a ? a.nama : "—";
@@ -3138,7 +3199,7 @@ function renderPelaporan(){
   const semua = pelajarNow();
   const list = tapis(semua);
   const area = $("pbdArea");
-  if(!semua.length){ area.innerHTML = '<p class="empty">Tiada pelajar dalam kelas ini.</p>'; return; }
+  if(!semua.length){ area.innerHTML = kosongBlok("Tiada pelajar", "Tambah pelajar untuk kelas ini dalam Tetapan.", '<button class="btn btn-sm" data-buka-tetapan>Tambah pelajar</button>'); return; }
 
   const siap = semua.filter(p => S.tpKeseluruhan[p.id]).length;
   const adaUlasan = semua.filter(p => (S.ulasan[p.id] || "").trim()).length;
@@ -3336,7 +3397,7 @@ function renderPBD(){
   const semua = pelajarNow();
   const list = tapis(semua);
   const area = $("pbdArea");
-  if(!semua.length){ area.innerHTML = '<p class="empty">Tiada pelajar dalam kelas ini.</p>'; return; }
+  if(!semua.length){ area.innerHTML = kosongBlok("Tiada pelajar", "Tambah pelajar untuk kelas ini dalam Tetapan.", '<button class="btn btn-sm" data-buka-tetapan>Tambah pelajar</button>'); return; }
 
   if(pbdMode === "lapor"){ renderPelaporan(); return; }
 
@@ -3955,7 +4016,7 @@ function petaHabaTopik(){
 
 function renderAnalisis(){
   const list = pelajarNow(), a = asmtNow();
-  if(!S.kelas.length){ $("analisisArea").innerHTML = '<p class="empty">Tambah kelas dan pelajar dalam Tetapan terlebih dahulu.</p>'; return; }
+  if(!S.kelas.length){ $("analisisArea").innerHTML = kosongBlok("Selamat datang ke Analisis", "Tambah kelas dan pelajar dalam Tetapan untuk mula melihat analisis automatik.", '<button class="btn btn-sm btn-accent" data-buka-tetapan>Buka Tetapan</button>'); return; }
 
   // (1) Kekuatan & kelemahan topik (TP — penilaian guru)
   const topikStat = S.topik.map(t => {
@@ -4193,10 +4254,22 @@ function openDrawer(title, sub, body, foot){
   $("drawerSub").textContent = sub || "";
   $("drawerBody").innerHTML = body;
   $("drawerFoot").innerHTML = foot || "";
+  if(window.__drT){ clearTimeout(window.__drT); window.__drT = null; }
+  $("drawer").classList.remove("tutup"); $("scrim").classList.remove("tutup");
   $("drawer").classList.add("on"); $("scrim").classList.add("on");
+  try{ naikSemua($("drawerBody")); }catch(e){}
   $("drawerClose").focus();
 }
-function closeDrawer(){ $("drawer").classList.remove("on"); $("scrim").classList.remove("on"); }
+function closeDrawer(){
+  const d = $("drawer"), sc = $("scrim");
+  if(d && d.classList.contains("on") && !kurangGerakMQ.matches && !window.__drT){
+    d.classList.add("tutup"); if(sc) sc.classList.add("tutup");
+    window.__drT = setTimeout(() => { try{ d.classList.remove("on", "tutup"); if(sc) sc.classList.remove("on", "tutup"); }catch(e){} window.__drT = null; }, 230);
+    return;
+  }
+  if(d) d.classList.remove("on", "tutup");
+  if(sc) sc.classList.remove("on", "tutup");
+}
 
 function openPelajar(pid){
   const p = S.pelajar.find(x => x.id === pid);
@@ -4774,7 +4847,7 @@ function secKop(){
     '<label class="fld"><span>Logo maktab</span><input type="file" id="kkLogo" accept="image/*"><span class="hint">PNG atau JPG, kecilkan bawah 400KB. Disimpan dalam fail ini sahaja.</span></label>' +
     '<label class="fld"><span>Tandatangan guru</span><input type="file" id="kkTt" accept="image/*"><span class="hint">Imej tandatangan atas kertas putih (bawah 150KB). Muncul pada slip, laporan dan sijil.</span></label>' +
     '<div class="row-actions" style="margin:4px 0 8px"><button class="btn btn-sm btn-accent" id="kkTtLukis">✍ Lukis tandatangan dengan jari / tetikus</button></div>' +
-    '<div class="row-actions" style="margin:0 0 10px"><button class="btn btn-sm" id="kkTtPanitia">✍ Ketua Panitia</button><button class="btn btn-sm" id="kkTtPengetua">✍ Pengetua</button><label style="display:flex;gap:8px;align-items:center;margin:8px 0 0"><input type="checkbox" id="kkDwi"><span>Dokumen dwibahasa (BM + EN) untuk kelas DLP</span></label><label style="display:flex;gap:8px;align-items:center;margin:8px 0 0"><span>Tarikh SPMRSM/SPM</span><input type="date" id="kkTarikhSPM" style="max-width:175px"></label></div>' +
+    '<div class="row-actions" style="margin:0 0 10px"><button class="btn btn-sm" id="kkTtPanitia">✍ Ketua Panitia</button><button class="btn btn-sm" id="kkTtPengetua">✍ Pengetua</button><label style="display:flex;gap:8px;align-items:center;margin:8px 0 0"><input type="checkbox" id="kkDwi"><span>Dokumen dwibahasa (BM + EN) untuk kelas DLP</span></label><label style="display:flex;gap:8px;align-items:center;margin:8px 0 0"><span>Tarikh SPMRSM/SPM</span><input type="date" id="kkTarikhSPM" style="max-width:175px"></label><label style="display:flex;gap:8px;align-items:center;margin:8px 0 0"><input type="checkbox" id="kkBunyi"><span>Bunyi UI halus (ketuk &amp; kejayaan)</span></label><div class="row-actions" style="margin:8px 0 0"><button class="btn btn-sm" id="kkSusun">Susun kad Papan Utama</button></div></div>' +
     (S.kop && S.kop.tt ? '<div class="row-actions" style="margin-top:6px"><img src="' + esc(S.kop.tt) + '" alt="Tandatangan" style="height:34px"><button class="btn btn-sm" id="kkTtBuang">Buang tandatangan</button></div>' : "") +
     (k.logo
       ? '<div class="kop-prev"><img src="' + esc(k.logo) + '" alt="Pratonton logo"><button class="btn btn-sm" id="kkBuang">Buang logo</button></div>'
@@ -4814,6 +4887,10 @@ function wireKop(){
   if(dwi3){ dwi3.checked = !!S.dwi; dwi3.onchange = e => { S.dwi = e.target.checked; saveState(); toast(S.dwi ? "Dokumen dwibahasa dihidupkan (BM + EN)" : "Dokumen Bahasa Melayu sahaja"); }; }
   const ksp = $("kkTarikhSPM");
   if(ksp){ ksp.value = S.tarikhSPM || ""; ksp.onchange = e => { S.tarikhSPM = e.target.value; saveState(); toast(S.tarikhSPM ? "Tarikh SPMRSM disimpan" : "Tarikh dikosongkan"); }; }
+  const kby = $("kkBunyi");
+  if(kby){ kby.checked = !!S.bunyi; kby.onchange = e => { S.bunyi = e.target.checked; saveState(); if(S.bunyi) bunyiUI("sah"); toast(S.bunyi ? "Bunyi UI dihidupkan" : "Bunyi UI dimatikan"); }; }
+  const ksy = $("kkSusun");
+  if(ksy) ksy.onclick = () => { closeDrawer(); setTimeout(() => bukaSusunUtama(), 270); };
   const tg2 = $("kkTtPengetua");
   if(tg2) tg2.onclick = () => bukaPadTandaTangan("Tandatangan Pengetua", "Muncul pada pelaporan PBD (kolum pengesahan)", (S.ttPengetua || ""), d => { S.ttPengetua = d; saveState(); }, () => { S.ttPengetua = ""; saveState(); });
   const ttBu = $("kkTtBuang");
@@ -6253,7 +6330,7 @@ function cetakKitKongsi(){
   cetakMula("cetak-slip");
 }
 /* ---------- VERSI & CHANGELOG ---------- */
-const VERSI_APLIKASI = "Fasa 13 · 21 Sep 2026";
+const VERSI_APLIKASI = "Fasa 14 · 21 Sep 2026";
 const APA_BAHARU = [
   {v:"Fasa 10 · Sep 2026", p:["Pemilih 3 gaya sijil (Klasik Emas / Navy / Minimal)", "Lencana murid automatik + helaian lencana", "Denyut Rekod (streak) + Kalendar PBD", "Mod Kiosk auto-slaid untuk majlis", "Carian murid dalam palet (Ctrl+K)", "Pusat Cetak Pantas di Utama", "Tandatangan Ketua Panitia & Pengetua di skrin"]},
   {v:"Fasa 9.1 · Sep 2026", p:["Butang tema kini menu pilihan penuh (auto/siang/malam/royale)", "Tandatangan guru boleh dilukis terus di skrin — tiada muat naik gambar", "Template sijil premium baharu (bingkai emas, mohor, no. rekod)"]},
@@ -6398,6 +6475,7 @@ function tahunSayaData(){
 function konfeti(bil){
   try{
     if(kurangGerakMQ.matches) return;
+    if(S.bunyi) bunyiUI("konfeti");
     const warna = ["#C9A227", "#143D6E", "#E8C766", "#5B8DEF", "#F1F3F2"];
     const wrap = document.createElement("div");
     wrap.style.cssText = "position:fixed;inset:0;pointer-events:none;z-index:12000;overflow:hidden";
@@ -6639,6 +6717,7 @@ document.addEventListener("click", e => {
   const cpX14 = t.closest("#cpProfil"); if(cpX14){ cetakProfilKelas(); return; }
   const cli2 = t.closest("[data-logibu]"); if(cli2){ bukaLogIbu(cli2.dataset.logibu); return; }
   const cpng = t.closest("[data-pngsijil]"); if(cpng){ janaSijilPNG(cpng.dataset.pngsijil); return; }
+  const btk = t.closest("[data-buka-tetapan]"); if(btk){ openSettings(); return; }
   const cpSl = t.closest("#cpSlip"); if(cpSl){ go("markah"); setTimeout(() => { const b2 = document.getElementById("btnSlipPukal"); if(b2) b2.click(); }, 300); return; }
 });
 document.addEventListener("change", e => {
@@ -6864,14 +6943,17 @@ function lencanaMurid(pid){
 function kadLencana(){
   const lk = lencanaKelas();
   if(!lk.konsisten && !lk.pelonjak && !lk.raja) return "";
+  const sig = JSON.stringify(lk);
+  const baharu = window.__lenSig !== sig;
+  window.__lenSig = sig;
   const nama = id => { const p2 = S.pelajar.find(x => x.id === id); return p2 ? p2.nama : "\u2014"; };
   const baris = [];
   if(lk.raja) baris.push(["\uD83D\uDC51", "Raja Topik", nama(lk.raja), "TP purata tertinggi"]);
   if(lk.pelonjak) baris.push(["\uD83D\uDE80", "Pelonjak Terbaik", nama(lk.pelonjak), "kenaikan markah terbesar"]);
   if(lk.konsisten) baris.push(["\u2B50", "Paling Konsisten", nama(lk.konsisten), "markah paling stabil"]);
-  return '<div class="card" style="margin-bottom:var(--sp-4)"><h2>Lencana Kelas <span class="sub">anugerah automatik</span></h2>' +
-    baris.map(b => '<div style="display:flex;gap:10px;align-items:center;padding:var(--sp-2) 0;border-bottom:1px solid var(--line)">' +
-      '<span style="font-size:20px">' + b[0] + '</span>' +
+  return '<div class="card' + (baharu ? " segar" : "") + '" style="margin-bottom:var(--sp-4)"><h2>Lencana Kelas <span class="sub">anugerah automatik</span></h2>' +
+    baris.map(b => '<div class="lencana-baris" style="display:flex;gap:10px;align-items:center;padding:var(--sp-2) 0;border-bottom:1px solid var(--line)">' +
+      '<span class="lencana-ikon" style="font-size:20px">' + b[0] + '</span>' +
       '<span style="flex:1;min-width:0"><b style="font-size:13.5px">' + esc(b[2]) + '</b><span class="hint" style="display:block;margin:0">' + b[1] + ' \u00b7 ' + b[3] + '</span></span></div>').join("") +
     '<div class="row-actions" style="margin-top:8px"><button class="btn btn-sm" id="btnLencanaCetak">Cetak helaian lencana</button></div></div>';
 }
@@ -6902,6 +6984,148 @@ function kadCetakPantas(){
     '<button class="btn btn-sm" id="cpMatriks">\uD83D\uDCCB Matriks</button>' +
     '<button class="btn btn-sm" id="cpLapor">\uD83D\uDCCA Pelaporan</button><button class="btn btn-sm" id="cpSasaran">\uD83C\uDFAF Papan Sasaran</button><button class="btn btn-sm" id="cpTugas">\u2705 Tugas</button><button class="btn btn-sm" id="cpMinggu">\uD83D\uDCDD Ringkasan minggu</button><button class="btn btn-sm" id="cpMingguWA">\uD83D\uDCAC WhatsApp minggu</button><button class="btn btn-sm" id="cpQR">📱 QR ibu bapa</button><button class="btn btn-sm" id="cpPakej">📦 Pakej cetak</button><button class="btn btn-sm" id="cpJadual">🗓 Jadual waktu</button><button class="btn btn-sm" id="cpLabel">🏷 Label meja</button><button class="btn btn-sm" id="cpKonsol">👨‍👩‍👧 Konsultasi</button><button class="btn btn-sm" id="cpRasmi">📊 Markah rasmi</button><button class="btn btn-sm" id="cpPoster">🖼 Poster kelas</button><button class="btn btn-sm" id="cpSimulasi">🔮 Simulasi naik gred</button><button class="btn btn-sm" id="cpProfil">👥 Profil kelas</button></div>' +
     '<p class="hint">Slip = untuk HBMP \u00b7 Matriks & Pelaporan = fail panitia \u00b7 Sijil = pengiktirafan.</p></div>';
+}
+/* ================= FASA 14 — Sentuhan Studio ================= */
+function kosongBlok(tajuk, ayat, aksi){
+  return '<div class="kosong"><svg viewBox="0 0 120 92" width="104" height="80" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ink-3);opacity:.8"><rect x="27" y="12" width="66" height="64" rx="7"/><path d="M38 30h44M38 42h44M38 54h24"/><path d="m78 68 9-9 8 8-9 9-11 3z" style="color:var(--accent-ink)"/><path d="M84 62l8 8" style="color:var(--accent-ink)"/></svg><b>' + tajuk + '</b><span>' + ayat + '</span>' + (aksi || "") + '</div>';
+}
+(function(){ setTimeout(() => { try{ document.body.classList.add("sedia"); }catch(e){} }, 4000); })();
+let __audio = null;
+function bunyiUI(jenis){
+  try{
+    if(!S.bunyi || kurangGerakMQ.matches) return;
+    __audio = __audio || new (window.AudioContext || window.webkitAudioContext)();
+    if(__audio.state === "suspended"){ __audio.resume(); }
+    const t0 = __audio.currentTime;
+    const nota = jenis === "sah" ? [[660, 0], [880, .09]] : jenis === "konfeti" ? [[523, 0], [659, .08], [784, .16], [1046, .24]] : jenis === "ralat" ? [[220, 0], [185, .1]] : [[740, 0]];
+    nota.forEach(n2 => {
+      const o = __audio.createOscillator(), g = __audio.createGain();
+      o.type = "sine"; o.frequency.value = n2[0];
+      g.gain.setValueAtTime(0.0001, t0 + n2[1]);
+      g.gain.exponentialRampToValueAtTime(0.045, t0 + n2[1] + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + n2[1] + 0.16);
+      o.connect(g); g.connect(__audio.destination);
+      o.start(t0 + n2[1]); o.stop(t0 + n2[1] + 0.2);
+    });
+  }catch(e){}
+}
+function naikAngka(el, teksAkhir, opt){
+  opt = opt || {};
+  const teks = String(teksAkhir);
+  const m = teks.match(/-?[\d.,]+/);
+  if(!m || kurangGerakMQ.matches){ el.textContent = teks; return; }
+  const sasaran = parseFloat(m[0].replace(/,/g, ""));
+  if(isNaN(sasaran)){ el.textContent = teks; return; }
+  const pre = teks.slice(0, m.index), pos = teks.slice(m.index + m[0].length);
+  const perpuluhan = (m[0].split(".")[1] || "").length;
+  const masa = opt.masa || 620;
+  const t0 = performance.now();
+  const langkah2 = t => {
+    const p = Math.min(1, (t - t0) / masa);
+    const e = 1 - Math.pow(1 - p, 3);
+    el.textContent = pre + (sasaran * e).toFixed(perpuluhan) + pos;
+    if(p < 1) requestAnimationFrame(langkah2);
+    else el.textContent = teks;
+  };
+  requestAnimationFrame(langkah2);
+}
+function naikSemua(root){
+  try{
+    if(!root || kurangGerakMQ.matches) return;
+    root.querySelectorAll(".kpi .val").forEach(el => { if(el.dataset.naik === "1") return; el.dataset.naik = "1"; naikAngka(el, el.textContent); });
+    root.querySelectorAll("[data-naik-angka]").forEach(el => { if(el.dataset.naik === "1") return; el.dataset.naik = "1"; naikAngka(el, el.textContent); });
+    root.querySelectorAll(".gelang").forEach(g => {
+      const p2 = g.querySelector("circle.isi"); if(!p2) return;
+      const L = +p2.getAttribute("data-l"); const ss = +(g.getAttribute("data-pct") || 0);
+      p2.style.strokeDashoffset = L;
+      setTimeout(() => { p2.style.transition = "stroke-dashoffset .95s cubic-bezier(.2,.7,.3,1)"; p2.style.strokeDashoffset = L * (1 - ss / 100); }, 40);
+    });
+  }catch(e){}
+}
+function gelang(pct, saiz, label){
+  const r = (saiz - 12) / 2, L = 2 * Math.PI * r;
+  const warna = pct >= 75 ? "var(--accent-ink)" : pct >= 40 ? "var(--amber)" : "var(--rose)";
+  return '<div class="gelang" data-pct="' + pct + '" style="width:' + saiz + 'px;height:' + saiz + 'px"><svg viewBox="0 0 ' + saiz + ' ' + saiz + '" width="' + saiz + '" height="' + saiz + '"><circle cx="' + saiz / 2 + '" cy="' + saiz / 2 + '" r="' + r + '" fill="none" stroke="var(--surface-3)" stroke-width="7"/><circle class="isi" cx="' + saiz / 2 + '" cy="' + saiz / 2 + '" r="' + r + '" fill="none" stroke="' + warna + '" stroke-width="7" stroke-linecap="round" data-l="' + L + '" transform="rotate(-90 ' + saiz / 2 + ' ' + saiz / 2 + ')" style="stroke-dasharray:' + L + ';stroke-dashoffset:' + L + '"/></svg><div class="gelang-t"><b>' + pct + '%</b><span>' + (label || "") + '</span></div></div>';
+}
+function tampilTip(el){
+  const tip = document.getElementById("tipCarta"); if(!tip) return;
+  const r = el.getBoundingClientRect();
+  tip.textContent = el.dataset.tip || "";
+  tip.hidden = false;
+  tip.style.left = Math.round(r.left + r.width / 2) + "px";
+  tip.style.top = Math.round(r.top - 8) + "px";
+}
+function sembunyiTip(){ const tip = document.getElementById("tipCarta"); if(tip) tip.hidden = true; }
+document.addEventListener("pointerover", e => { const t = e.target && e.target.closest && e.target.closest(".lc-dot[data-tip]"); if(t) tampilTip(t); });
+document.addEventListener("pointerout", e => { const t = e.target && e.target.closest && e.target.closest(".lc-dot[data-tip]"); if(t) sembunyiTip(); });
+document.addEventListener("pointerdown", e => { const t = e.target && e.target.closest && e.target.closest(".lc-dot[data-tip]"); if(t){ tampilTip(t); clearTimeout(window.__tipT); window.__tipT = setTimeout(sembunyiTip, 1800); } });
+function togolFokus(paksa){
+  const on = paksa !== undefined ? paksa : !document.body.classList.contains("mod-fokus");
+  document.body.classList.toggle("mod-fokus", on);
+  toast(on ? "Mod Fokus — tekan F atau Esc untuk keluar" : "Mod Fokus ditutup");
+}
+document.addEventListener("keydown", e => {
+  if(e.target && /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(!document.getElementById("konsol") && !document.getElementById("ibubapa")){
+    if(e.key === "f" || e.key === "F"){ togolFokus(); }
+    else if(e.key === "Escape" && document.body.classList.contains("mod-fokus")){ togolFokus(false); }
+  }
+});
+function flipUbah(fn){
+  try{
+    if(kurangGerakMQ.matches){ fn(); return; }
+    const pel = Array.from(document.querySelectorAll("#kadUtamaWrap > *"));
+    const r0 = new Map(pel.map(el => [el, el.getBoundingClientRect()]));
+    fn();
+    pel.forEach(el => {
+      const a = r0.get(el), b = el.getBoundingClientRect();
+      if(!a || !b) return;
+      const dx = a.left - b.left, dy = a.top - b.top;
+      if(Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
+      try{ el.animate([{ transform: "translate(" + dx + "px," + dy + "px)" }, { transform: "none" }], { duration: 330, easing: "cubic-bezier(.2,.7,.3,1)" }); }catch(e){}
+    });
+  }catch(e){ fn(); }
+}
+const UTAMA_KAD = [["persediaanKad", "Persediaan"], ["streakKad", "Denyut Rekod"], ["kiraDetikKad", "Kesediaan SPMRSM"], ["pentaksiranKad", "Pentaksiran"], ["semuaKelasKad", "Perbandingan kelas"], ["cetakPantasKad", "Pusat Pantas"], ["lencanaKad", "Lencana Kelas"]];
+function susunUtamaData(){
+  if(!S.susunUtama) S.susunUtama = UTAMA_KAD.map(x => x[0]);
+  UTAMA_KAD.forEach(x => { if(S.susunUtama.indexOf(x[0]) < 0) S.susunUtama.push(x[0]); });
+  if(!S.kadTutup) S.kadTutup = {};
+  return S.susunUtama;
+}
+function susunUtamaApply(){
+  try{
+    const urut = susunUtamaData();
+    const wrap = document.getElementById("kadUtamaWrap");
+    if(!wrap) return;
+    urut.forEach(id => {
+      const el = document.getElementById(id); if(!el) return;
+      el.style.display = S.kadTutup[id] ? "none" : "";
+      wrap.appendChild(el);
+    });
+  }catch(e){}
+}
+function bukaSusunUtama(){
+  const bina = () => {
+    const urut = susunUtamaData();
+    return urut.map((id, i) => {
+      const nama = (UTAMA_KAD.find(x => x[0] === id) || [id, id])[1];
+      return '<div style="display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)">' +
+        '<input type="checkbox" data-sk-papar="' + id + '"' + (S.kadTutup[id] ? "" : " checked") + ' style="width:17px;height:17px">' +
+        '<span style="flex:1;min-width:0;font-size:13px' + (S.kadTutup[id] ? ";opacity:.5" : "") + '">' + esc(nama) + '</span>' +
+        '<button class="btn btn-sm" data-sk-naik="' + id + '"' + (i === 0 ? " disabled" : "") + '>↑</button>' +
+        '<button class="btn btn-sm" data-sk-turun="' + id + '"' + (i === urut.length - 1 ? " disabled" : "") + '>↓</button></div>';
+    }).join("") + '<p class="hint">Tanda = papar kad di Papan Utama. Susun ikut keutamaan anda — susunan disimpan pada peranti ini.</p>';
+  };
+  openDrawer("Susun Papan Utama", "Papar / sorok / susun kad", '<div id="skIsi">' + bina() + '</div>', '<button class="btn btn-sm btn-primary" id="skTutup">Tutup</button>');
+  const pasang = () => {
+    $("skTutup").onclick = closeDrawer;
+    $("drawerBody").querySelectorAll("[data-sk-papar]").forEach(c => c.onchange = () => { S.kadTutup[c.dataset.skPapar] = c.checked ? false : true; if(c.checked) delete S.kadTutup[c.dataset.skPapar]; saveState(); flipUbah(() => susunUtamaApply()); $("skIsi").innerHTML = bina(); pasang(); });
+    $("drawerBody").querySelectorAll("[data-sk-naik]").forEach(b => b.onclick = () => { const u = susunUtamaData(); const i = u.indexOf(b.dataset.skNaik); if(i > 0){ u.splice(i - 1, 0, u.splice(i, 1)[0]); saveState(); flipUbah(() => susunUtamaApply()); $("skIsi").innerHTML = bina(); pasang(); } });
+    $("drawerBody").querySelectorAll("[data-sk-turun]").forEach(b => b.onclick = () => { const u = susunUtamaData(); const i = u.indexOf(b.dataset.skTurun); if(i >= 0 && i < u.length - 1){ u.splice(i + 1, 0, u.splice(i, 1)[0]); saveState(); flipUbah(() => susunUtamaApply()); $("skIsi").innerHTML = bina(); pasang(); } });
+  };
+  pasang();
 }
 /* ================= FASA 13 ================= */
 /* ---------- Markah rasmi SPMRSM ---------- */
@@ -7676,7 +7900,7 @@ function kadKiraDetik(){
     det = hari > 0 ? hari + " hari" : (hari === 0 ? "Hari ini!" : "Telah berlalu");
   }
   return '<div class="card"><h2>Kesediaan SPMRSM <span class="sub">' + (S.tarikhSPM ? esc(S.tarikhSPM) : "tetapkan tarikh dalam Tetapan") + '</span></h2>' +
-    '<div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">' +
+    '<div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">' + gelang(sedia, 92, "kesediaan") +
     (det ? '<div style="font-size:30px;font-weight:700;letter-spacing:-.5px">' + det + '</div>' : '<button class="btn btn-sm" id="kdSet">Tetapkan tarikh SPMRSM</button>') +
     '<div style="flex:1;min-width:220px">' + barRows([{k: "Liputan topik diajar", v: lip, lbl: lip + "%", c: "var(--accent-ink)"}, {k: "Topik ada TP", v: tpC, lbl: tpC + "%", c: "var(--accent-ink)"}], 100) +
     '<div class="chip-list" style="margin-top:6px"><span class="tag">Kesediaan keseluruhan ' + sedia + '%</span><span class="tag">' + uji + ' pentaksiran direkod</span></div></div></div>' +
@@ -7903,7 +8127,7 @@ function renderHadir(){
   const list = pelajarNow();
   const k = kelasNow();
   const sub = $("hadirSub");
-  if(!k || !list.length){ area.innerHTML = '<p class="empty">' + (!k ? "Tambah kelas dahulu dalam Tetapan." : "Tiada pelajar dalam kelas ini.") + '</p>'; return; }
+  if(!k || !list.length){ area.innerHTML = kosongBlok("Kehadiran", !k ? "Tambah kelas dahulu dalam Tetapan." : "Tiada pelajar dalam kelas ini — tambah dalam Tetapan.", '<button class="btn btn-sm" data-buka-tetapan>Buka Tetapan</button>'); return; }
   if(sub) sub.textContent = k.nama + " · " + list.length + " pelajar";
   if(!hadirTarikhSel) hadirTarikhSel = new Date().toISOString().slice(0, 10);
   const h = hadirHari(hadirTarikhSel);
@@ -7922,7 +8146,7 @@ function renderHadir(){
     '<button class="btn btn-sm" id="hadirCetak">Cetak rekod</button></div>' +
     '<div class="chip-list" style="margin-bottom:var(--sp-2)"><span class="tag tag-siap">' + bilSt("H") + ' hadir</span><span class="tag tag-th">' + bilSt("TH") + ' tidak hadir</span><span class="tag">' + bilSt("MC") + ' MC</span><span class="tag">' + bilSt("L") + ' lewat</span></div>' +
     baris + '</div>' +
-    (ring.length ? '<div class="card"><h2>Ringkasan Kehadiran <span class="sub">' + ring[0].k2.hari + ' hari direkod</span></h2>' +
+    (ring.length ? '<div class="card"><h2>Ringkasan Kehadiran <span class="sub">' + ring[0].k2.hari + ' hari direkod</span></h2>' + '<div style="margin:8px 0">' + gelang(Math.round(ring.reduce((x, y) => x + y.k2.peratus, 0) / ring.length), 84, "purata kelas") + '</div>' +
       barRows(ring.map(x => ({k: x.p.nama.split(" ")[0], v: x.k2.peratus, lbl: x.k2.peratus + "%", c: x.k2.peratus < 85 ? "var(--rose)" : x.k2.peratus < 95 ? "var(--amber)" : "var(--accent-ink)"})), 100) +
       '<p class="hint">TH = tidak hadir · MC = sijil sakit · Lewat dikira hadir. % = hari hadir / hari direkod.</p></div>' : "");
   $("hadirTarikh").onchange = e => { hadirTarikhSel = e.target.value; renderHadir(); };
@@ -9010,6 +9234,8 @@ async function init(){
   $("classPick").onchange = e => { S.aktifKelas = e.target.value; carian = ""; saveState(); render(); };
   $("asmtPick").onchange = e => { S.aktifAsmt = e.target.value; saveState(); render(); };
   $("btnSettings").onclick = openSettings;
+  const bfk2 = $("btnFokus"); if(bfk2) bfk2.onclick = () => togolFokus();
+  const fk3 = $("fokusKeluar"); if(fk3) fk3.onclick = () => togolFokus(false);
   $("syncPil").onclick = () => { openSettings(); setTab = "awan"; drawSettings(); };
   $("btnNewAsmt").onclick = () => newAsmt();
   $("btnImportMarkah").onclick = importMarkah;
@@ -9126,7 +9352,7 @@ const Premium = (function(){
     document.documentElement.setAttribute("data-royale", royale ? "1" : "0");
     document.documentElement.setAttribute("data-padat", P.padat ? "1" : "0");
     const meta = document.querySelector('meta[name="theme-color"]');
-    if(meta) meta.setAttribute("content", royale ? "#0F1420" : (t === "malam" ? "#10161C" : "#F1F3F2"));
+    if(meta) meta.setAttribute("content", royale ? "#0F1420" : (t === "malam" ? "#10161C" : (t === "kertas" ? "#F5EEDF" : "#F1F3F2")));
     const b = document.getElementById("btnTema");
     if(b){
       const label = P.tema === "auto" ? "Tema: ikut sistem (" + (t === "malam" ? "malam" : "siang") + ")"
@@ -9156,7 +9382,7 @@ const Premium = (function(){
     const m = document.createElement("div");
     m.id = "menuTema";
     m.className = "menu-tema";
-    const senarai2 = [["auto", "\uD83D\uDD04 Ikut sistem (auto)"], ["siang", "\u2600\uFE0F Siang (cerah)"], ["malam", "\uD83C\uDF19 Malam (gelap)"], ["royale", "\uD83D\uDC51 Royale (hitam-emas)"]];
+    const senarai2 = [["auto", "\uD83D\uDD04 Ikut sistem (auto)"], ["siang", "\u2600\uFE0F Siang (cerah)"], ["malam", "\uD83C\uDF19 Malam (gelap)"], ["royale", "\uD83D\uDC51 Royale (hitam-emas)"], ["kertas", "\uD83D\uDCDC Kertas (sepia)"]];
     m.innerHTML = senarai2.map(x => '<button type="button" data-tema="' + x[0] + '"><span>' + x[1] + '</span>' + (P.tema === x[0] ? "<b>\u2713</b>" : "") + "</button>").join("");
     document.body.appendChild(m);
     const r = b.getBoundingClientRect();
@@ -9973,6 +10199,7 @@ init().then(async () => {
   }catch(e){}
   try{ FOLDER.auto(); }catch(e){}
   try{ if(!lsGet("pbd.tour.v1") && S && S.demo) setTimeout(() => { try{ bukaWalkthrough(); }catch(e){} }, 1200); }catch(e){}
+  setTimeout(() => { try{ document.body.classList.add("sedia"); }catch(e){} }, 140);
   try{ if(kunciTetap() && kunciTetap().hash) paparLock(); }catch(e){}
   try{ resetKunciTimer(); }catch(e){}
   try{
