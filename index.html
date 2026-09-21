@@ -1187,6 +1187,26 @@ html[data-royale="1"]{--accent-ink:#C9A227;--accent-soft:rgba(201,162,39,.18);--
   .tiket-qr{position:absolute;right:4mm;bottom:4mm}
   .kal-aca{font-style:normal;font-size:9px;color:var(--accent-ink);font-weight:700}
   .kal-hari.acara{outline:1.5px dotted var(--accent-ink)}
+  /* --- Fasa 16 --- */
+  #pemasaUjian{position:fixed;inset:0;z-index:386;background:var(--canvas);display:grid;place-items:center}
+  .ps-panel{text-align:center;padding:20px}
+  .ps-panel h1{font-size:26px;margin:0 0 18px}
+  .ps-setup{display:flex;gap:12px;align-items:flex-end;justify-content:center}
+  .ps-jam b{font-size:118px;font-weight:700;letter-spacing:2px;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .ps-jam.kuning b{color:var(--amber)}
+  .ps-jam.merah b{color:var(--rose)}
+  #psTutup{position:fixed;right:18px;top:16px}
+  .rawak-kotak{font-size:23px;font-weight:700;text-align:center;padding:24px 16px;border:1.5px dashed var(--line-2);border-radius:14px;margin-top:6px;min-height:86px;display:grid;place-items:center;background:var(--card)}
+  .buku-kulit{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .buku-bingkai{border:2.5px solid var(--sijil-aksen,#C9A227);border-radius:10px;margin-top:10mm;padding:14mm 12mm;text-align:center;min-height:210mm;display:flex;flex-direction:column;align-items:center}
+  .buku-eyebrow{letter-spacing:.3em;font-size:9.5pt;color:#8A7B55;margin:0 0 4mm}
+  .buku-tajuk{font-family:'Source Serif 4',Georgia,serif;font-size:27pt;line-height:1.2;margin:0 0 6mm;letter-spacing:.02em}
+  .buku-sub{font-size:13pt;color:#4E5A64;margin:0 0 2mm}
+  .buku-tahun{letter-spacing:.2em;font-size:11pt;color:#8A7B55;margin:0 0 14mm}
+  .buku-info{width:78%;margin:0 auto}
+  .buku-info td{padding:7px 4px;font-size:11pt;border-bottom:1px solid #E4DCC8}
+  .buku-kaki{margin-top:auto;padding-top:12mm;font-size:10.5pt;color:#4E5A64}
+  .buku-ttd{border-bottom:1.2px solid #8A7B55;width:64mm;height:16mm;margin:8px auto 4px}
 .sijil *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .menu-tema{position:fixed;z-index:13000;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 14px 40px rgba(8,18,30,.3);padding:6px;display:flex;flex-direction:column;min-width:212px}
 .menu-tema button{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;border:none;background:none;color:var(--ink);font-size:13.5px;border-radius:var(--r-xs);cursor:pointer;text-align:left;width:100%}
@@ -1763,7 +1783,7 @@ html[data-padat="1"] th{position:sticky;top:0}
    ========================================================= */
 const KEY = "pbd-biologi-v1";
 const KEY_BUKU = "pbd.buku.v1";
-const VERSI_APP = "Fasa 15 · 21 Sep 2026";
+const VERSI_APP = "Fasa 16 · 21 Sep 2026";
 const URL_APP = "https://wriizo212.github.io/pbd-biologi/";
 const QR_APP = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASgAAAEoAQMAAADRyf5aAAAABlBMVEUUPW7///+/1iNXAAABRklEQVR42u2ayw7CMAwEV/z/PxtE/ErblBxBTCpVpPJpZK/XFrKdI6KIIoqo74zSOK/LeM9fX+ehnfMPUSq0b1KBeXCLO7wOvCK7/KeNJFNQg9clL/OyVEMHrw/5NW7k14Z+DQELFUO/lryqP/aH/rjg1f2Fa9f8HV7HetSUY+oKBq9zfpWJqA7Z8gxex3p0Nkp27iiox6WfcEh1q9EIXsd6jAkosypqEV5XfsJS30PCmLd35m3n5fhSweA112MYieQUoOC1qMdQLOWttUd4neYha77eNaw0H15XvHwv0cQeP7Huj7mfbpvVtBvwOuWXTYIvm/oBvC73E8121SoMXnf7r4ZK8PrkV3Pkrg0rer+at9NNSD3l4HXDK/c5mVrk15pXyZbUxnB4LfTLwkdYjNvMj7f9MSchw09s+C/+eUMUUUT9UNQTL+itheYoi98AAAAASUVORK5CYII=";
 const KEY_CFG = "pbd-supabase-config";
@@ -6357,7 +6377,7 @@ function cetakKitKongsi(){
   cetakMula("cetak-slip");
 }
 /* ---------- VERSI & CHANGELOG ---------- */
-const VERSI_APLIKASI = "Fasa 15 · 21 Sep 2026";
+const VERSI_APLIKASI = "Fasa 16 · 21 Sep 2026";
 const APA_BAHARU = [
   {v:"Fasa 10 · Sep 2026", p:["Pemilih 3 gaya sijil (Klasik Emas / Navy / Minimal)", "Lencana murid automatik + helaian lencana", "Denyut Rekod (streak) + Kalendar PBD", "Mod Kiosk auto-slaid untuk majlis", "Carian murid dalam palet (Ctrl+K)", "Pusat Cetak Pantas di Utama", "Tandatangan Ketua Panitia & Pengetua di skrin"]},
   {v:"Fasa 9.1 · Sep 2026", p:["Butang tema kini menu pilihan penuh (auto/siang/malam/royale)", "Tandatangan guru boleh dilukis terus di skrin — tiada muat naik gambar", "Template sijil premium baharu (bingkai emas, mohor, no. rekod)"]},
@@ -6749,6 +6769,12 @@ document.addEventListener("click", e => {
   const cpx16 = t.closest("#cpTiket"); if(cpx16){ cetakTiket(); return; }
   const cpx17 = t.closest("#cpMesej"); if(cpx17){ bukaMesej(); return; }
   const cpx18 = t.closest("#cpPapan"); if(cpx18){ bukaPapanKelas(); return; }
+  const cpx19 = t.closest("#cpBuku"); if(cpx19){ bukaBuku(); return; }
+  const cpx20 = t.closest("#cpPelan"); if(cpx20){ bukaPelanUlangKaji(); return; }
+  const cpx21 = t.closest("#cpHW"); if(cpx21){ bukaHW(); return; }
+  const cpx22 = t.closest("#cpRawak"); if(cpx22){ bukaRawak(); return; }
+  const cpx23 = t.closest("#cpEksekutif"); if(cpx23){ bukaEksekutif(); return; }
+  const cpx24 = t.closest("#cpPemasa"); if(cpx24){ bukaPemasa(); return; }
   const clm2 = t.closest("[data-logmurid]"); if(clm2){ bukaLogIbu(clm2.dataset.logmurid, "murid"); return; }
   const cms2 = t.closest("[data-mesej]"); if(cms2){ bukaMesej(cms2.dataset.mesej); return; }
   const cpSl = t.closest("#cpSlip"); if(cpSl){ go("markah"); setTimeout(() => { const b2 = document.getElementById("btnSlipPukal"); if(b2) b2.click(); }, 300); return; }
@@ -7029,9 +7055,285 @@ function kadCetakPantas(){
     '<button class="btn btn-sm btn-accent" id="cpSlip">\uD83D\uDDA8 Slip kelas</button>' +
     '<button class="btn btn-sm" id="cpSijil">\uD83C\uDFC5 Sijil</button>' +
     '<button class="btn btn-sm" id="cpMatriks">\uD83D\uDCCB Matriks</button>' +
-    '<button class="btn btn-sm" id="cpLapor">\uD83D\uDCCA Pelaporan</button><button class="btn btn-sm" id="cpSasaran">\uD83C\uDFAF Papan Sasaran</button><button class="btn btn-sm" id="cpTugas">\u2705 Tugas</button><button class="btn btn-sm" id="cpMinggu">\uD83D\uDCDD Ringkasan minggu</button><button class="btn btn-sm" id="cpMingguWA">\uD83D\uDCAC WhatsApp minggu</button><button class="btn btn-sm" id="cpQR">📱 QR ibu bapa</button><button class="btn btn-sm" id="cpPakej">📦 Pakej cetak</button><button class="btn btn-sm" id="cpJadual">🗓 Jadual waktu</button><button class="btn btn-sm" id="cpLabel">🏷 Label meja</button><button class="btn btn-sm" id="cpKonsol">👨‍👩‍👧 Konsultasi</button><button class="btn btn-sm" id="cpRasmi">📊 Markah rasmi</button><button class="btn btn-sm" id="cpPoster">🖼 Poster kelas</button><button class="btn btn-sm" id="cpSimulasi">🔮 Simulasi naik gred</button><button class="btn btn-sm" id="cpProfil">👥 Profil kelas</button><button class="btn btn-sm" id="cpRancangan">🗒 Rancangan minggu</button><button class="btn btn-sm" id="cpTiket">🎟 Tiket pujian</button><button class="btn btn-sm" id="cpMesej">💬 Mesej ibu bapa</button><button class="btn btn-sm" id="cpPapan">📺 Papan kelas</button></div>' +
+    '<button class="btn btn-sm" id="cpLapor">\uD83D\uDCCA Pelaporan</button><button class="btn btn-sm" id="cpSasaran">\uD83C\uDFAF Papan Sasaran</button><button class="btn btn-sm" id="cpTugas">\u2705 Tugas</button><button class="btn btn-sm" id="cpMinggu">\uD83D\uDCDD Ringkasan minggu</button><button class="btn btn-sm" id="cpMingguWA">\uD83D\uDCAC WhatsApp minggu</button><button class="btn btn-sm" id="cpQR">📱 QR ibu bapa</button><button class="btn btn-sm" id="cpPakej">📦 Pakej cetak</button><button class="btn btn-sm" id="cpJadual">🗓 Jadual waktu</button><button class="btn btn-sm" id="cpLabel">🏷 Label meja</button><button class="btn btn-sm" id="cpKonsol">👨‍👩‍👧 Konsultasi</button><button class="btn btn-sm" id="cpRasmi">📊 Markah rasmi</button><button class="btn btn-sm" id="cpPoster">🖼 Poster kelas</button><button class="btn btn-sm" id="cpSimulasi">🔮 Simulasi naik gred</button><button class="btn btn-sm" id="cpProfil">👥 Profil kelas</button><button class="btn btn-sm" id="cpRancangan">🗒 Rancangan minggu</button><button class="btn btn-sm" id="cpTiket">🎟 Tiket pujian</button><button class="btn btn-sm" id="cpMesej">💬 Mesej ibu bapa</button><button class="btn btn-sm" id="cpPapan">📺 Papan kelas</button><button class="btn btn-sm" id="cpBuku">📚 Buku tahunan</button><button class="btn btn-sm" id="cpPelan">🧭 Pelan ulang kaji</button><button class="btn btn-sm" id="cpHW">🏠 Tugasan rumah</button><button class="btn btn-sm" id="cpRawak">🎲 Soalan rawak</button><button class="btn btn-sm" id="cpEksekutif">📝 Ringkasan eksekutif</button><button class="btn btn-sm" id="cpPemasa">⏱ Pemasa ujian</button></div>' +
     '<p class="hint">Slip = untuk HBMP \u00b7 Matriks & Pelaporan = fail panitia \u00b7 Sijil = pengiktirafan.</p></div>';
 }
+/* ================= FASA 16 ================= */
+/* ---------- (7) Ringkasan eksekutif ---------- */
+function ringkasanEksekutifTeks(){
+  const list = pelajarNow();
+  const k2 = kelasNow() || {};
+  if(!list.length) return "Tiada pelajar dalam kelas aktif.";
+  const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+  const akhir = ber.length ? ber[ber.length - 1] : null;
+  const vals = list.map(p2 => akhir ? pct(akhir, p2.id) : null).filter(v => v !== null);
+  const purata = vals.length ? vals.reduce((x, y) => x + y, 0) / vals.length : null;
+  const g = purata === null ? null : gredOf(purata);
+  const lulus = vals.length ? Math.round(vals.filter(v => v >= ambangLulus()).length / vals.length * 100) : 0;
+  const cem = vals.filter(v => (gredOf(v) || {}).i <= 2).length;
+  const M = momentumData();
+  const tStat = S.topik.map(t => { const a2 = list.map(p2 => S.pbd[t.id] && S.pbd[t.id][p2.id]).filter(Boolean); return {t, avg: a2.length ? a2.reduce((x, y) => x + y, 0) / a2.length : null, lemah: list.filter(p2 => { const v = S.pbd[t.id] && S.pbd[t.id][p2.id]; return v && v <= 2; }).length}; }).filter(x => x.avg !== null);
+  const lemah2 = tStat.slice().sort((x, y) => x.avg - y.avg).slice(0, 2);
+  const lip = S.topik.length ? Math.round(S.topik.filter(t => liputanTopik(t.id)).length / S.topik.length * 100) : 0;
+  const arrH = list.map(p2 => kehadiranMurid(p2.id)).filter(Boolean);
+  const kh = arrH.length ? Math.round(arrH.reduce((x, y) => x + y.peratus, 0) / arrH.length) : null;
+  let rasmiPur = null;
+  try{ const R = markahRasmiData(); const ada = R.hasil.filter(x => x.akhir !== null); if(ada.length) rasmiPur = ada.reduce((x, y) => x + y.akhir, 0) / ada.length; }catch(e){}
+  const senarai = [];
+  senarai.push("Kelas " + (k2.nama || "") + " (" + list.length + " murid) mencatat purata " + (purata === null ? "\u2014" : Math.round(purata * 10) / 10 + "% (" + (g ? g.g : "\u2014") + ")") + (akhir ? " dalam " + akhir.nama : "") + ".");
+  senarai.push("Kadar lulus " + lulus + "% dengan " + cem + " murid cemerlang (A- ke atas).");
+  if(M.naik.length || M.turun.length) senarai.push("Momentum: " + M.naik.length + " murid menaik konsisten, " + M.turun.length + " murid menurun dan perlu diberi perhatian.");
+  if(lemah2.length) senarai.push("Standard kandungan paling lemah: " + lemah2.map(x => x.t.kod + " " + x.t.nama + " (purata TP " + (Math.round(x.avg * 10) / 10) + ", " + x.lemah + " murid TP\u22642)").join("; ") + ".");
+  senarai.push("Liputan pengajaran " + lip + "% topik" + (kh !== null ? " \u00b7 kehadiran kelas " + kh + "%" : "") + (rasmiPur !== null ? " \u00b7 markah rasmi SPMRSM " + (Math.round(rasmiPur * 10) / 10) + "%" : "") + ".");
+  const cadang = [];
+  if(lemah2.length) cadang.push("tumpukan ulang kaji pada " + lemah2.map(x => x.t.kod).join(" & "));
+  if(M.turun.length) cadang.push("adakan intervensi segera untuk murid menurun");
+  if(!lip) cadang.push("mulakan log sesi pengajaran untuk menjejak liputan");
+  senarai.push("Tindakan dicadangkan: " + (cadang.join("; ") || "kekalkan momentum semasa") + ".");
+  return senarai.join("\n\n");
+}
+function bukaEksekutif(){
+  openDrawer("Ringkasan Eksekutif", "Perenggan auto untuk laporan panitia / GPK", '<label class="fld"><span>Ringkasan (boleh sunting)</span><textarea id="ekTeks" rows="12"></textarea></label><div class="row-actions" style="margin-top:8px"><button class="btn btn-sm" id="ekCetak">Cetak</button></div>', '<button class="btn btn-sm btn-accent" id="ekSalin">Salin</button><button class="btn btn-sm btn-primary" id="ekTutup">Tutup</button>');
+  $("ekTeks").value = ringkasanEksekutifTeks();
+  $("ekTutup").onclick = closeDrawer;
+  $("ekSalin").onclick = () => salinFallback($("ekTeks").value, () => toast("Ringkasan disalin"));
+  $("ekCetak").onclick = () => {
+    $("slipArea").innerHTML = '<div class="slip slip-halaman">' + kopHtml() + '<header class="slip-head"><div><h1>' + hd("Ringkasan Eksekutif", "Executive Summary") + '</h1><p>' + esc(kelasNow() ? kelasNow().nama : "") + " \u00b7 " + esc(S.subjek) + " \u00b7 " + esc(S.guru) + '</p></div><div class="slip-cop">PBD</div></header>' + esc($("ekTeks").value).split("\n\n").map(x => '<p style="text-align:justify;line-height:1.7;font-size:10.5pt">' + x.replace(/\n/g, "<br>") + '</p>').join("") + '<p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+    closeDrawer(); cetakMula("cetak-slip");
+  };
+}
+/* ---------- (1) Buku rekod tahunan ---------- */
+function jadualMarkahHtml(){
+  const list = pelajarNow();
+  const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length).slice(-9);
+  return '<div class="slip slip-halaman slip-matriks">' + kopHtml() + '<header class="slip-head"><div><h1>Jadual Markah Sepanjang Sesi</h1><p>' + esc(kelasNow() ? kelasNow().nama : "") + " \u00b7 " + esc(S.subjek) + '</p></div><div class="slip-cop">PBD</div></header>' +
+    '<table><thead><tr><th>Murid</th>' + ber.map(a => '<th class="num">' + esc(String(a.nama || "").slice(0, 8)) + '</th>').join("") + '<th class="num">Purata</th></tr></thead><tbody>' +
+    list.map(p2 => {
+      const vs = ber.map(a => pct(a, p2.id));
+      const ada = vs.filter(v => v !== null);
+      const pur = ada.length ? Math.round(ada.reduce((x, y) => x + y, 0) / ada.length) : null;
+      return '<tr><td>' + esc(p2.nama) + '</td>' + vs.map(v => '<td class="num">' + (v === null ? "\u2014" : v) + '</td>').join("") + '<td class="num"><b>' + (pur === null ? "\u2014" : pur + "%") + '</b></td></tr>';
+    }).join("") + '</tbody></table><p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+}
+function jadualRasmiHtml(){
+  const R = markahRasmiData();
+  const baris = R.hasil.slice().sort((x, y) => (y.akhir === null ? -1 : y.akhir) - (x.akhir === null ? -1 : x.akhir)).map(x => '<tr><td>' + esc(x.p.nama) + '</td>' + ["sumatif", "setara", "pbd"].map(k => '<td class="num">' + (x.avg[k] === null ? "\u2014" : Math.round(x.avg[k] * 10) / 10 + "%") + '</td>').join("") + '<td class="num"><b>' + (x.akhir === null ? "\u2014" : Math.round(x.akhir * 10) / 10 + "%") + '</b></td><td class="num">' + (x.akhir === null ? "\u2014" : ((gredOf(x.akhir) || {}).g || "\u2014")) + '</td></tr>').join("");
+  return '<div class="slip slip-halaman slip-rasmi">' + kopHtml() + '<header class="slip-head"><div><h1>' + hd("Markah Rasmi SPMRSM", "Official SPMRSM Marks") + '</h1><p>' + esc(kelasNow() ? kelasNow().nama : "") + " \u00b7 " + esc(S.subjek) + '</p></div><div class="slip-cop">RASMI</div></header>' +
+    '<table><thead><tr><th>Pelajar</th><th class="num">Sumatif</th><th class="num">Setara</th><th class="num">PBD</th><th class="num">Akhir</th><th class="num">Gred</th></tr></thead><tbody>' + baris + '</tbody></table>' +
+    '<p class="slip-kaki">Pemberat ' + R.W.sumatif + "/" + R.W.setara + "/" + R.W.pbd + ' \u00b7 Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+}
+function jadualRisikoHtml(){
+  const data = risikoTopikData();
+  if(!data.length) return "";
+  return '<div class="slip slip-halaman">' + kopHtml() + '<header class="slip-head"><div><h1>Papan Risiko Topik</h1><p>' + esc(kelasNow() ? kelasNow().nama : "") + " \u00b7 " + esc(S.subjek) + '</p></div><div class="slip-cop">PBD</div></header>' +
+    '<table><thead><tr><th>Standard Kandungan</th><th class="num">Murid TP\u22642</th><th class="num">% kelas</th><th>Murid disasarkan</th></tr></thead><tbody>' +
+    data.map(x => '<tr><td>' + esc(x.t.kod + " " + x.t.nama) + '</td><td class="num">' + x.lemah.length + '</td><td class="num">' + (x.nilaian ? Math.round(x.lemah.length / x.nilaian * 100) : 0) + '%</td><td style="font-size:8pt">' + x.lemah.map(p2 => esc(p2.nama)).join("; ") + '</td></tr>').join("") +
+    '</tbody></table><p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+}
+function jadualMomentumHtml(){
+  const M = momentumData();
+  if(!M.naik.length && !M.turun.length) return "";
+  const senarai = arr => arr.map(x => '<tr><td>' + esc(x.p.nama) + '</td><td class="num">' + (x.delta > 0 ? "+" : "") + x.delta + '%</td><td class="num">' + x.siri.map(v => Math.round(v)).join(" \u2192 ") + '</td></tr>').join("");
+  return '<div class="slip slip-halaman">' + kopHtml() + '<header class="slip-head"><div><h1>Momentum Murid</h1><p>' + esc(kelasNow() ? kelasNow().nama : "") + " \u00b7 " + esc(S.subjek) + '</p></div><div class="slip-cop">PBD</div></header>' +
+    '<div class="mini-head">\u25B2 Menaik konsisten</div><table><tbody>' + (senarai(M.naik) || '<tr><td>Tiada</td><td></td><td></td></tr>') + '</tbody></table>' +
+    '<div class="mini-head">\u25BC Menurun</div><table><tbody>' + (senarai(M.turun) || '<tr><td>Tiada</td><td></td><td></td></tr>') + '</tbody></table>' +
+    '<p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+}
+function bukaBuku(){
+  const opt = (id, nama, def) => '<label style="display:flex;gap:8px;align-items:center;padding:5px 0"><input type="checkbox" id="' + id + '"' + (def ? " checked" : "") + '><span>' + nama + '</span></label>';
+  openDrawer("Buku Rekod PBD Tahunan", "Jilid lengkap sedia audit panitia", '<div class="card" style="margin:0 0 10px"><b style="font-size:13px">Bahagian buku</b>' +
+    opt("bkEksek", "Ringkasan eksekutif", true) + opt("bkProfil", "Profil kelas", true) + opt("bkMarkah", "Jadual markah sepanjang sesi", true) + opt("bkRasmi", "Markah rasmi SPMRSM", true) + opt("bkRisiko", "Papan risiko topik", true) + opt("bkMomentum", "Momentum murid", true) +
+    '<p class="hint">Kulit depan + isi kandungan dijana automatik. Sesuai dicetak dan dijilid untuk fail panitia / audit.</p></div>' +
+    '<div class="row-actions"><button class="btn btn-sm btn-accent" id="bkJana">Jana buku lengkap</button></div>',
+    '<button class="btn btn-sm btn-primary" id="bkTutup">Tutup</button>');
+  $("bkTutup").onclick = closeDrawer;
+  $("bkJana").onclick = () => {
+    const pilih = {eksek: $("bkEksek").checked, profil: $("bkProfil").checked, markah: $("bkMarkah").checked, rasmi: $("bkRasmi").checked, risiko: $("bkRisiko").checked, momentum: $("bkMomentum").checked};
+    let h = "";
+    h += '<div class="slip slip-halaman buku-kulit">' + kopHtml() + '<div class="buku-bingkai"><p class="buku-eyebrow">BUKU REKOD GURU</p><h1 class="buku-tajuk">PENTAKSIRAN BILIK DARJAH</h1><p class="buku-sub">' + esc(S.subjek) + (S.tingkatan ? " \u00b7 Tingkatan " + esc(S.tingkatan) : "") + '</p><p class="buku-tahun">SESI ' + new Date().getFullYear() + '</p><table class="buku-info"><tbody><tr><td>Nama guru</td><td><b>' + esc(S.guru) + '</b></td></tr><tr><td>Kelas</td><td><b>' + esc(kelasNow() ? kelasNow().nama : "\u2014") + '</b></td></tr><tr><td>Bilangan murid</td><td><b>' + pelajarNow().length + '</b></td></tr><tr><td>Dijana pada</td><td><b>' + new Date().toLocaleDateString("ms-MY") + '</b></td></tr></tbody></table><div class="buku-kaki"><span>Disahkan oleh:</span><div class="buku-ttd"></div><span class="hint">Guru Mata Pelajaran / Ketua Panitia</span></div></div></div>';
+    const toc = [["1", "Ringkasan eksekutif", pilih.eksek], ["2", "Profil kelas", pilih.profil], ["3", "Jadual markah sepanjang sesi", pilih.markah], ["4", "Markah rasmi SPMRSM", pilih.rasmi], ["5", "Papan risiko topik", pilih.risiko], ["6", "Momentum murid", pilih.momentum]].filter(x => x[2]);
+    h += '<div class="slip slip-halaman">' + kopHtml() + '<header class="slip-head"><div><h1>Isi Kandungan</h1><p>' + esc(S.subjek) + " \u00b7 " + esc(kelasNow() ? kelasNow().nama : "") + '</p></div><div class="slip-cop">PBD</div></header><table><tbody>' + toc.map(x => '<tr><td style="width:60px"><b>' + x[0] + '.</b></td><td>' + x[1] + '</td></tr>').join("") + '</tbody></table><p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+    if(pilih.eksek) h += '<div class="slip slip-halaman">' + kopHtml() + '<header class="slip-head"><div><h1>' + hd("Ringkasan Eksekutif", "Executive Summary") + '</h1><p>' + esc(S.subjek) + '</p></div><div class="slip-cop">PBD</div></header>' + ringkasanEksekutifTeks().split("\n\n").map(x => '<p style="text-align:justify;line-height:1.7;font-size:10.5pt">' + esc(x) + '</p>').join("") + '</div>';
+    if(pilih.profil){ try{ const hp = profilKelasHtml(); if(hp) h += hp; }catch(e){} }
+    if(pilih.markah) h += jadualMarkahHtml();
+    if(pilih.rasmi) h += jadualRasmiHtml();
+    if(pilih.risiko) h += jadualRisikoHtml();
+    if(pilih.momentum) h += jadualMomentumHtml();
+    $("slipArea").innerHTML = h;
+    closeDrawer();
+    toast("Buku dijana \u2014 sedia dicetak & dijilid");
+    setTimeout(() => cetakMula("cetak-slip"), 420);
+  };
+}
+/* ---------- (2) Pelan ulang kaji ---------- */
+function pelanUlangKajiData(){
+  const list = pelajarNow();
+  const tStat = S.topik.map(t => { const a2 = list.map(p2 => S.pbd[t.id] && S.pbd[t.id][p2.id]).filter(Boolean); const avg = a2.length ? a2.reduce((x, y) => x + y, 0) / a2.length : null; const lemah = list.filter(p2 => { const v = S.pbd[t.id] && S.pbd[t.id][p2.id]; return v && v <= 2; }).length; return {t, avg, lemah}; });
+  const urut = tStat.slice().sort((x, y) => ((x.avg === null ? 2.5 : x.avg) - x.lemah * 0.08) - ((y.avg === null ? 2.5 : y.avg) - y.lemah * 0.08));
+  const hI = new Date().toISOString().slice(0, 10);
+  let sasar = null;
+  if(S.tarikhSPM && S.tarikhSPM > hI) sasar = new Date(S.tarikhSPM + "T00:00:00");
+  else { const t2 = S.asmt.map(a => String(a.tarikh || "").slice(0, 10)).filter(x => x > hI).sort()[0]; if(t2) sasar = new Date(t2 + "T00:00:00"); }
+  const mingguBil = sasar ? Math.max(2, Math.min(16, Math.ceil((sasar - new Date()) / (7 * 86400000)))) : 8;
+  const chunk = Math.max(1, Math.ceil(urut.length / Math.max(1, mingguBil - 1)));
+  const senin0 = new Date(); senin0.setDate(senin0.getDate() - ((senin0.getDay() + 6) % 7));
+  const minggu = [];
+  for(let i6 = 0; i6 < mingguBil; i6++){
+    const mula = new Date(senin0.getTime() + i6 * 7 * 86400000);
+    const akhir = i6 === mingguBil - 1;
+    minggu.push({mula, topik: akhir ? [] : urut.slice(i6 * chunk, (i6 + 1) * chunk).map(x => x.t), akhir});
+  }
+  return {minggu, sasar, mingguBil};
+}
+function bukaPelanUlangKaji(){
+  const P = pelanUlangKajiData();
+  const bina = () => '<div class="chip-list" style="margin-bottom:6px"><span class="tag">' + P.mingguBil + ' minggu</span>' + (P.sasar ? '<span class="tag">sasaran ' + P.sasar.toISOString().slice(0, 10) + '</span>' : '<span class="tag">tiada tarikh sasaran \u2014 8 minggu lalai</span>') + '</div>' +
+    '<div class="tw"><table><thead><tr><th>Minggu</th><th>Fokus ulang kaji (lemah didahulukan)</th></tr></thead><tbody>' +
+    P.minggu.map((m, i6) => '<tr><td>Mg ' + (i6 + 1) + '<br><span class="hint" style="margin:0">' + m.mula.toISOString().slice(5, 10).replace("-", "/") + '</span></td><td>' + (m.akhir ? '<b>Ulang kaji menyeluruh</b> + latihan soalan SPMRSM' : (m.topik.map(t => '<b>' + esc(t.kod) + '</b> ' + esc(t.nama)).join("<br>") || "\u2014")) + '</td></tr>').join("") + '</tbody></table></div>' +
+    '<p class="hint">Berdasarkan Papan Risiko Topik + Kira Detik SPMRSM.</p>' +
+    '<div class="row-actions" style="margin-top:10px"><button class="btn btn-sm" id="puKalendar">Tambah ke kalendar</button><button class="btn btn-sm" id="puCetak">Cetak pelan</button></div>';
+  openDrawer("Pelan Ulang Kaji", "Jadual ulang kaji automatik sehingga sasaran", '<div id="puIsi">' + bina() + '</div>', '<button class="btn btn-sm btn-primary" id="puTutup">Tutup</button>');
+  $("puTutup").onclick = closeDrawer;
+  $("puKalendar").onclick = () => {
+    S.acara = S.acara || [];
+    P.minggu.forEach((m, i6) => {
+      const tg = m.mula.toISOString().slice(0, 10);
+      const nama = m.akhir ? "Ulang kaji menyeluruh \u2014 latihan SPMRSM" : (m.topik.length ? "Ulang kaji: " + m.topik.map(t => t.kod).join(", ") : "");
+      if(nama) S.acara.push({id: "ac" + Date.now() + i6, tarikh: tg, nama});
+    });
+    saveState(); toast(P.minggu.length + " acara ulang kaji ditambah ke kalendar");
+  };
+  $("puCetak").onclick = () => {
+    $("slipArea").innerHTML = '<div class="slip slip-halaman">' + kopHtml() + '<header class="slip-head"><div><h1>' + hd("Pelan Ulang Kaji", "Revision Plan") + '</h1><p>' + esc(kelasNow() ? kelasNow().nama : "") + " \u00b7 " + esc(S.subjek) + (P.sasar ? " \u00b7 sebelum " + P.sasar.toISOString().slice(0, 10) : "") + '</p></div><div class="slip-cop">PBD</div></header>' +
+      '<table><thead><tr><th>Minggu</th><th>Fokus</th></tr></thead><tbody>' + P.minggu.map((m, i6) => '<tr><td>Minggu ' + (i6 + 1) + ' (' + m.mula.toISOString().slice(5, 10).replace("-", "/") + ')</td><td>' + (m.akhir ? "Ulang kaji menyeluruh + latihan soalan" : esc(m.topik.map(t => t.kod + " " + t.nama).join("; ")) || "\u2014") + '</td></tr>').join("") + '</tbody></table><p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+    closeDrawer(); cetakMula("cetak-slip");
+  };
+}
+/* ---------- (3) Tugasan rumah ---------- */
+function hwData(){ return (S.hw = S.hw || []); }
+function bukaHW(){
+  const list = pelajarNow();
+  if(!list.length){ toast("Tiada pelajar"); return; }
+  let hwId = window.__hwId || null;
+  const bina = () => {
+    const arr = hwData();
+    if(hwId){
+      const h = arr.find(x => x.id === hwId);
+      if(h){
+        const bilH = list.filter(p2 => h.hantar[p2.id] === 1).length;
+        return '<button class="btn btn-sm" id="hwKembali" style="margin-bottom:8px">\u2039 Senarai tugasan</button>' +
+          '<div class="mini-head">' + esc(h.tajuk) + ' \u2014 ' + esc(h.tarikh) + '</div>' +
+          '<div class="chip-list" style="margin-bottom:6px"><span class="tag tag-siap">' + bilH + "/" + list.length + ' hantar (' + Math.round(bilH / list.length * 100) + '%)</span></div>' +
+          list.map(p2 => '<div style="display:flex;gap:8px;align-items:center;padding:5px 0;border-bottom:1px solid var(--line)"><span style="flex:1;font-size:13px">' + esc(p2.nama) + '</span><button class="btn btn-sm' + (h.hantar[p2.id] === 1 ? " btn-accent" : "") + '" data-hw-set="' + p2.id + '|1">\u2714</button><button class="btn btn-sm' + (h.hantar[p2.id] === 0 ? " btn-accent" : "") + '" data-hw-set="' + p2.id + '|0">\u2716</button></div>').join("") +
+          '<div class="row-actions" style="margin-top:10px"><button class="btn btn-sm" id="hwCetak">Cetak senarai</button><button class="btn btn-sm" id="hwMesej">Mesej ibu bapa (belum hantar)</button></div>';
+      }
+      hwId = null; window.__hwId = null;
+    }
+    return '<div class="mini-head">Tugasan rumah (' + arr.length + ')</div>' +
+      (arr.length ? arr.map(h => { const bilH = list.filter(p2 => h.hantar[p2.id] === 1).length; return '<div style="display:flex;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line)"><span style="flex:1;min-width:0"><b style="font-size:13px">' + esc(h.tajuk) + '</b><span class="hint" style="display:block;margin:0">' + esc(h.tarikh) + " \u00b7 " + bilH + "/" + list.length + ' hantar</span></span><button class="btn btn-sm" data-hw-buka="' + h.id + '">Isi</button><button class="btn btn-sm" data-hw-del="' + h.id + '" style="border-color:#E0BDB8;color:var(--rose)">Padam</button></div>'; }).join("") : '<p class="hint">Belum ada tugasan rumah direkod.</p>') +
+      '<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"><input type="text" id="hwTajuk" placeholder="Tajuk tugasan (cth: Latihan 3.1)" style="flex:1;min-width:160px"><input type="date" id="hwTarikh" value="' + new Date().toISOString().slice(0, 10) + '" style="max-width:160px"><button class="btn btn-sm btn-primary" id="hwTambah" style="flex:none">Tambah</button></div>';
+  };
+  openDrawer("Rekod Tugasan Rumah", "Penghantaran tugasan setiap murid", '<div id="hwIsi">' + bina() + '</div>', '<button class="btn btn-sm btn-primary" id="hwTutup">Tutup</button>');
+  const pasang = () => {
+    $("hwTutup").onclick = closeDrawer;
+    const bk = $("hwKembali"); if(bk) bk.onclick = () => { hwId = null; window.__hwId = null; $("hwIsi").innerHTML = bina(); pasang(); };
+    const bt = $("hwTambah"); if(bt) bt.onclick = () => { const tj = $("hwTajuk").value.trim(); if(!tj){ toast("Isi tajuk"); return; } const h = {id: "hw" + Date.now(), tajuk: tj, tarikh: $("hwTarikh").value || new Date().toISOString().slice(0, 10), hantar: {}}; hwData().push(h); hwId = h.id; window.__hwId = h.id; saveState(); $("hwIsi").innerHTML = bina(); pasang(); };
+    const hc = $("hwCetak"); if(hc) hc.onclick = () => cetakHW(hwId);
+    const hm = $("hwMesej"); if(hm) hm.onclick = () => { const h = hwData().find(x => x.id === hwId); const p2 = list.find(x => h && h.hantar[x.id] !== 1); if(p2){ closeDrawer(); setTimeout(() => bukaMesej(p2.id), 270); } else toast("Semua sudah hantar!"); };
+    $("drawerBody").querySelectorAll("[data-hw-buka]").forEach(b => b.onclick = () => { hwId = b.dataset.hwBuka; window.__hwId = hwId; $("hwIsi").innerHTML = bina(); pasang(); });
+    $("drawerBody").querySelectorAll("[data-hw-del]").forEach(b => b.onclick = () => { S.hw = hwData().filter(x => x.id !== b.dataset.hwDel); if(hwId === b.dataset.hwDel){ hwId = null; window.__hwId = null; } saveState(); $("hwIsi").innerHTML = bina(); pasang(); });
+    $("drawerBody").querySelectorAll("[data-hw-set]").forEach(b => b.onclick = () => { const z = b.dataset.hwSet.split("|"); const h = hwData().find(x => x.id === hwId); if(h){ h.hantar[z[0]] = +z[1]; saveState(); $("hwIsi").innerHTML = bina(); pasang(); } });
+  };
+  pasang();
+}
+function cetakHW(hwId){
+  const h = hwData().find(x => x.id === hwId);
+  if(!h){ toast("Tiada tugasan"); return; }
+  const list = pelajarNow();
+  $("slipArea").innerHTML = '<div class="slip slip-halaman">' + kopHtml() + '<header class="slip-head"><div><h1>' + hd("Rekod Tugasan Rumah", "Homework Record") + ' \u2014 ' + esc(h.tajuk) + '</h1><p>' + esc(kelasNow() ? kelasNow().nama : "") + " \u00b7 " + esc(h.tarikh) + '</p></div><div class="slip-cop">PBD</div></header>' +
+    '<table><thead><tr><th>Murid</th><th class="num">Status</th></tr></thead><tbody>' + list.map(p2 => '<tr><td>' + esc(p2.nama) + '</td><td class="num">' + (h.hantar[p2.id] === 1 ? "\u2714 Hantar" : h.hantar[p2.id] === 0 ? "\u2716 Tidak" : "\u2014") + '</td></tr>').join("") + '</tbody></table>' +
+    '<p class="slip-kaki">' + list.filter(p2 => h.hantar[p2.id] === 1).length + "/" + list.length + ' murid menghantar \u00b7 Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+  closeDrawer(); cetakMula("cetak-slip");
+}
+/* ---------- (4) Soalan rawak ---------- */
+function bukaRawak(){
+  const list = pelajarNow();
+  if(!list.length){ toast("Tiada pelajar"); return; }
+  if(!window.__rawak) window.__rawak = {asked: {}, topikId: (S.topik[0] || {}).id || null, dipilih: null};
+  const bina = () => {
+    const rk = window.__rawak;
+    const dipilih = rk.dipilih ? list.find(p2 => p2.id === rk.dipilih) : null;
+    return '<label class="fld"><span>Topik dinilai</span><select id="rkTopik">' + S.topik.map(t => '<option value="' + t.id + '"' + (t.id === rk.topikId ? " selected" : "") + '>' + esc(t.kod + " " + t.nama) + '</option>').join("") + '</select></label>' +
+      '<div class="rawak-kotak" id="rkNama">' + (dipilih ? esc(dipilih.nama) : 'Tekan butang \u2014 murid rawak dipilih') + '</div>' +
+      '<div class="row-actions" style="justify-content:center;margin-top:10px;flex-wrap:wrap"><button class="btn btn-sm btn-accent" id="rkPilih">🎲 Pilih murid rawak</button><button class="btn btn-sm" id="rkReset">Reset sesi</button></div>' +
+      (dipilih ? '<div class="mini-head" style="text-align:center">Nilai TP sekarang \u2014 <span class="hint">' + esc((S.topik.find(t => t.id === rk.topikId) || {}).kod || "") + '</span></div><div class="row-actions" style="justify-content:center">' + [1, 2, 3, 4, 5, 6].map(n2 => '<button class="btn btn-sm tp' + n2 + '" data-rk-tp="' + n2 + '" style="min-width:46px">' + n2 + '</button>').join("") + '</div>' : "") +
+      '<div class="chip-list" style="margin-top:12px;justify-content:center"><span class="tag">Sudah ditanya: ' + Object.keys(rk.asked).length + "/" + list.length + '</span></div>' +
+      '<p class="hint" style="text-align:center">Murid tidak diulang dalam satu sesi. Nilai TP terus tersimpan ke rekod PBD.</p>';
+  };
+  openDrawer("Soalan Rawak Kelas", "Pilih murid rawak, soal, nilai TP terus", '<div id="rkIsi">' + bina() + '</div>', '<button class="btn btn-sm btn-primary" id="rkTutup">Tutup</button>');
+  const pasang = () => {
+    $("rkTutup").onclick = closeDrawer;
+    $("rkTopik").onchange = e => { window.__rawak.topikId = e.target.value; };
+    $("rkPilih").onclick = () => {
+      const rk = window.__rawak;
+      const calon = list.filter(p2 => !rk.asked[p2.id]);
+      if(!calon.length){ toast("Semua murid sudah ditanya \u2014 reset untuk pusingan baharu"); return; }
+      const pilih = calon[Math.floor(Math.random() * calon.length)];
+      rk.dipilih = pilih.id;
+      rk.asked[pilih.id] = 1;
+      getar(8);
+      $("rkIsi").innerHTML = bina(); pasang();
+    };
+    $("rkReset").onclick = () => { window.__rawak = {asked: {}, topikId: window.__rawak.topikId, dipilih: null}; $("rkIsi").innerHTML = bina(); pasang(); };
+    $("drawerBody").querySelectorAll("[data-rk-tp]").forEach(b => b.onclick = () => {
+      const rk = window.__rawak;
+      if(!rk.dipilih || !rk.topikId) return;
+      setTP(rk.dipilih, rk.topikId, +b.dataset.rkTp);
+      saveState();
+      const t = S.topik.find(x => x.id === rk.topikId) || {};
+      toast("TP " + b.dataset.rkTp + " disimpan \u2014 " + esc(t.kod || ""));
+      bunyiUI("sah");
+      rk.dipilih = null;
+      $("rkIsi").innerHTML = bina(); pasang();
+    });
+  };
+  pasang();
+}
+/* ---------- (8) Pemasa ujian ---------- */
+function bukaPemasa(){
+  const ada = document.getElementById("pemasaUjian"); if(ada) ada.remove();
+  document.body.insertAdjacentHTML("beforeend", '<div id="pemasaUjian"><div class="ps-panel" id="psIsi"></div><button class="btn btn-sm" id="psTutup">Tutup (Esc)</button></div>');
+  window.__ps = {baki: 0, penuh: 0, jalan: false, t: null};
+  const jalan = () => {
+    clearInterval(window.__ps.t);
+    window.__ps.t = setInterval(() => {
+      const ps = window.__ps;
+      if(!ps.jalan) return;
+      ps.baki--;
+      if(ps.baki === 300){ toast("⏳ 5 minit lagi"); bunyiUI("sah"); }
+      if(ps.baki === 60){ toast("⏳ 1 minit lagi!"); bunyiUI("sah"); }
+      if(ps.baki <= 0){ clearInterval(ps.t); ps.t = null; ps.jalan = false; toast("⏱ Masa tamat"); bunyiUI("konfeti"); }
+      lukis();
+    }, 1000);
+  };
+  const lukis = () => {
+    const ps = window.__ps;
+    const mm = Math.floor(Math.max(0, ps.baki) / 60), ss = Math.max(0, ps.baki) % 60;
+    const warna = ps.baki <= 60 ? " merah" : ps.baki <= 300 ? " kuning" : "";
+    $("psIsi").innerHTML = ps.penuh === 0
+      ? '<h1>Pemasa Ujian</h1><div class="ps-setup"><label class="fld" style="margin:0"><span>Minit</span><input type="number" id="psMinit" value="40" min="1" max="300" style="width:110px" class="mono"></label><button class="btn btn-accent" id="psMula">Mula</button></div>'
+      : '<div class="ps-jam' + warna + '"><b>' + (mm < 10 ? "0" : "") + mm + ':' + (ss < 10 ? "0" : "") + ss + '</b></div><div class="row-actions" style="justify-content:center;margin-top:16px"><button class="btn" id="psTambah">+1 minit</button><button class="btn" id="psJeda">' + (ps.jalan ? "Jeda" : "Sambung") + '</button><button class="btn" id="psSet">Set semula</button></div>';
+    const pm = $("psMula"); if(pm) pm.onclick = () => { const m = Math.max(1, Math.min(300, +($("psMinit").value) || 40)); window.__ps = {baki: m * 60, penuh: m * 60, jalan: true, t: null}; jalan(); lukis(); };
+    const pt = $("psTambah"); if(pt) pt.onclick = () => { if(window.__ps.penuh) window.__ps.baki += 60; lukis(); };
+    const pj = $("psJeda"); if(pj) pj.onclick = () => { window.__ps.jalan = !window.__ps.jalan; if(window.__ps.jalan && !window.__ps.t) jalan(); lukis(); };
+    const pst = $("psSet"); if(pst) pst.onclick = () => { clearInterval(window.__ps.t); window.__ps = {baki: 0, penuh: 0, jalan: false, t: null}; lukis(); };
+  };
+  lukis();
+  const tutup = () => { try{ clearInterval(window.__ps.t); }catch(e){} const el = document.getElementById("pemasaUjian"); if(el) el.remove(); };
+  $("psTutup").onclick = tutup;
+  window.__psTutup2 = tutup;
+}
+document.addEventListener("keydown", e => { if(e.key === "Escape" && document.getElementById("pemasaUjian") && window.__psTutup2) window.__psTutup2(); });
 /* ================= FASA 15 ================= */
 /* ---------- (1) Tampal markah dari Excel ---------- */
 function normalNama(s2){ return String(s2 || "").toLowerCase().replace(/\bbinti\b|\bbin\b|\bbt\b|\bbte\b/g, " ").replace(/[^a-z0-9\u00c0-\uffff ]/g, " ").replace(/\s+/g, " ").trim(); }
@@ -7725,7 +8027,7 @@ function cetakUlangan(){
   closeDrawer(); cetakMula("cetak-slip");
 }
 /* ---------- Profil kelas ---------- */
-function cetakProfilKelas(){
+function profilKelasHtml(){
   const list = pelajarNow();
   if(!list.length){ toast("Tiada pelajar"); return; }
   const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
@@ -7751,6 +8053,11 @@ function cetakProfilKelas(){
     '<p style="font-size:10.5pt;margin:4px 0">Lemah: ' + (lemah2.map(x => esc(x.t.kod) + " (" + (Math.round(x.avg * 10) / 10) + ")").join(", ") || "\u2014") + '</p>' +
     (function(){ try{ const M = momentumData(); return '<div class="mini-head">Momentum (3\u20134 ujian terakhir)</div><p style="font-size:10.5pt;margin:4px 0">Menaik: ' + (M.naik.slice(0, 4).map(x => esc(x.p.nama) + " (+" + x.delta + ")").join(", ") || "\u2014") + '</p><p style="font-size:10.5pt;margin:4px 0">Menurun: ' + (M.turun.slice(0, 4).map(x => esc(x.p.nama) + " (" + x.delta + ")").join(", ") || "\u2014") + '</p>'; }catch(e){ return ""; } })() +
     '<p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + ' \u00b7 Untuk mesyuarat panitia / minggu pertama sesi</p></div>';
+}
+function cetakProfilKelas(){
+  const h = profilKelasHtml();
+  if(!h){ toast("Tiada pelajar"); return; }
+  $("slipArea").innerHTML = h;
   closeDrawer(); cetakMula("cetak-slip");
 }
 /* ---------- Simulasi naik gred ---------- */
@@ -8743,13 +9050,13 @@ function bukaItemAnalisis(){
     const it = a.item || [];
     return '<div class="mini-head">Senarai soalan</div>' +
       (it.length
-        ? '<div class="tw"><table class="ig"><thead><tr><th>Soalan</th><th class="num">Penuh</th><th></th></tr></thead><tbody>' +
-          it.map(x => '<tr><td>' + esc(x.nama) + '</td><td class="num">' + x.penuh + '</td><td class="num"><button class="btn btn-sm" data-iadel="' + x.id + '">Padam</button></td></tr>').join("") + '</tbody></table></div>'
+        ? '<div class="tw"><table class="ig"><thead><tr><th>Soalan</th><th class="num">Penuh</th><th>Aras</th><th></th></tr></thead><tbody>' +
+          it.map(x => '<tr><td>' + esc(x.nama) + '</td><td class="num">' + x.penuh + '</td><td><select data-iars="' + x.id + '" style="max-width:118px"><option value=""' + (!x.aras ? " selected" : "") + '>\u2014</option>' + [["R", "Rendah"], ["S", "Sederhana"], ["T", "Tinggi"]].map(o => '<option value="' + o[0] + '"' + (x.aras === o[0] ? " selected" : "") + '>' + o[1] + '</option>').join("") + '</select></td><td class="num"><button class="btn btn-sm" data-iadel="' + x.id + '">Padam</button></td></tr>').join("") + '</tbody></table></div>'
         : '<p class="hint">Belum ada soalan. Tambah di bawah (contoh: S1, S2, Esei a).</p>') +
       '<div style="display:flex;gap:8px;margin-top:6px">' +
       '<input type="text" id="iaNama" placeholder="Nama soalan (cth: Soalan 1)" style="flex:1">' +
       '<input type="number" id="iaPenuh" placeholder="Penuh" min="1" style="width:80px" class="mono">' +
-      '<button class="btn btn-sm btn-primary" id="iaTambah" style="flex:none">Tambah</button></div>';
+      '<select id="iaAras" style="max-width:122px"><option value="">Aras</option><option value="R">Rendah</option><option value="S">Sederhana</option><option value="T">Tinggi</option></select><button class="btn btn-sm btn-primary" id="iaTambah" style="flex:none">Tambah</button></div>';
   };
   const markahHtml = () => {
     const it = a.item || [];
@@ -8778,7 +9085,7 @@ function bukaItemAnalisis(){
       stat.filter(x => x.purata !== null && x.purata < 0.6 && x.gagal.length)
         .map(x => '<details style="margin-top:6px"><summary>' + esc(x.x.nama) + ' — ' + x.gagal.length + ' murid bawah 50%</summary><ul style="margin:6px 0 0;padding-left:20px">' +
           x.gagal.slice(0, 10).map(g => '<li>' + esc(g.p.nama) + ' — ' + g.v + '/' + x.x.penuh + '</li>').join("") + '</ul></details>').join("") +
-      (stat.filter(x => x.purata !== null).length > 1 ? '<div class="mini-head">Turutan keutamaan ulang kaji</div><ol style="margin:4px 0 0;padding-left:20px;font-size:12.5px">' + stat.filter(x => x.purata !== null).slice().sort((x, y) => x.purata - y.purata).map(x => '<li><b>' + esc(x.x.nama) + '</b> — ' + Math.round(x.purata * 100) + '% (' + x.gagal.length + ' murid <50%)</li>').join("") + '</ol>' : "") + '<p class="hint">Merah = bawah 50%. Soalan merah dengan senarai murid panjang = sasaran ulang kaji kelas seterusnya.</p>';
+      (stat.filter(x => x.purata !== null).length > 1 ? '<div class="mini-head">Turutan keutamaan ulang kaji</div><ol style="margin:4px 0 0;padding-left:20px;font-size:12.5px">' + stat.filter(x => x.purata !== null).slice().sort((x, y) => x.purata - y.purata).map(x => '<li><b>' + esc(x.x.nama) + '</b> — ' + Math.round(x.purata * 100) + '% (' + x.gagal.length + ' murid <50%)</li>').join("") + '</ol>' : "") + '<p class="hint">Merah = bawah 50%. Soalan merah dengan senarai murid panjang = sasaran ulang kaji kelas seterusnya.</p>' + (function(){ const it2 = a.item || []; const bil2 = {R: 0, S: 0, T: 0}; it2.forEach(x => { if(bil2[x.aras] !== undefined) bil2[x.aras]++; }); return (bil2.R + bil2.S + bil2.T) ? '<p class="hint">Taburan aras kognitif: Rendah ' + bil2.R + ' \u00b7 Sederhana ' + bil2.S + ' \u00b7 Tinggi ' + bil2.T + ' soalan</p>' : ""; })();
   };
   openDrawer("Analisis Item", "Markah per soalan — cari punca sebenar markah hilang",
     '<div id="iaIsi">' + tetapanHtml() + markahHtml() + '<div id="iaAnalisis">' + analisisHtml() + '</div></div>' +
@@ -8791,7 +9098,7 @@ function bukaItemAnalisis(){
       if(!nama){ toast("Isi nama soalan"); return; }
       if(!(penuh > 0)){ toast("Isi markah penuh"); return; }
       a.item = a.item || [];
-      a.item.push({id:"s" + Date.now(), nama, penuh});
+      a.item.push({id:"s" + Date.now(), nama, penuh, aras: ($("iaAras") ? $("iaAras").value : "")});
       saveState();
       $("iaIsi").innerHTML = tetapanHtml() + markahHtml() + '<div id="iaAnalisis">' + analisisHtml() + '</div>';
       pasang();
@@ -8822,6 +9129,7 @@ function bukaItemAnalisis(){
       if(an2) an2.innerHTML = analisisHtml();
     });
   };
+  $("drawerBody").querySelectorAll("[data-iars]").forEach(sel => sel.onchange = () => { const x = (a.item || []).find(y => y.id === sel.dataset.iars); if(x){ x.aras = sel.value; saveState(); } });
   $("iaTutup").onclick = closeDrawer;
   $("iaCetak").onclick = () => cetakItemAnalisis(a, list);
   pasang();
