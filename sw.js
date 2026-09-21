@@ -1,8 +1,8 @@
 /* Cache app untuk guna luar talian — HANYA fail daripada asalan yang sama.
    Panggilan Supabase (asalan luar) dan apa-apa bukan-GET dibiarkan terus
    ke rangkaian supaya data awan tidak pernah basi. */
-const VERSI = "pbd-biologi-v2";
-const ASET = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./icon-180.png"];
+const VERSI = "pbd-biologi-v3";
+const ASET = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./icon-180.png", "./splash-828x1792.png", "./splash-1170x2532.png", "./splash-1290x2796.png", "./splash-2048x2732.png"];
 
 self.addEventListener("install", function(e){
   e.waitUntil(caches.open(VERSI).then(function(c){ return c.addAll(ASET); }).then(function(){ return self.skipWaiting(); }));
