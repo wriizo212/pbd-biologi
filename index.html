@@ -1642,6 +1642,7 @@ html[data-padat="1"] th{position:sticky;top:0}
       <div id="semuaKelasKad"></div>
       <div id="cetakPantasKad"></div>
       <div id="lencanaKad"></div>
+      <div id="sekarangKad"></div>
     </div>
 
     <div class="grid g-kpi" id="kpis"></div>
@@ -1783,7 +1784,7 @@ html[data-padat="1"] th{position:sticky;top:0}
    ========================================================= */
 const KEY = "pbd-biologi-v1";
 const KEY_BUKU = "pbd.buku.v1";
-const VERSI_APP = "Fasa 17 · 21 Sep 2026";
+const VERSI_APP = "Fasa 18 · 21 Sep 2026";
 const URL_APP = "https://wriizo212.github.io/pbd-biologi/";
 const QR_APP = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASgAAAEoAQMAAADRyf5aAAAABlBMVEUUPW7///+/1iNXAAABRklEQVR42u2ayw7CMAwEV/z/PxtE/ErblBxBTCpVpPJpZK/XFrKdI6KIIoqo74zSOK/LeM9fX+ehnfMPUSq0b1KBeXCLO7wOvCK7/KeNJFNQg9clL/OyVEMHrw/5NW7k14Z+DQELFUO/lryqP/aH/rjg1f2Fa9f8HV7HetSUY+oKBq9zfpWJqA7Z8gxex3p0Nkp27iiox6WfcEh1q9EIXsd6jAkosypqEV5XfsJS30PCmLd35m3n5fhSweA112MYieQUoOC1qMdQLOWttUd4neYha77eNaw0H15XvHwv0cQeP7Huj7mfbpvVtBvwOuWXTYIvm/oBvC73E8121SoMXnf7r4ZK8PrkV3Pkrg0rer+at9NNSD3l4HXDK/c5mVrk15pXyZbUxnB4LfTLwkdYjNvMj7f9MSchw09s+C/+eUMUUUT9UNQTL+itheYoi98AAAAASUVORK5CYII=";
 const KEY_CFG = "pbd-supabase-config";
@@ -3026,6 +3027,7 @@ function renderUtama(){
     $("kiraDetikKad").innerHTML = kadKiraDetik();
     const kd2 = $("kdSet"); if(kd2) kd2.onclick = openSettings;
     susunUtamaApply();
+  $("sekarangKad").innerHTML = kadSekarang();
   $("lencanaKad").innerHTML = kadLencana();
   $("cetakPantasKad").innerHTML = kadCetakPantas();
   $("gredSrc").textContent = a ? a.nama : "—";
@@ -4164,7 +4166,7 @@ function renderAnalisis(){
     '<p class="hint" style="margin-top:var(--sp-4)">Ini penilaian guru. Analisis Bahagian di atas ialah bukti markah. Bila kedua-duanya sepakat, kesimpulannya kukuh.</p></div>' +
     '<div class="card"><h2>Headcount <span class="sub">' + bilCapai + ' / ' + bilAda + ' sudah mencapai ETR</span></h2>' + headHtml +
     '<p class="hint" style="margin-top:var(--sp-3)">TOV daripada pentaksiran terawal. OTI1 dan OTI2 ialah sasaran berperingkat menuju ETR — tetapkan melalui panel pelajar. Jurang positif bermakna masih di bawah sasaran akhir.</p></div>' +
-    kadUnjuran() + kadRasmi() + kadRisikoTopik() + kadMomentum() + kadBahagian() + kadPerjalanan() + '<div class="card"><h2>Perbandingan Antara Kelas <span class="sub">' + esc(a ? a.nama : "—") + '</span></h2>' + kelasHtml + '<div class="row-actions" style="margin-top:var(--sp-3)"><button class="btn btn-sm" id="btnHaba">Peta haba kelas × topik…</button></div>' + '</div>';
+    kadUnjuran() + kadRasmi() + kadRisikoTopik() + kadMomentum() + kadBahagian() + kadSikapPrestasi() + kadPerjalanan() + '<div class="card"><h2>Perbandingan Antara Kelas <span class="sub">' + esc(a ? a.nama : "—") + '</span></h2>' + kelasHtml + '<div class="row-actions" style="margin-top:var(--sp-3)"><button class="btn btn-sm" id="btnHaba">Peta haba kelas × topik…</button></div>' + '</div>';
 
   $("analisisArea").querySelectorAll("[data-open]").forEach(b => b.onclick = () => openPelajar(b.dataset.open));
   const bh = $("btnHaba"); if(bh) bh.onclick = petaHabaTopik;
@@ -5880,6 +5882,8 @@ function auditRekod(){
 function bukaAudit(){
   const isu = auditRekod();
   const boleh = isu.filter(x => x.baik);
+  const kH = kesihatanData();
+  const kesihatanHtml = kH ? ('<div style="margin:0 0 12px"><div style="display:flex;gap:14px;align-items:center;border:1px solid var(--line);border-radius:var(--r-3);padding:10px 12px"><div style="flex:none">' + gelang(kH.skor, 80, "kesihatan") + '</div><div style="flex:1;min-width:0">' + barRows(kH.modul.map(m => ({k: m.nama, v: m.pct, lbl: m.pct + "% \u00b7 " + m.nota, c: m.pct >= 80 ? "var(--accent-ink)" : m.pct >= 50 ? "var(--amber)" : "var(--rose)"})), 100) + '</div></div><p class="hint" style="margin:6px 0 0">Skor ' + kH.skor + '/100 \u2014 kemas kini modul lemah sebelum laporan/audit panitia.</p></div>') : "";
   const isi = isu.length
     ? isu.map(x =>
       '<div style="display:flex;gap:10px;align-items:flex-start;padding:var(--sp-2) 0;border-bottom:1px solid var(--line)">' +
@@ -5887,7 +5891,7 @@ function bukaAudit(){
         (x.baik ? '<span class="tag tag-siap" style="flex:none">boleh dibetulkan</span>' : '<span class="tag" style="flex:none">semak manual</span>') +
       '</div>').join("")
     : '<p class="empty">Rekod bersih — tiada isu ditemui.</p>';
-  openDrawer("Semak Rekod", isu.length ? isu.reduce((n, x) => n + x.bil, 0) + " isu ditemui" : "Selesai", isi,
+  openDrawer("Kesihatan Data", (kH ? "Skor " + kH.skor + "/100" : "Semak Rekod") + (isu.length ? " \u00b7 " + isu.reduce((n, x) => n + x.bil, 0) + " isu" : " \u00b7 tiada isu"), kesihatanHtml + isi,
     (boleh.length ? '<button class="btn btn-sm" id="auBetul">Betulkan (' + boleh.length + ')</button>' : "") +
     '<button class="btn btn-sm btn-primary" id="auTutup">Tutup</button>');
   const b = $("auBetul");
@@ -6377,7 +6381,7 @@ function cetakKitKongsi(){
   cetakMula("cetak-slip");
 }
 /* ---------- VERSI & CHANGELOG ---------- */
-const VERSI_APLIKASI = "Fasa 17 · 21 Sep 2026";
+const VERSI_APLIKASI = "Fasa 18 · 21 Sep 2026";
 const APA_BAHARU = [
   {v:"Fasa 10 · Sep 2026", p:["Pemilih 3 gaya sijil (Klasik Emas / Navy / Minimal)", "Lencana murid automatik + helaian lencana", "Denyut Rekod (streak) + Kalendar PBD", "Mod Kiosk auto-slaid untuk majlis", "Carian murid dalam palet (Ctrl+K)", "Pusat Cetak Pantas di Utama", "Tandatangan Ketua Panitia & Pengetua di skrin"]},
   {v:"Fasa 9.1 · Sep 2026", p:["Butang tema kini menu pilihan penuh (auto/siang/malam/royale)", "Tandatangan guru boleh dilukis terus di skrin — tiada muat naik gambar", "Template sijil premium baharu (bingkai emas, mohor, no. rekod)"]},
@@ -6781,6 +6785,12 @@ document.addEventListener("click", e => {
   const cpx28 = t.closest("#cpPeperiksaan"); if(cpx28){ cetakJadualPeperiksaan(); return; }
   const cpx29 = t.closest("#cpBuletin"); if(cpx29){ bukaBuletin(); return; }
   const cpx30 = t.closest("#cpDuduk"); if(cpx30){ bukaDuduk(); return; }
+  const cx31 = t.closest("#cpExit"); if(cx31){ bukaExit(); return; }
+  const cx32 = t.closest("#cpSihat"); if(cx32){ bukaAudit(); return; }
+  const cx33 = t.closest("#cpBukuSemak"); if(cx33){ bukaBukuSemak(); return; }
+  const cx34 = t.closest("#cpAnugerah"); if(cx34){ bukaAnugerah(); return; }
+  const cx35 = t.closest("#cpSurat"); if(cx35){ bukaSurat(); return; }
+  const cx36 = t.closest("#cpMinit"); if(cx36){ bukaMinit(); return; }
   const csk = t.closest("[data-sikap]"); if(csk){ bukaSikap(csk.dataset.sikap); return; }
   const clm2 = t.closest("[data-logmurid]"); if(clm2){ bukaLogIbu(clm2.dataset.logmurid, "murid"); return; }
   const cms2 = t.closest("[data-mesej]"); if(cms2){ bukaMesej(cms2.dataset.mesej); return; }
@@ -7062,8 +7072,322 @@ function kadCetakPantas(){
     '<button class="btn btn-sm btn-accent" id="cpSlip">\uD83D\uDDA8 Slip kelas</button>' +
     '<button class="btn btn-sm" id="cpSijil">\uD83C\uDFC5 Sijil</button>' +
     '<button class="btn btn-sm" id="cpMatriks">\uD83D\uDCCB Matriks</button>' +
-    '<button class="btn btn-sm" id="cpLapor">\uD83D\uDCCA Pelaporan</button><button class="btn btn-sm" id="cpSasaran">\uD83C\uDFAF Papan Sasaran</button><button class="btn btn-sm" id="cpTugas">\u2705 Tugas</button><button class="btn btn-sm" id="cpMinggu">\uD83D\uDCDD Ringkasan minggu</button><button class="btn btn-sm" id="cpMingguWA">\uD83D\uDCAC WhatsApp minggu</button><button class="btn btn-sm" id="cpQR">📱 QR ibu bapa</button><button class="btn btn-sm" id="cpPakej">📦 Pakej cetak</button><button class="btn btn-sm" id="cpJadual">🗓 Jadual waktu</button><button class="btn btn-sm" id="cpLabel">🏷 Label meja</button><button class="btn btn-sm" id="cpKonsol">👨‍👩‍👧 Konsultasi</button><button class="btn btn-sm" id="cpRasmi">📊 Markah rasmi</button><button class="btn btn-sm" id="cpPoster">🖼 Poster kelas</button><button class="btn btn-sm" id="cpSimulasi">🔮 Simulasi naik gred</button><button class="btn btn-sm" id="cpProfil">👥 Profil kelas</button><button class="btn btn-sm" id="cpRancangan">🗒 Rancangan minggu</button><button class="btn btn-sm" id="cpTiket">🎟 Tiket pujian</button><button class="btn btn-sm" id="cpMesej">💬 Mesej ibu bapa</button><button class="btn btn-sm" id="cpPapan">📺 Papan kelas</button><button class="btn btn-sm" id="cpBuku">📚 Buku tahunan</button><button class="btn btn-sm" id="cpPelan">🧭 Pelan ulang kaji</button><button class="btn btn-sm" id="cpHW">🏠 Tugasan rumah</button><button class="btn btn-sm" id="cpRawak">🎲 Soalan rawak</button><button class="btn btn-sm" id="cpEksekutif">📝 Ringkasan eksekutif</button><button class="btn btn-sm" id="cpPemasa">⏱ Pemasa ujian</button><button class="btn btn-sm" id="cpKumpulan">🧩 Kumpulan</button><button class="btn btn-sm" id="cpPBL">🎞 Projek PBL</button><button class="btn btn-sm" id="cpSikap">😊 Sikap</button><button class="btn btn-sm" id="cpPeperiksaan">🗓 Jadual peperiksaan</button><button class="btn btn-sm" id="cpBuletin">📰 Buletin bulanan</button><button class="btn btn-sm" id="cpDuduk">🪑 Tempat duduk</button></div>' +
+    '<button class="btn btn-sm" id="cpLapor">\uD83D\uDCCA Pelaporan</button><button class="btn btn-sm" id="cpSasaran">\uD83C\uDFAF Papan Sasaran</button><button class="btn btn-sm" id="cpTugas">\u2705 Tugas</button><button class="btn btn-sm" id="cpMinggu">\uD83D\uDCDD Ringkasan minggu</button><button class="btn btn-sm" id="cpMingguWA">\uD83D\uDCAC WhatsApp minggu</button><button class="btn btn-sm" id="cpQR">📱 QR ibu bapa</button><button class="btn btn-sm" id="cpPakej">📦 Pakej cetak</button><button class="btn btn-sm" id="cpJadual">🗓 Jadual waktu</button><button class="btn btn-sm" id="cpLabel">🏷 Label meja</button><button class="btn btn-sm" id="cpKonsol">👨‍👩‍👧 Konsultasi</button><button class="btn btn-sm" id="cpRasmi">📊 Markah rasmi</button><button class="btn btn-sm" id="cpPoster">🖼 Poster kelas</button><button class="btn btn-sm" id="cpSimulasi">🔮 Simulasi naik gred</button><button class="btn btn-sm" id="cpProfil">👥 Profil kelas</button><button class="btn btn-sm" id="cpRancangan">🗒 Rancangan minggu</button><button class="btn btn-sm" id="cpTiket">🎟 Tiket pujian</button><button class="btn btn-sm" id="cpMesej">💬 Mesej ibu bapa</button><button class="btn btn-sm" id="cpPapan">📺 Papan kelas</button><button class="btn btn-sm" id="cpBuku">📚 Buku tahunan</button><button class="btn btn-sm" id="cpPelan">🧭 Pelan ulang kaji</button><button class="btn btn-sm" id="cpHW">🏠 Tugasan rumah</button><button class="btn btn-sm" id="cpRawak">🎲 Soalan rawak</button><button class="btn btn-sm" id="cpEksekutif">📝 Ringkasan eksekutif</button><button class="btn btn-sm" id="cpPemasa">⏱ Pemasa ujian</button><button class="btn btn-sm" id="cpKumpulan">🧩 Kumpulan</button><button class="btn btn-sm" id="cpPBL">🎞 Projek PBL</button><button class="btn btn-sm" id="cpSikap">😊 Sikap</button><button class="btn btn-sm" id="cpPeperiksaan">🗓 Jadual peperiksaan</button><button class="btn btn-sm" id="cpBuletin">📰 Buletin bulanan</button><button class="btn btn-sm" id="cpExit">🎫 Exit ticket</button><button class="btn btn-sm" id="cpSihat">🩺 Kesihatan data</button><button class="btn btn-sm" id="cpBukuSemak">📕 Semakan buku</button><button class="btn btn-sm" id="cpAnugerah">🏆 Anugerah</button><button class="btn btn-sm" id="cpSurat">✉ Surat</button><button class="btn btn-sm" id="cpMinit">🗂 Minit mesyuarat</button><button class="btn btn-sm" id="cpDuduk">🪑 Tempat duduk</button></div>' +
     '<p class="hint">Slip = untuk HBMP \u00b7 Matriks & Pelaporan = fail panitia \u00b7 Sijil = pengiktirafan.</p></div>';
+}
+/* ================= FASA 18 ================= */
+/* ---------- (1) Exit ticket ---------- */
+const EXIT_LAB = {1: "Faham", 2: "Separa", 3: "Tidak faham"};
+function exitData(){ S.exit = S.exit || []; return S.exit; }
+function exitRekod(tid){
+  const hI = new Date().toISOString().slice(0, 10);
+  let r = exitData().find(x => String(x.tarikh).slice(0, 10) === hI && x.topikId === tid);
+  if(!r){ r = {id: "ex" + Date.now(), tarikh: hI, topikId: tid, kelasId: S.aktifKelas, jawapan: {}}; exitData().push(r); }
+  return r;
+}
+function bukaExit(){
+  const list = pelajarNow();
+  if(!list.length){ toast("Tiada pelajar"); return; }
+  window.__exitTid = window.__exitTid || (S.topik[0] || {}).id || null;
+  const bina = () => {
+    const tid = window.__exitTid;
+    const r = exitData().find(x => String(x.tarikh).slice(0, 10) === new Date().toISOString().slice(0, 10) && x.topikId === tid);
+    const jw = r ? r.jawapan : {};
+    const bil = k => list.filter(p2 => jw[p2.id] === k).length;
+    const t3 = S.topik.find(x => x.id === tid) || {};
+    return '<label class="fld"><span>Topik sesi ini</span><select id="exTopik">' + S.topik.map(x => '<option value="' + x.id + '"' + (x.id === tid ? " selected" : "") + '>' + esc(x.kod + " " + x.nama) + '</option>').join("") + '</select></label>' +
+      '<div class="chip-list" style="margin:6px 0"><span class="tag tag-siap">\uD83D\uDFE2 ' + bil(1) + ' faham</span><span class="tag" style="border-color:var(--amber);color:var(--amber)">\uD83D\uDFE1 ' + bil(2) + ' separa</span><span class="tag tag-th">\uD83D\uDD34 ' + bil(3) + ' tidak faham</span></div>' +
+      list.map(p2 => '<div style="display:flex;gap:8px;align-items:center;padding:5px 0;border-bottom:1px solid var(--line)"><span style="flex:1;font-size:13px">' + esc(p2.nama) + '</span>' +
+        [1, 2, 3].map(k => '<button class="btn btn-sm' + (jw[p2.id] === k ? " btn-accent" : "") + '" data-ex="' + p2.id + '|' + k + '" title="' + EXIT_LAB[k] + '" style="min-width:44px">' + (k === 1 ? "\uD83D\uDFE2" : k === 2 ? "\uD83D\uDFE1" : "\uD83D\uDD34") + '</button>').join("") + '</div>').join("") +
+      '<div class="row-actions" style="margin-top:10px;flex-wrap:wrap"><button class="btn btn-sm" id="exTindakan">Tindakan untuk ' + bil(3) + '+' + bil(2) + ' murid</button><button class="btn btn-sm" id="exCetak">Cetak ringkasan</button></div>' +
+      '<p class="hint">Ketik semasa murid keluar kelas (exit ticket) \u2014 2 saat seorang. Rekod disimpan mengikut topik & tarikh.</p>';
+  };
+  openDrawer("Exit Ticket", "Semakan kefahaman hujung sesi", '<div id="exIsi">' + bina() + '</div>', '<button class="btn btn-sm btn-primary" id="exTutup">Tutup</button>');
+  const pasang = () => {
+    $("exTutup").onclick = closeDrawer;
+    $("exTopik").onchange = e => { window.__exitTid = e.target.value; $("exIsi").innerHTML = bina(); pasang(); };
+    $("drawerBody").querySelectorAll("[data-ex]").forEach(b => b.onclick = () => {
+      const z = b.dataset.ex.split("|");
+      exitRekod(window.__exitTid).jawapan[z[0]] = +z[1];
+      saveState(); getar(6);
+      $("exIsi").innerHTML = bina(); pasang();
+    });
+    $("exTindakan").onclick = async () => {
+      const r = exitRekod(window.__exitTid);
+      const perlu = list.filter(p2 => r.jawapan[p2.id] === 3 || r.jawapan[p2.id] === 2);
+      if(!perlu.length){ toast("Semua murid faham \u2014 tiada tindakan perlu"); return; }
+      if(!(await tanya("<b>" + perlu.length + "</b> murid akan direkod sebagai perhatian intervensi. Teruskan?", {ya:"Rekod"}))) return;
+      const hI = new Date().toISOString().slice(0, 10);
+      perlu.forEach(p2 => {
+        (S.intervensi = S.intervensi || []).push({id: "iv" + Date.now() + Math.random().toString(36).slice(2, 5), pelajarId: p2.id, tarikh: hI, teks: "Exit ticket " + ((S.topik.find(x => x.id === window.__exitTid) || {}).kod || "") + ": kefahaman belum kukuh", selesai: false});
+      });
+      saveState(); toast(perlu.length + " murid direkod ke intervensi");
+    };
+    $("exCetak").onclick = () => {
+      const tid = window.__exitTid;
+      const r = exitRekod(tid);
+      const t3 = S.topik.find(x => x.id === tid) || {};
+      $("slipArea").innerHTML = '<div class="slip slip-halaman">' + kopHtml() + '<header class="slip-head"><div><h1>' + hd("Ringkasan Exit Ticket", "Exit Ticket Summary") + '</h1><p>' + esc(kelasNow() ? kelasNow().nama : "") + " \u00b7 " + esc(t3.kod + " " + t3.nama) + " \u00b7 " + esc(r.tarikh) + '</p></div><div class="slip-cop">PBD</div></header>' +
+        '<table><thead><tr><th>Murid</th><th class="num">Kefahaman</th></tr></thead><tbody>' + list.map(p2 => '<tr><td>' + esc(p2.nama) + '</td><td class="num">' + (r.jawapan[p2.id] ? EXIT_LAB[r.jawapan[p2.id]] : "\u2014") + '</td></tr>').join("") + '</tbody></table>' +
+        '<p class="slip-kaki">' + list.filter(p2 => r.jawapan[p2.id] === 3).length + " tidak faham \u00b7 " + list.filter(p2 => r.jawapan[p2.id] === 2).length + " separa \u00b7 Dijana " + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+      closeDrawer(); cetakMula("cetak-slip");
+    };
+  };
+  pasang();
+}
+/* ---------- (2) Kesihatan data ---------- */
+function kesihatanData(){
+  try{
+    const list = pelajarNow();
+    const k2 = kelasNow();
+    if(!list.length) return null;
+    const modul = [];
+    const hI = new Date().toISOString().slice(0, 10);
+    const ber = asmtUrut().filter(a => String(a.tarikh || "") <= hI);
+    if(ber.length){
+      const pur = ber.reduce((n, a) => n + list.filter(p2 => pct(a, p2.id) !== null || isTH(a, p2.id)).length / list.length, 0) / ber.length * 100;
+      const tk = ber.filter(a => list.some(p2 => pct(a, p2.id) === null && !isTH(a, p2.id)));
+      modul.push({nama: "Markah pentaksiran", pct: Math.round(pur), nota: tk.length ? "belum lengkap: " + tk.slice(0, 2).map(a => a.nama).join(", ") + (tk.length > 2 ? "\u2026" : "") : "lengkap"});
+    }
+    const tpC = S.topik.length ? S.topik.filter(t => Object.keys(S.pbd[t.id] || {}).length).length / S.topik.length * 100 : null;
+    if(tpC !== null) modul.push({nama: "Rekod TP topik", pct: Math.round(tpC), nota: S.topik.length + " topik"});
+    const bln = hI.slice(0, 7);
+    const hariAda = hariHadirKelas(k2 ? k2.id : S.aktifKelas).filter(t3 => t3.slice(0, 7) === bln);
+    const hariSek = (function(){ let n = 0; const d = new Date(bln + "-01T00:00:00"); while(d.toISOString().slice(0, 7) === bln && d.toISOString().slice(0, 10) <= hI){ const h = d.getDay(); if(h !== 0 && h !== 6) n++; d.setDate(d.getDate() + 1); } return n; })();
+    modul.push({nama: "Kehadiran bulan ini", pct: hariSek ? Math.round(Math.min(1, hariAda.length / hariSek) * 100) : 100, nota: hariAda.length + "/" + hariSek + " hari sekolah"});
+    const berItem = ber.filter(a => (a.item || []).length);
+    if(berItem.length){
+      const purI = berItem.reduce((n, a) => n + list.filter(p2 => a.itemMarkah && a.itemMarkah[p2.id] && Object.keys(a.itemMarkah[p2.id]).length).length / list.length, 0) / berItem.length * 100;
+      modul.push({nama: "Analisis item", pct: Math.round(purI), nota: berItem.length + " pentaksiran bersoalan"});
+    }
+    if((S.amali || []).length){
+      const amC = list.filter(p2 => amaliPurata(p2.id) !== null).length / list.length * 100;
+      modul.push({nama: "Markah amali", pct: Math.round(amC), nota: (S.amali || []).length + " amali"});
+    }
+    if((S.pbl || []).length){
+      const pbC = list.filter(p2 => pblPurata(p2.id) !== null).length / list.length * 100;
+      modul.push({nama: "Markah PBL", pct: Math.round(pbC), nota: (S.pbl || []).length + " projek"});
+    }
+    const seminggu = new Date(Date.now() - 7 * 86400000).toISOString().slice(0, 10);
+    const bilSk = Object.keys(S.sikap || {}).reduce((n, pid2) => n + (S.sikap[pid2] || []).filter(x => x.tarikh >= seminggu).length, 0);
+    modul.push({nama: "Rekod sikap (7 hari)", pct: bilSk ? 100 : 0, nota: bilSk + " rekod"});
+    const skor = Math.round(modul.reduce((n, m) => n + m.pct, 0) / modul.length);
+    return {skor, modul};
+  }catch(e){ return null; }
+}
+/* ---------- (3) Korelasi sikap x prestasi ---------- */
+function kadSikapPrestasi(){
+  try{
+    const list = pelajarNow();
+    const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+    const akhir = ber.length ? ber[ber.length - 1] : null;
+    if(!akhir || !Object.keys(S.sikap || {}).length) return "";
+    const baris2 = list.map(p2 => {
+      const arr = (S.sikap || {})[p2.id] || [];
+      const pos = arr.filter(x => x.tanda > 0).length, neg = arr.filter(x => x.tanda < 0).length;
+      return {p: p2, pos, neg, v: pct(akhir, p2.id)};
+    }).filter(x => x.v !== null);
+    if(baris2.length < 5 || (baris2.filter(x => x.pos >= 2 || x.neg >= 2).length < 2)) return "";
+    const posGrp = baris2.filter(x => x.pos >= 2 && x.neg <= 1);
+    const negGrp = baris2.filter(x => x.neg >= 2);
+    const avg = arr => arr.length ? Math.round(arr.reduce((n, x) => n + x.v, 0) / arr.length) : null;
+    return '<div class="card"><h2>Korelasi Sikap &times; Prestasi <span class="sub">bukti kuantitatif</span></h2>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">' +
+      '<div><b style="font-size:12.5px;color:var(--accent-ink)">Sikap positif (\u22652 rekod +)</b><div style="font-size:16px;margin:4px 0"><b>' + (avg(posGrp) === null ? "\u2014" : avg(posGrp) + "%") + '</b> <span class="hint">purata ' + posGrp.length + ' murid</span></div></div>' +
+      '<div><b style="font-size:12.5px;color:var(--rose)">Perlu perhatian (\u22652 rekod \u2212)</b><div style="font-size:16px;margin:4px 0"><b>' + (avg(negGrp) === null ? "\u2014" : avg(negGrp) + "%") + '</b> <span class="hint">purata ' + negGrp.length + ' murid</span></div></div></div>' +
+      (negGrp.length ? '<p class="hint">Senarai perhatian: ' + negGrp.map(x => esc(x.p.nama)).join(", ") + '</p>' : "") +
+      '<p class="hint">Rekod sikap konsisten membina bukti untuk program motivasi & laporan sahsiah.</p></div>';
+  }catch(e){ return ""; }
+}
+/* ---------- (4) Semakan buku latihan ---------- */
+function bukuSemakData(pid){ S.bukuSemak = S.bukuSemak || {}; S.bukuSemak[pid] = S.bukuSemak[pid] || []; return S.bukuSemak[pid]; }
+function bukaBukuSemak(){
+  const list = pelajarNow();
+  if(!list.length){ toast("Tiada pelajar"); return; }
+  window.__bsPid = window.__bsPid || null;
+  const bina = () => {
+    const arr = list.map(p2 => { const r = bukuSemakData(p2.id); const akhir = r.slice().sort((x, y) => String(y.tarikh).localeCompare(String(x.tarikh)))[0]; return {p: p2, akhir, bil: r.length}; }).sort((x, y) => String((x.akhir || {}).tarikh || "0").localeCompare(String((y.akhir || {}).tarikh || "0")));
+    return '<div class="chip-list" style="margin-bottom:6px"><span class="tag">Buku disemak: ' + arr.filter(x => x.akhir).length + "/" + list.length + '</span></div>' +
+      arr.map(x => '<div style="display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)"><span style="flex:1;min-width:0;font-size:13px">' + esc(x.p.nama) + '<span class="hint" style="display:block;margin:0">' + (x.akhir ? "Terakhir " + esc(x.akhir.tarikh) + " \u00b7 mutu " + "\u2605".repeat(x.akhir.mutu) : "Belum disemak") + '</span></span><button class="btn btn-sm" data-bs-pilih="' + x.p.id + '">Tanda semak</button>' + (x.bil ? '<button class="btn btn-sm" data-bs-lihat="' + x.p.id + '">' + x.bil + '</button>' : "") + '</div>').join("") +
+      (window.__bsPid ? (function(){ const p2 = list.find(z => z.id === window.__bsPid); if(!p2) return ""; return '<div class="mini-head">Semak: ' + esc(p2.nama) + '</div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end"><label class="fld" style="margin:0;max-width:150px"><span>Tarikh</span><input type="date" id="bsTarikh" value="' + new Date().toISOString().slice(0, 10) + '"></label><label class="fld" style="margin:0;max-width:140px"><span>Mutu</span><select id="bsMutu"><option value="1">\u2605 kemas</option><option value="2" selected>\u2605\u2605 baik</option><option value="3">\u2605\u2605\u2605 cemerlang</option></select></label><button class="btn btn-sm btn-accent" id="bsSimpan" style="flex:none">Simpan</button></div><input type="text" id="bsNota" placeholder="Ulasan ringkas (pilihan)" style="margin-top:6px">'; })() : "") +
+      '<div class="row-actions" style="margin-top:8px"><button class="btn btn-sm" id="bsCetak">Cetak rekod</button></div>';
+  };
+  openDrawer("Cop Semakan Buku Latihan", "Rekod semakan buku kerja murid", '<div id="bsIsi">' + bina() + '</div>', '<button class="btn btn-sm btn-primary" id="bsTutup">Tutup</button>');
+  const pasang = () => {
+    $("bsTutup").onclick = closeDrawer;
+    $("bsCetak").onclick = cetakBukuSemak;
+    const bs = $("bsSimpan"); if(bs) bs.onclick = () => {
+      bukuSemakData(window.__bsPid).push({id: "bs" + Date.now(), tarikh: $("bsTarikh").value || new Date().toISOString().slice(0, 10), mutu: +($("bsMutu").value) || 2, nota: ($("bsNota") ? $("bsNota").value.trim() : "")});
+      saveState(); window.__bsPid = null; $("bsIsi").innerHTML = bina(); pasang(); toast("Semakan direkod");
+    };
+    $("drawerBody").querySelectorAll("[data-bs-pilih]").forEach(b => b.onclick = () => { window.__bsPid = b.dataset.bsPilih; $("bsIsi").innerHTML = bina(); pasang(); });
+    $("drawerBody").querySelectorAll("[data-bs-lihat]").forEach(b => b.onclick = () => { const r = bukuSemakData(b.dataset.bsLihat).slice().sort((x, y) => String(y.tarikh).localeCompare(String(x.tarikh))).slice(0, 8); toast(r.map(x => x.tarikh + " \u2605" + x.mutu).join(" \u00b7 ") || "tiada"); });
+  };
+  pasang();
+}
+function cetakBukuSemak(){
+  const list = pelajarNow();
+  const baris2 = list.map(p2 => { const r = bukuSemakData(p2.id).slice().sort((x, y) => String(y.tarikh).localeCompare(String(x.tarikh))); const a2 = r[0]; return '<tr><td>' + esc(p2.nama) + '</td><td>' + (a2 ? esc(a2.tarikh) : "<b>belum</b>") + '</td><td>' + (a2 ? "\u2605".repeat(a2.mutu) : "\u2014") + '</td><td style="font-size:8pt">' + (a2 ? esc(a2.nota || "") : "") + '</td></tr>'; }).join("");
+  $("slipArea").innerHTML = '<div class="slip slip-halaman">' + kopHtml() + '<header class="slip-head"><div><h1>' + hd("Rekod Semakan Buku Latihan", "Exercise Book Record") + '</h1><p>' + esc(kelasNow() ? kelasNow().nama : "") + " \u00b7 " + esc(S.subjek) + " \u00b7 " + esc(S.guru) + '</p></div><div class="slip-cop">PBD</div></header>' +
+    '<table><thead><tr><th>Murid</th><th>Terakhir disemak</th><th>Mutu</th><th>Ulasan</th></tr></thead><tbody>' + baris2 + '</tbody></table>' +
+    '<p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+  closeDrawer(); cetakMula("cetak-slip");
+}
+/* ---------- (5) Anugerah akhir tahun ---------- */
+function calonAnugerah(){
+  const list = pelajarNow();
+  const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+  const akhir = ber.length ? ber[ber.length - 1] : null;
+  const val = p2 => akhir ? pct(akhir, p2.id) : null;
+  const terbaik = list.slice().sort((x, y) => (val(y) === null ? -1 : val(y)) - (val(x) === null ? -1 : val(x)))[0] || null;
+  const M = momentumData();
+  let meningkat = M.naik.length ? M.naik[0].p : null, sebabM = M.naik.length ? "+" + M.naik[0].delta + "% merentas ujian" : "";
+  if(!meningkat && ber.length >= 2){
+    const dua = ber.slice(-2);
+    const urut2 = list.slice().sort((x, y) => { const a4 = (pct(dua[1], x.id) === null ? -999 : pct(dua[1], x.id)) - (pct(dua[0], x.id) === null ? -999 : pct(dua[0], x.id)); const b4 = (pct(dua[1], y.id) === null ? -999 : pct(dua[1], y.id)) - (pct(dua[0], y.id) === null ? -999 : pct(dua[0], y.id)); return b4 - a4; });
+    meningkat = urut2[0] || null;
+    sebabM = "peningkatan dua ujian terakhir";
+  }
+  const hadir = list.filter(p2 => { const h = kehadiranMurid(p2.id); return h && h.peratus >= 100; })[0] || null;
+  const gigih = list.slice().sort((x, y) => ((S.sikap[y.id] || []).filter(z => z.tanda > 0).length) - ((S.sikap[x.id] || []).filter(z => z.tanda > 0).length))[0] || null;
+  return {
+    terbaik: {p: terbaik, sebab: terbaik && val(terbaik) !== null ? Math.round(val(terbaik)) + "% (" + ((gredOf(val(terbaik)) || {}).g || "") + ")" + (akhir ? " dalam " + akhir.nama : "") : ""},
+    meningkat: {p: meningkat, sebab: sebabM},
+    hadir: {p: hadir, sebab: hadir ? "Kehadiran 100%" : ""},
+    gigih: {p: gigih, sebab: gigih ? ((S.sikap[gigih.id] || []).filter(z => z.tanda > 0).length + " rekod sikap positif") : ""}
+  };
+}
+function bukaAnugerah(){
+  const C = calonAnugerah();
+  const senaraiA = [["\uD83C\uDFC6", "Pelajar Terbaik", C.terbaik], ["\uD83D\uDE80", "Paling Meningkat", C.meningkat], ["\uD83D\uDDD3", "Kehadiran Penuh", C.hadir], ["\u2B50", "Usaha Gigih", C.gigih]];
+  const rows = senaraiA.map(x => '<div style="display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)"><span style="font-size:20px">' + x[0] + '</span><span style="flex:1;min-width:0"><b style="font-size:13.5px">' + x[1] + '</b><span class="hint" style="display:block;margin:0">' + (x[2].p ? esc(x[2].p.nama) + " \u00b7 " + esc(x[2].sebab || "") : "tiada calon (data belum cukup)") + '</span></span></div>').join("");
+  openDrawer("Anugerah Akhir Tahun", "4 kategori dipilih automatik dari data", rows +
+    '<div class="row-actions" style="margin-top:10px"><button class="btn btn-sm btn-accent" id="anSijil">Jana sijil pemenang</button><button class="btn btn-sm" id="anProgram">Cetak helaian program</button></div>' +
+    '<p class="hint">Sijil mengikut gaya semasa (Tetapan gaya sijil). Helaian program untuk bacaan majlis.</p>', '<button class="btn btn-sm btn-primary" id="anTutup">Tutup</button>');
+  $("anTutup").onclick = closeDrawer;
+  $("anSijil").onclick = () => {
+    const senaraiB = [C.terbaik, C.meningkat, C.hadir, C.gigih].filter(x => x.p);
+    if(!senaraiB.length){ toast("Tiada pemenang"); return; }
+    const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+    const akhir = ber.length ? ber[ber.length - 1] : null;
+    $("slipArea").innerHTML = senaraiB.map(x => { const v = akhir ? pct(akhir, x.p.id) : null; return sijilHtml({p: x.p, v: v === null ? 0 : v, g: v === null ? null : gredOf(v)}); }).join("");
+    closeDrawer(); cetakMula("cetak-slip");
+  };
+  $("anProgram").onclick = () => {
+    $("slipArea").innerHTML = '<div class="slip slip-halaman">' + kopHtml() + '<header class="slip-head"><div><h1>Majlis Anugerah ' + esc(S.subjek) + '</h1><p>' + esc(kelasNow() ? kelasNow().nama : "") + " \u00b7 " + new Date().toLocaleDateString("ms-MY") + '</p></div><div class="slip-cop">PBD</div></header>' +
+      '<table><thead><tr><th>Anugerah</th><th>Penerima</th><th>Pencapaian</th></tr></thead><tbody>' +
+      senaraiA.map(x => '<tr><td>' + x[1] + '</td><td><b>' + (x[2].p ? esc(x[2].p.nama) : "\u2014") + '</b></td><td style="font-size:9pt">' + (x[2].p ? esc(x[2].sebab || "") : "") + '</td></tr>').join("") +
+      '</tbody></table><p class="slip-kaki">Disampaikan oleh ' + esc(S.guru) + ' \u00b7 Tahniah kepada semua pelajar!</p></div>';
+    closeDrawer(); cetakMula("cetak-slip");
+  };
+}
+/* ---------- (6) Penjana surat rasmi ---------- */
+function bukaSurat(){
+  const list = pelajarNow();
+  if(!list.length){ toast("Tiada pelajar"); return; }
+  window.__surat = window.__surat || {jenis: "notis", pid: list[0].id, aktiviti: "", tarikh: new Date().toISOString().slice(0, 10), tempat: ""};
+  const bina = () => {
+    const S2 = window.__surat;
+    return '<div class="row-actions" style="align-items:flex-end;flex-wrap:wrap"><label class="fld" style="margin:0;max-width:235px"><span>Jenis surat</span><select id="suJenis"><option value="notis"' + (S2.jenis === "notis" ? " selected" : "") + '>Notis awal prestasi</option><option value="kebenaran"' + (S2.jenis === "kebenaran" ? " selected" : "") + '>Borang kebenaran aktiviti</option></select></label>' +
+      '<label class="fld" style="margin:0;max-width:210px"><span>Murid</span><select id="suMurid">' + list.map(p2 => '<option value="' + p2.id + '"' + (p2.id === S2.pid ? " selected" : "") + '>' + esc(p2.nama) + '</option>').join("") + '</select></label></div>' +
+      (S2.jenis === "kebenaran" ? '<label class="fld"><span>Nama aktiviti</span><input type="text" id="suAktiviti" value="' + esc(S2.aktiviti || "") + '" placeholder="cth: Lawatan Sambil Belajar ke FRIM"></label><div style="display:flex;gap:8px;flex-wrap:wrap"><label class="fld" style="flex:1;min-width:140px"><span>Tarikh</span><input type="date" id="suTarikh" value="' + esc(S2.tarikh || "") + '"></label><label class="fld" style="flex:1;min-width:140px"><span>Tempat</span><input type="text" id="suTempat" value="' + esc(S2.tempat || "") + '"></label></div>' : "") +
+      '<div class="row-actions" style="margin-top:10px"><button class="btn btn-sm btn-accent" id="suJana">Jana surat</button></div>' +
+      '<p class="hint">Kepala surat diambil dari Tetapan \u00b7 tanda tangan guru pada surat dicetak.</p>';
+  };
+  openDrawer("Penjana Surat Rasmi", "Notis prestasi & borang kebenaran", '<div id="suIsi">' + bina() + '</div>', '<button class="btn btn-sm btn-primary" id="suTutup">Tutup</button>');
+  const pasang = () => {
+    $("suTutup").onclick = closeDrawer;
+    $("suJenis").onchange = e => { window.__surat.jenis = e.target.value; $("suIsi").innerHTML = bina(); pasang(); };
+    $("suMurid").onchange = e => { window.__surat.pid = e.target.value; };
+    const aj = $("suAktiviti"); if(aj) aj.onchange = e => { window.__surat.aktiviti = e.target.value; };
+    const tj = $("suTarikh"); if(tj) tj.onchange = e => { window.__surat.tarikh = e.target.value; };
+    const tp2 = $("suTempat"); if(tp2) tp2.onchange = e => { window.__surat.tempat = e.target.value; };
+    $("suJana").onclick = () => {
+      const S2 = window.__surat;
+      const p2 = list.find(z => z.id === S2.pid) || list[0];
+      const ruj = "PBD/" + String(S.subjek || "BIO").slice(0, 3).toUpperCase() + "/" + new Date().getFullYear() + "/" + (100 + new Date().getDate());
+      const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+      const akhir = ber.length ? ber[ber.length - 1] : null;
+      const v = akhir ? pct(akhir, p2.id) : null;
+      const hd2 = kehadiranMurid(p2.id);
+      const isiSurat = S2.jenis === "notis"
+        ? '<p>Assalamualaikum / Salam sejahtera,</p><p><b>MAKLUMAN PRESTASI SEMASA</b></p><p>Dengan hormatnya perkara di atas dirujuk. Adalah dimaklumkan bahawa prestasi semasa anak tuan/puan, <b>' + esc(p2.nama) + '</b> dalam mata pelajaran ' + esc(S.subjek) + ' adalah seperti berikut:</p>' +
+          '<table style="max-width:72%"><tbody><tr><td>Markah terkini</td><td class="num"><b>' + (v === null ? "\u2014" : Math.round(v) + "%") + '</b></td></tr><tr><td>Gred</td><td class="num"><b>' + (v === null ? "\u2014" : (gredOf(v) || {}).g || "\u2014") + '</b></td></tr><tr><td>Kehadiran</td><td class="num"><b>' + (hd2 ? hd2.peratus + "%" : "\u2014") + '</b></td></tr></tbody></table>' +
+          '<p>Sehubungan itu, pihak tuan/puan dijemput hadir berbincang bersama guru mata pelajaran bagi sama-sama membantu peningkatan anak tuan/puan.</p><p>Sekian, terima kasih.</p>'
+        : '<p>Assalamualaikum / Salam sejahtera,</p><p><b>KEBENARAN MENYERTAI AKTIVITI</b></p><p>Dengan segala hormatnya, pihak sekolah akan mengadakan aktiviti berikut:</p>' +
+          '<table style="max-width:82%"><tbody><tr><td><b>Aktiviti</b></td><td>' + esc(S2.aktiviti || "[SILA ISI]") + '</td></tr><tr><td><b>Tarikh</b></td><td>' + esc(S2.tarikh || "[SILA ISI]") + '</td></tr><tr><td><b>Tempat</b></td><td>' + esc(S2.tempat || "[SILA ISI]") + '</td></tr></tbody></table>' +
+          '<p>Saya, <b>__________________________</b> (penjaga kepada <b>' + esc(p2.nama) + '</b>) dengan ini <b>membenarkan / tidak membenarkan</b>* anak saya menyertai aktiviti tersebut.</p><p>Nombor telefon untuk dihubungi: ______________________</p><p>Tandatangan penjaga: ______________________ &nbsp;&nbsp; Tarikh: ____________</p>';
+      $("slipArea").innerHTML = '<div class="slip slip-halaman">' + kopHtml() +
+        '<p style="font-size:9pt;margin:4px 0 0">Ruj. kami: ' + esc(ruj) + '</p><p style="font-size:9pt;margin:0 0 10px">Tarikh: ' + new Date().toLocaleDateString("ms-MY") + '</p>' +
+        '<p style="font-size:10.5pt;margin:0 0 6px"><b>Kepada: Ibu bapa / penjaga ' + esc(p2.nama) + '</b></p>' +
+        '<div style="font-size:10.5pt;line-height:1.7">' + isiSurat + '</div>' +
+        '<div style="margin-top:26px;font-size:10.5pt"><p style="margin:0">Yang benar,</p><div style="height:16mm"></div><p style="margin:0"><b>' + esc(S.guru) + '</b><br>Guru Mata Pelajaran ' + esc(S.subjek) + '</p></div>' +
+        '<p class="slip-kaki">Dokumen dijana aplikasi PBD \u00b7 ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+      closeDrawer(); cetakMula("cetak-slip");
+    };
+  };
+  pasang();
+}
+/* ---------- (7) Sekarang & seterusnya ---------- */
+function jadualSlotSekarang(){
+  const J = jadualData();
+  const hari = (new Date().getDay() + 6) % 7;
+  const kini2 = new Date();
+  const menit2 = kini2.getHours() * 60 + kini2.getMinutes();
+  const parseMasa = t3 => { const m = String(t3).match(/(\d{1,2})[:.](\d{2})/); return m ? (+m[1]) * 60 + (+m[2]) : null; };
+  const senarai = [];
+  J.waktu.forEach((w2, i9) => {
+    const sel = J.sel[hari + "-" + i9];
+    if(!sel) return;
+    senarai.push({i: i9, teks: sel, mula: parseMasa(String(w2).split("\u2013")[0] || w2), waktu: w2});
+  });
+  if(!senarai.length) return {ada: false};
+  let tidak = null, seterusnya = null;
+  senarai.forEach((x, idx) => {
+    const tamat = (senarai[idx + 1] && senarai[idx + 1].mula !== null) ? senarai[idx + 1].mula : (x.mula !== null ? x.mula + 40 : null);
+    if(x.mula !== null && menit2 >= x.mula && (tamat === null || menit2 < tamat)) tidak = x;
+    if(x.mula !== null && x.mula > menit2 && !seterusnya) seterusnya = x;
+  });
+  return {ada: true, hari, tidak, seterusnya};
+}
+function kadSekarang(){
+  const S2 = jadualSlotSekarang();
+  if(!S2.ada) return "";
+  const hariNama = ["Isnin", "Selasa", "Rabu", "Khamis", "Jumaat"][S2.hari] || "";
+  let isi = "";
+  if(S2.tidak) isi += '<div class="chip-list"><span class="tag tag-siap">SEKARANG \u00b7 ' + esc(S2.tidak.waktu) + '</span><b style="font-size:14px">' + esc(S2.tidak.teks) + '</b></div>';
+  if(S2.seterusnya){
+    const kini2 = new Date();
+    const menit2 = kini2.getHours() * 60 + kini2.getMinutes();
+    const lagi = S2.seterusnya.mula - menit2;
+    isi += '<div class="chip-list"' + (S2.tidak ? ' style="margin-top:6px"' : "") + '><span class="tag">SETERUSNYA \u00b7 ' + esc(S2.seterusnya.waktu) + '</span><b style="font-size:13.5px">' + esc(S2.seterusnya.teks) + '</b><span class="hint" style="margin:0">dalam ' + lagi + ' minit</span></div>';
+    const kunciN = "pbd.notif." + kini2.toISOString().slice(0, 10) + "." + S2.seterusnya.i;
+    if(lagi <= 5 && lsGet(kunciN) !== "1"){ lsSet(kunciN, "1"); setTimeout(() => toast("\u23F0 " + S2.seterusnya.teks + " bermula " + lagi + " minit lagi"), 1800); }
+  }
+  if(!isi) isi = '<p class="hint">Tiada kelas berjadual sepanjang hari ini (' + hariNama + ').</p>';
+  return '<div class="card"><h2>Sekarang &amp; Seterusnya <span class="sub">' + hariNama + '</span></h2>' + isi + '</div>';
+}
+/* ---------- (8) Nota mesyuarat ---------- */
+function bukaMinit(){
+  const list = pelajarNow();
+  const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+  const akhir = ber.length ? ber[ber.length - 1] : null;
+  const vals = list.map(p2 => akhir ? pct(akhir, p2.id) : null).filter(v => v !== null);
+  const pur = vals.length ? Math.round(vals.reduce((x, y) => x + y, 0) / vals.length) : null;
+  const lulus = vals.length ? Math.round(vals.filter(v => v >= ambangLulus()).length / vals.length * 100) : 0;
+  const M = momentumData();
+  const tStat = S.topik.map(t => { const a2 = list.map(p2 => S.pbd[t.id] && S.pbd[t.id][p2.id]).filter(Boolean); return {t, avg: a2.length ? a2.reduce((x, y) => x + y, 0) / a2.length : null}; }).filter(x => x.avg !== null).sort((x, y) => x.avg - y.avg);
+  let rasmi = null;
+  try{ const R = markahRasmiData(); const ada = R.hasil.filter(x => x.akhir !== null); if(ada.length) rasmi = Math.round(ada.reduce((x, y) => x + y.akhir, 0) / ada.length * 10) / 10; }catch(e){}
+  const teks = "NOTA MESYUARAT PANITIA " + String(S.subjek || "").toUpperCase() + "\nTarikh: " + new Date().toLocaleDateString("ms-MY") + "   |   Tempat: [SILA ISI]\n\n1. UCAPAN PENGERUSI\n   [SILA ISI]\n\n2. PRESTASI SEMASA (data automatik)\n   - Purata kelas: " + (pur === null ? "-" : pur + "%") + " (" + (pur === null ? "-" : ((gredOf(pur) || {}).g || "-")) + ") | Lulus: " + lulus + "%\n   - Markah rasmi SPMRSM: " + (rasmi === null ? "-" : rasmi + "%") + "\n   - Momentum: " + M.naik.length + " murid menaik konsisten, " + M.turun.length + " menurun\n   - Topik terlemah: " + (tStat.slice(0, 3).map(x => x.t.kod).join(", ") || "-") + "\n\n3. ISU & CABARAN\n   [SILA ISI]\n\n4. CADANGAN TINDAKAN\n   - Tumpuan ulang kaji: " + (tStat.slice(0, 2).map(x => x.t.kod).join(", ") || "-") + "\n   - Program intervensi untuk " + M.turun.length + " murid menurun\n\n5. HAL-HAL LAIN\n   [SILA ISI]\n\n6. PENANGGUHAN\n   Mesyuarat ditangguhkan pada jam [SILA ISI].\n\nDisediakan oleh: " + (S.guru || "") + "\n(Setiausaha Panitia)";
+  openDrawer("Nota Mesyuarat Panitia", "Rangka agenda + minit dengan data automatik", '<label class="fld"><span>Minit (boleh sunting)</span><textarea id="mnTeks" rows="16"></textarea></label><div class="row-actions" style="margin-top:8px"><button class="btn btn-sm" id="mnCetak">Cetak</button></div>', '<button class="btn btn-sm btn-accent" id="mnSalin">Salin</button><button class="btn btn-sm btn-primary" id="mnTutup">Tutup</button>');
+  $("mnTeks").value = teks;
+  $("mnTutup").onclick = closeDrawer;
+  $("mnSalin").onclick = () => salinFallback($("mnTeks").value, () => toast("Minit disalin"));
+  $("mnCetak").onclick = () => {
+    $("slipArea").innerHTML = '<div class="slip slip-halaman"><pre style="font-family:Georgia,serif;font-size:10pt;line-height:1.65;white-space:pre-wrap">' + esc($("mnTeks").value) + '</pre></div>';
+    closeDrawer(); cetakMula("cetak-slip");
+  };
 }
 /* ================= FASA 17 ================= */
 /* ---------- (1) Modul PBL ---------- */
@@ -8109,7 +8433,7 @@ function flipUbah(fn){
     });
   }catch(e){ fn(); }
 }
-const UTAMA_KAD = [["persediaanKad", "Persediaan"], ["streakKad", "Denyut Rekod"], ["kiraDetikKad", "Kesediaan SPMRSM"], ["pentaksiranKad", "Pentaksiran"], ["semuaKelasKad", "Perbandingan kelas"], ["cetakPantasKad", "Pusat Pantas"], ["lencanaKad", "Lencana Kelas"]];
+const UTAMA_KAD = [["persediaanKad", "Persediaan"], ["streakKad", "Denyut Rekod"], ["kiraDetikKad", "Kesediaan SPMRSM"], ["pentaksiranKad", "Pentaksiran"], ["semuaKelasKad", "Perbandingan kelas"], ["cetakPantasKad", "Pusat Pantas"], ["lencanaKad", "Lencana Kelas"], ["sekarangKad", "Sekarang & seterusnya"]];
 function susunUtamaData(){
   if(!S.susunUtama) S.susunUtama = UTAMA_KAD.map(x => x[0]);
   UTAMA_KAD.forEach(x => { if(S.susunUtama.indexOf(x[0]) < 0) S.susunUtama.push(x[0]); });
