@@ -6885,6 +6885,7 @@ function kadCetakPantas(){
     '<p class="hint">Slip = untuk HBMP \u00b7 Matriks & Pelaporan = fail panitia \u00b7 Sijil = pengiktirafan.</p></div>';
 }
 /* ================= FASA 12 — Enjin QR (mod bait, ECC L, versi 1–13) ================= */
+let IBU_PAYLOAD = (function(){ try{ const h = location.hash || ""; return h.indexOf("#r=") === 0 ? decodeURIComponent(h.slice(3)) : ""; }catch(e){ return ""; } })();
 const QR_BLOK = {1:[1,26,19],2:[1,44,34],3:[1,70,55],4:[1,100,80],5:[1,134,108],6:[2,86,68],7:[2,98,78],8:[2,121,97],9:[2,146,116],10:[2,86,68,2,87,69],11:[4,101,81],12:[2,116,92,2,117,93],13:[4,133,107]};
 const QR_ALIGN2 = {2:[6,18],3:[6,22],4:[6,26],5:[6,30],6:[6,34],7:[6,22,38],8:[6,24,42],9:[6,26,46],10:[6,28,50],11:[6,30,54],12:[6,32,58],13:[6,34,62]};
 const QR_EXP = new Uint8Array(512), QR_LOG = new Uint8Array(256);
@@ -7047,9 +7048,12 @@ function qrURLMurid(pid){ const pl = qrPayloadMurid(pid); return pl ? lokasiAsas
 function qrHTMLMurid(pid, saiz){ const u = qrURLMurid(pid); if(!u) return ""; const q = qrMatriks(u); return q ? qrSVGPapar(q, saiz || 120) : ""; }
 function semakHashIbuBapa(){
   try{
+    let teks2 = "";
     const h = location.hash || "";
-    if(h.indexOf("#r=") !== 0){ const el = document.getElementById("ibubapa"); if(el){ el.remove(); document.body.classList.remove("mod-ibu-bapa"); } return; }
-    const z = decodeURIComponent(h.slice(3)).split("|");
+    if(h.indexOf("#r=") === 0) teks2 = decodeURIComponent(h.slice(3));
+    else if(IBU_PAYLOAD) teks2 = IBU_PAYLOAD;
+    if(!teks2){ const el = document.getElementById("ibubapa"); if(el){ el.remove(); document.body.classList.remove("mod-ibu-bapa"); } return; }
+    const z = teks2.split("|");
     if(z[0] !== "1") return;
     const nama = z[1] || "Pelajar", kelas2 = z[2] || "", subjek = z[3] || "", mark = z[4] || "", gred = z[5] || "", tp = z[6] || "", hd3 = z[7] || "", am = z[8] || "", guru = z[9] || "", sek = z[10] || "";
     const markArr = mark.split(",").filter(x => x !== "");
