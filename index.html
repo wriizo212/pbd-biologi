@@ -1161,6 +1161,32 @@ html[data-royale="1"]{--accent-ink:#C9A227;--accent-soft:rgba(201,162,39,.18);--
   .kosong b{font-size:14.5px}
   .kosong span{font-size:12.5px;color:var(--ink-3);max-width:430px;line-height:1.55}
   .kosong .btn{margin-top:4px}
+  /* --- Fasa 15 --- */
+  #papanKelas{position:fixed;inset:0;z-index:385;background:var(--canvas);display:flex;flex-direction:column;padding:22px 26px;overflow:auto}
+  .pk-atas{display:flex;justify-content:space-between;color:var(--ink-3);font-size:14px}
+  .pk-jam{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink-2)}
+  .pk-tajuk h1{font-size:30px;margin:8px 0 2px;letter-spacing:-.5px}
+  .pk-tajuk p{margin:0 0 18px;color:var(--ink-3);font-size:13px}
+  .pk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;max-width:920px}
+  .pk-kotak{border:1px solid var(--border);border-radius:13px;padding:16px 14px;background:var(--card)}
+  .pk-kotak span{display:block;font-size:12.5px;color:var(--ink-3);margin-bottom:5px}
+  .pk-kotak b{font-size:23px}
+  .pk-minggu{display:flex;align-items:center;gap:6px;margin:16px 0 4px;font-size:12px;color:var(--ink-3)}
+  .pk-minggu i{width:16px;height:16px;border-radius:4px;background:var(--surface-3);display:inline-block}
+  .pk-minggu i.on{background:var(--accent-ink)}
+  .pk-belum{margin-top:12px;font-size:14px;padding:12px 14px;border:1px dashed var(--line-2);border-radius:11px;max-width:920px}
+  .pk-belum.ok{color:var(--accent-ink);border-style:solid}
+  #pkTutup{position:fixed;right:18px;top:16px}
+  .tiket-grid{display:grid;grid-template-columns:1fr 1fr;gap:6mm;padding:6mm 0}
+  .tiket{border:1.6px dashed #B9B2A6;border-radius:10px;padding:5mm;display:flex;flex-direction:column;gap:2mm;min-height:60mm;position:relative}
+  .tiket-kepala{display:flex;justify-content:space-between;font-size:8pt;letter-spacing:.08em;color:#8A7B55;font-weight:600}
+  .tiket b{font-size:13.5pt;line-height:1.2}
+  .tiket-ayat{font-size:9.5pt;color:#4E5A64}
+  .tiket-kaki{font-size:8pt;color:#8A7B55}
+  .tiket-ttd{margin-top:auto;border-top:1px solid #C9C2B2;padding-top:1.5mm;font-size:9pt}
+  .tiket-qr{position:absolute;right:4mm;bottom:4mm}
+  .kal-aca{font-style:normal;font-size:9px;color:var(--accent-ink);font-weight:700}
+  .kal-hari.acara{outline:1.5px dotted var(--accent-ink)}
 .sijil *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .menu-tema{position:fixed;z-index:13000;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 14px 40px rgba(8,18,30,.3);padding:6px;display:flex;flex-direction:column;min-width:212px}
 .menu-tema button{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;border:none;background:none;color:var(--ink);font-size:13.5px;border-radius:var(--r-xs);cursor:pointer;text-align:left;width:100%}
@@ -1737,7 +1763,7 @@ html[data-padat="1"] th{position:sticky;top:0}
    ========================================================= */
 const KEY = "pbd-biologi-v1";
 const KEY_BUKU = "pbd.buku.v1";
-const VERSI_APP = "Fasa 14 · 21 Sep 2026";
+const VERSI_APP = "Fasa 15 · 21 Sep 2026";
 const URL_APP = "https://wriizo212.github.io/pbd-biologi/";
 const QR_APP = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASgAAAEoAQMAAADRyf5aAAAABlBMVEUUPW7///+/1iNXAAABRklEQVR42u2ayw7CMAwEV/z/PxtE/ErblBxBTCpVpPJpZK/XFrKdI6KIIoqo74zSOK/LeM9fX+ehnfMPUSq0b1KBeXCLO7wOvCK7/KeNJFNQg9clL/OyVEMHrw/5NW7k14Z+DQELFUO/lryqP/aH/rjg1f2Fa9f8HV7HetSUY+oKBq9zfpWJqA7Z8gxex3p0Nkp27iiox6WfcEh1q9EIXsd6jAkosypqEV5XfsJS30PCmLd35m3n5fhSweA112MYieQUoOC1qMdQLOWttUd4neYha77eNaw0H15XvHwv0cQeP7Huj7mfbpvVtBvwOuWXTYIvm/oBvC73E8121SoMXnf7r4ZK8PrkV3Pkrg0rer+at9NNSD3l4HXDK/c5mVrk15pXyZbUxnB4LfTLwkdYjNvMj7f9MSchw09s+C/+eUMUUUT9UNQTL+itheYoi98AAAAASUVORK5CYII=";
 const KEY_CFG = "pbd-supabase-config";
@@ -3735,7 +3761,7 @@ function renderMarkah(){
       (markahUndo.length ? '<button class="btn btn-sm no-print" id="btnUndoMarkah">Buat asal markah</button>' : '') +
       '<button class="btn btn-sm no-print" id="btnSlipPukal">Cetak slip kelas</button>' +
       '<button class="btn btn-sm no-print" id="btnIcs">Eksport kalendar (.ics)</button>' +
-      '<button class="btn btn-sm no-print" id="btnDupAsmt">Duplikasi</button><button class="btn btn-sm no-print" id="btnSijil">Sijil</button><button class="btn btn-sm no-print" id="btnItemAsmt">Item</button><button class="btn btn-sm no-print" id="btnAmali">Amali</button><button class="btn btn-sm no-print" id="btnUlangan">Ulangan</button><button class="btn btn-sm no-print" id="btnLapIndividu">Laporan</button>' +
+      '<button class="btn btn-sm no-print" id="btnDupAsmt">Duplikasi</button><button class="btn btn-sm no-print" id="btnSijil">Sijil</button><button class="btn btn-sm no-print" id="btnItemAsmt">Item</button><button class="btn btn-sm no-print" id="btnAmali">Amali</button><button class="btn btn-sm no-print" id="btnUlangan">Ulangan</button><button class="btn btn-sm no-print" id="btnTampal">Tampal</button><button class="btn btn-sm no-print" id="btnLapIndividu">Laporan</button>' +
       '<button class="btn btn-sm no-print" id="btnEditAsmt" style="margin-left:auto">Sunting</button>' +
       '<button class="btn btn-sm no-print" id="btnDelAsmt" style="border-color:#E0BDB8;color:var(--rose)">Padam</button>' +
     '</div>' +
@@ -3832,6 +3858,7 @@ function renderMarkah(){
   const bia = $("btnItemAsmt"); if(bia) bia.onclick = bukaItemAnalisis;
   const bam = $("btnAmali"); if(bam) bam.onclick = bukaAmali;
   const bul = $("btnUlangan"); if(bul) bul.onclick = bukaUlangan;
+  const btp = $("btnTampal"); if(btp) btp.onclick = bukaTampalMarkah;
   const bse = $("btnSesi"); if(bse) bse.onclick = bukaSesi;
     const bli = $("btnLapIndividu"); if(bli) bli.onclick = pilihLaporanIndividu;
   $("btnDupAsmt").onclick = async () => {
@@ -4117,7 +4144,7 @@ function renderAnalisis(){
     '<p class="hint" style="margin-top:var(--sp-4)">Ini penilaian guru. Analisis Bahagian di atas ialah bukti markah. Bila kedua-duanya sepakat, kesimpulannya kukuh.</p></div>' +
     '<div class="card"><h2>Headcount <span class="sub">' + bilCapai + ' / ' + bilAda + ' sudah mencapai ETR</span></h2>' + headHtml +
     '<p class="hint" style="margin-top:var(--sp-3)">TOV daripada pentaksiran terawal. OTI1 dan OTI2 ialah sasaran berperingkat menuju ETR — tetapkan melalui panel pelajar. Jurang positif bermakna masih di bawah sasaran akhir.</p></div>' +
-    kadUnjuran() + kadRasmi() + kadRisikoTopik() + kadPerjalanan() + '<div class="card"><h2>Perbandingan Antara Kelas <span class="sub">' + esc(a ? a.nama : "—") + '</span></h2>' + kelasHtml + '<div class="row-actions" style="margin-top:var(--sp-3)"><button class="btn btn-sm" id="btnHaba">Peta haba kelas × topik…</button></div>' + '</div>';
+    kadUnjuran() + kadRasmi() + kadRisikoTopik() + kadMomentum() + kadPerjalanan() + '<div class="card"><h2>Perbandingan Antara Kelas <span class="sub">' + esc(a ? a.nama : "—") + '</span></h2>' + kelasHtml + '<div class="row-actions" style="margin-top:var(--sp-3)"><button class="btn btn-sm" id="btnHaba">Peta haba kelas × topik…</button></div>' + '</div>';
 
   $("analisisArea").querySelectorAll("[data-open]").forEach(b => b.onclick = () => openPelajar(b.dataset.open));
   const bh = $("btnHaba"); if(bh) bh.onclick = petaHabaTopik;
@@ -4307,7 +4334,7 @@ function openPelajar(pid){
   }).join("");
 
   let body =
-    '<div class="row-actions" style="margin-bottom:6px"><button class="btn btn-sm" data-logibu="' + pid + '">📞 Log ibu bapa</button><button class="btn btn-sm" data-pngsijil="' + pid + '">⬇ Sijil PNG</button></div>' +
+    '<div class="row-actions" style="margin-bottom:6px"><button class="btn btn-sm" data-logibu="' + pid + '">📞 Log ibu bapa</button><button class="btn btn-sm" data-logmurid="' + pid + '">👤 Log murid</button><button class="btn btn-sm" data-mesej="' + pid + '">💬 Mesej</button><button class="btn btn-sm" data-pngsijil="' + pid + '">⬇ Sijil PNG</button></div>' +
     '<div class="mini-head">Sasaran berperingkat</div>' +
     '<div class="row-actions" style="gap:var(--sp-2);align-items:flex-start">' + sasaranSel + '</div>' +
     '<p class="hint" style="margin-top:0">OTI1 dan OTI2 ialah batu tanda pertengahan menuju ETR. Sasaran berperingkat lebih berkesan daripada satu sasaran akhir yang jauh.</p>' +
@@ -6330,7 +6357,7 @@ function cetakKitKongsi(){
   cetakMula("cetak-slip");
 }
 /* ---------- VERSI & CHANGELOG ---------- */
-const VERSI_APLIKASI = "Fasa 14 · 21 Sep 2026";
+const VERSI_APLIKASI = "Fasa 15 · 21 Sep 2026";
 const APA_BAHARU = [
   {v:"Fasa 10 · Sep 2026", p:["Pemilih 3 gaya sijil (Klasik Emas / Navy / Minimal)", "Lencana murid automatik + helaian lencana", "Denyut Rekod (streak) + Kalendar PBD", "Mod Kiosk auto-slaid untuk majlis", "Carian murid dalam palet (Ctrl+K)", "Pusat Cetak Pantas di Utama", "Tandatangan Ketua Panitia & Pengetua di skrin"]},
   {v:"Fasa 9.1 · Sep 2026", p:["Butang tema kini menu pilihan penuh (auto/siang/malam/royale)", "Tandatangan guru boleh dilukis terus di skrin — tiada muat naik gambar", "Template sijil premium baharu (bingkai emas, mohor, no. rekod)"]},
@@ -6718,6 +6745,12 @@ document.addEventListener("click", e => {
   const cli2 = t.closest("[data-logibu]"); if(cli2){ bukaLogIbu(cli2.dataset.logibu); return; }
   const cpng = t.closest("[data-pngsijil]"); if(cpng){ janaSijilPNG(cpng.dataset.pngsijil); return; }
   const btk = t.closest("[data-buka-tetapan]"); if(btk){ openSettings(); return; }
+  const cpx15 = t.closest("#cpRancangan"); if(cpx15){ bukaRancangan(); return; }
+  const cpx16 = t.closest("#cpTiket"); if(cpx16){ cetakTiket(); return; }
+  const cpx17 = t.closest("#cpMesej"); if(cpx17){ bukaMesej(); return; }
+  const cpx18 = t.closest("#cpPapan"); if(cpx18){ bukaPapanKelas(); return; }
+  const clm2 = t.closest("[data-logmurid]"); if(clm2){ bukaLogIbu(clm2.dataset.logmurid, "murid"); return; }
+  const cms2 = t.closest("[data-mesej]"); if(cms2){ bukaMesej(cms2.dataset.mesej); return; }
   const cpSl = t.closest("#cpSlip"); if(cpSl){ go("markah"); setTimeout(() => { const b2 = document.getElementById("btnSlipPukal"); if(b2) b2.click(); }, 300); return; }
 });
 document.addEventListener("change", e => {
@@ -6880,6 +6913,8 @@ function bukaKalendarPBD(off){
     const set = setAktiviti();
     const ujian = {};
     (S.asmt || []).forEach(a => { const tg = String(a.tarikh || "").slice(0, 10); if(/^\d{4}-\d{2}-\d{2}$/.test(tg)) ujian[tg] = (ujian[tg] || 0) + 1; });
+    const acara = {};
+    (S.acara || []).forEach(x => { const tg = String(x.tarikh || "").slice(0, 10); if(/^\d{4}-\d{2}-\d{2}$/.test(tg)) acara[tg] = (acara[tg] || 0) + 1; });
     const namaH = ["Ah", "Is", "Se", "Ra", "Kh", "Ju", "Sa"];
     let sel = namaH.map(h => '<div class="kal-h">' + h + '</div>').join("");
     for(let i3 = 0; i3 < hariPertama; i3++) sel += '<div></div>';
@@ -6887,17 +6922,29 @@ function bukaKalendarPBD(off){
       const kunci = thn + "-" + String(bln + 1).padStart(2, "0") + "-" + String(d3).padStart(2, "0");
       const akt = !!set[kunci];
       const adaU = ujian[kunci] ? ujian[kunci] : 0;
+      const adaA = acara[kunci] ? acara[kunci] : 0;
       const hariIni = kunci === kini2.toISOString().slice(0, 10);
-      sel += '<div class="kal-hari' + (akt ? " akt" : "") + (adaU ? " ujian" : "") + (hariIni ? " ini" : "") + '"><span>' + d3 + '</span>' + (adaU ? '<i class="kal-tanda">' + adaU + '</i>' : (akt ? '<i class="kal-dot"></i>' : "")) + '</div>';
+      sel += '<div class="kal-hari' + (akt ? " akt" : "") + (adaU ? " ujian" : "") + (adaA ? " acara" : "") + (hariIni ? " ini" : "") + '" title="' + (adaA ? esc((S.acara || []).filter(z => String(z.tarikh || "").slice(0, 10) === kunci).map(z => z.nama).join(", ")) : "") + '"><span>' + d3 + '</span>' + (adaU ? '<i class="kal-tanda">' + adaU + '</i>' : (adaA ? '<i class="kal-aca">◆</i>' : (akt ? '<i class="kal-dot"></i>' : ""))) + '</div>';
     }
     return '<div class="row-actions" style="justify-content:space-between;align-items:center"><button class="btn btn-sm" id="kalLalu">\u2039</button><b style="text-transform:capitalize">' + esc(namaBln) + '</b><button class="btn btn-sm" id="kalMaju">\u203A</button></div>' +
       '<div class="kal-grid">' + sel + '</div>' +
-      '<p class="hint">Titik = hari anda merekod \u00b7 angka merah = bilangan pentaksiran \u00b7 bingkai = hari ini</p>';
+      '<div class="mini-head">Acara sendiri</div>' + ((S.acara || []).length ? (S.acara || []).slice().sort((x, y) => String(x.tarikh).localeCompare(String(y.tarikh))).filter(x => String(x.tarikh || "") >= kini2.toISOString().slice(0, 10)).slice(0, 6).map(x => '<div style="display:flex;gap:8px;align-items:center;padding:5px 0;border-bottom:1px solid var(--line)"><span style="flex:1;font-size:12.5px"><b>' + esc(x.tarikh) + '</b> · ' + esc(x.nama) + '</span><button class="btn btn-sm" data-ka-del="' + x.id + '">Padam</button></div>').join("") : '<p class="hint">Belum ada acara. Tambah mesyuarat / cuti / program.</p>') +
+      '<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"><input type="date" id="kaTarikh" style="max-width:160px"><input type="text" id="kaNama" placeholder="Nama acara (cth: Mesyuarat panitia)" style="flex:1;min-width:170px"><button class="btn btn-sm btn-primary" id="kaTambah" style="flex:none">Tambah</button></div>' +
+      '<p class="hint">Titik = hari merekod · angka = bilangan pentaksiran · ◆ = acara anda · bingkai = hari ini</p>';
   };
   openDrawer("Kalendar PBD", "Aktiviti merekod & tarikh pentaksiran", '<div id="kalIsi">' + lukis() + '</div>', '<button class="btn btn-sm btn-primary" id="kalTutup">Tutup</button>');
   const pasang = () => {
     $("kalLalu").onclick = () => { kalOffset--; $("kalIsi").innerHTML = lukis(); pasang(); };
     $("kalMaju").onclick = () => { kalOffset++; $("kalIsi").innerHTML = lukis(); pasang(); };
+    const kat2 = $("kaTambah");
+    if(kat2) kat2.onclick = () => {
+      const tg = $("kaTarikh").value, nm = $("kaNama").value.trim();
+      if(!tg || !nm){ toast("Isi tarikh & nama acara"); return; }
+      S.acara = S.acara || [];
+      S.acara.push({id: "ac" + Date.now(), tarikh: tg, nama: nm});
+      saveState(); $("kalIsi").innerHTML = lukis(); pasang();
+    };
+    $("drawerBody").querySelectorAll("[data-ka-del]").forEach(b => b.onclick = () => { S.acara = (S.acara || []).filter(x => x.id !== b.dataset.kaDel); saveState(); $("kalIsi").innerHTML = lukis(); pasang(); });
   };
   pasang();
   $("kalTutup").onclick = closeDrawer;
@@ -6982,9 +7029,332 @@ function kadCetakPantas(){
     '<button class="btn btn-sm btn-accent" id="cpSlip">\uD83D\uDDA8 Slip kelas</button>' +
     '<button class="btn btn-sm" id="cpSijil">\uD83C\uDFC5 Sijil</button>' +
     '<button class="btn btn-sm" id="cpMatriks">\uD83D\uDCCB Matriks</button>' +
-    '<button class="btn btn-sm" id="cpLapor">\uD83D\uDCCA Pelaporan</button><button class="btn btn-sm" id="cpSasaran">\uD83C\uDFAF Papan Sasaran</button><button class="btn btn-sm" id="cpTugas">\u2705 Tugas</button><button class="btn btn-sm" id="cpMinggu">\uD83D\uDCDD Ringkasan minggu</button><button class="btn btn-sm" id="cpMingguWA">\uD83D\uDCAC WhatsApp minggu</button><button class="btn btn-sm" id="cpQR">📱 QR ibu bapa</button><button class="btn btn-sm" id="cpPakej">📦 Pakej cetak</button><button class="btn btn-sm" id="cpJadual">🗓 Jadual waktu</button><button class="btn btn-sm" id="cpLabel">🏷 Label meja</button><button class="btn btn-sm" id="cpKonsol">👨‍👩‍👧 Konsultasi</button><button class="btn btn-sm" id="cpRasmi">📊 Markah rasmi</button><button class="btn btn-sm" id="cpPoster">🖼 Poster kelas</button><button class="btn btn-sm" id="cpSimulasi">🔮 Simulasi naik gred</button><button class="btn btn-sm" id="cpProfil">👥 Profil kelas</button></div>' +
+    '<button class="btn btn-sm" id="cpLapor">\uD83D\uDCCA Pelaporan</button><button class="btn btn-sm" id="cpSasaran">\uD83C\uDFAF Papan Sasaran</button><button class="btn btn-sm" id="cpTugas">\u2705 Tugas</button><button class="btn btn-sm" id="cpMinggu">\uD83D\uDCDD Ringkasan minggu</button><button class="btn btn-sm" id="cpMingguWA">\uD83D\uDCAC WhatsApp minggu</button><button class="btn btn-sm" id="cpQR">📱 QR ibu bapa</button><button class="btn btn-sm" id="cpPakej">📦 Pakej cetak</button><button class="btn btn-sm" id="cpJadual">🗓 Jadual waktu</button><button class="btn btn-sm" id="cpLabel">🏷 Label meja</button><button class="btn btn-sm" id="cpKonsol">👨‍👩‍👧 Konsultasi</button><button class="btn btn-sm" id="cpRasmi">📊 Markah rasmi</button><button class="btn btn-sm" id="cpPoster">🖼 Poster kelas</button><button class="btn btn-sm" id="cpSimulasi">🔮 Simulasi naik gred</button><button class="btn btn-sm" id="cpProfil">👥 Profil kelas</button><button class="btn btn-sm" id="cpRancangan">🗒 Rancangan minggu</button><button class="btn btn-sm" id="cpTiket">🎟 Tiket pujian</button><button class="btn btn-sm" id="cpMesej">💬 Mesej ibu bapa</button><button class="btn btn-sm" id="cpPapan">📺 Papan kelas</button></div>' +
     '<p class="hint">Slip = untuk HBMP \u00b7 Matriks & Pelaporan = fail panitia \u00b7 Sijil = pengiktirafan.</p></div>';
 }
+/* ================= FASA 15 ================= */
+/* ---------- (1) Tampal markah dari Excel ---------- */
+function normalNama(s2){ return String(s2 || "").toLowerCase().replace(/\bbinti\b|\bbin\b|\bbt\b|\bbte\b/g, " ").replace(/[^a-z0-9\u00c0-\uffff ]/g, " ").replace(/\s+/g, " ").trim(); }
+function padanMurid(teksNama, list){
+  const t = normalNama(teksNama);
+  if(!t) return null;
+  let terbaik = null, skorT = 0;
+  list.forEach(p => {
+    const n2 = normalNama(p.nama);
+    let skor = 0;
+    if(n2 === t) skor = 100;
+    else {
+      const kata = t.split(" "), kata2 = n2.split(" ");
+      let sama = 0;
+      kata.forEach(k => { if(k.length > 1 && kata2.indexOf(k) >= 0) sama++; });
+      skor = kata.length ? sama / Math.max(kata.length, kata2.length) * 100 : 0;
+    }
+    if(skor > skorT){ skorT = skor; terbaik = p; }
+  });
+  return skorT >= 40 ? {p: terbaik, skor: Math.round(skorT)} : null;
+}
+function bukaTampalMarkah(){
+  const a = asmtNow();
+  if(!a){ toast("Tiada pentaksiran"); return; }
+  const list = pelajarNow();
+  if(!list.length){ toast("Tiada pelajar"); return; }
+  const bs = a.bahagian || [];
+  let bhgId = bs.length ? bs[0].id : "";
+  let padanan = null;
+  const penuhUntuk = () => { if(bs.length){ const b = bs.find(x => x.id === bhgId); return b ? b.penuh : 100; } const p2 = penuhOf(a); return p2 || 100; };
+  const bina = () => {
+    const nilaiSemasa = pid => {
+      const raw = rawOf(a, pid);
+      if(bs.length) return (raw && typeof raw === "object" && raw[bhgId] !== undefined) ? raw[bhgId] : "";
+      return (raw === null || raw === undefined) ? "" : raw;
+    };
+    const baris = list.map((p2, i) => '<tr><td>' + (i + 1) + '</td><td class="lapis">' + esc(p2.nama) + '</td><td class="num">' + (nilaiSemasa(p2.id) === "" ? "\u2014" : nilaiSemasa(p2.id)) + '</td></tr>').join("");
+    return '<div class="chip-list" style="margin-bottom:6px"><span class="tag">' + esc(a.nama) + '</span><span class="tag">' + list.length + ' murid</span><span class="tag">Penuh: ' + penuhUntuk() + '</span></div>' +
+      (bs.length ? '<label class="fld"><span>Bahagian menerima tampalan</span><select id="tpBahagian">' + bs.map(b => '<option value="' + b.id + '"' + (b.id === bhgId ? " selected" : "") + '>' + esc(b.nama) + ' (' + b.penuh + ')</option>').join("") + '</select></label>' : "") +
+      '<label class="fld"><span>Tampal dari Excel (satu markah satu baris ikut susunan nama, atau Nama[TAB]Markah)</span><textarea id="tpTeks" rows="5" placeholder="78&#10;85&#10;64&#10;TH&#10;&#10;atau:&#10;Ahmad Faiz&#9;78&#10;Nur Aina&#9;85"></textarea></label>' +
+      '<div class="row-actions" style="margin-top:8px"><button class="btn btn-sm btn-accent" id="tpPadan">Padankan &amp; pratonton</button></div>' +
+      '<div id="tpPraton"></div>' +
+      '<div class="mini-head">Susunan nama kelas (rujukan)</div>' +
+      '<div class="tw" style="max-height:190px;overflow:auto"><table class="ig"><thead><tr><th>#</th><th class="lapis">Nama</th><th class="num">Markah semasa</th></tr></thead><tbody>' + baris + '</tbody></table></div>' +
+      '<p class="hint">Sel kosong = tidak dikemas kini. "TH" = tidak hadir. Markah di luar 0\u2013' + penuhUntuk() + ' dipotong automatik.</p>';
+  };
+  openDrawer("Tampal Markah dari Excel", "Salin lajur markah \u2192 tampal \u2192 padan automatik", '<div id="tpIsi">' + bina() + '</div>',
+    '<button class="btn btn-sm" id="tpSimpan" disabled>Simpan padanan</button><button class="btn btn-sm btn-primary" id="tpTutup">Tutup</button>');
+  const pasang = () => {
+    $("tpTutup").onclick = closeDrawer;
+    const bhs = $("tpBahagian");
+    if(bhs) bhs.onchange = () => { bhgId = bhs.value; padanan = null; $("tpPraton").innerHTML = ""; $("tpSimpan").disabled = true; };
+    $("tpPadan").onclick = () => {
+      const teks = $("tpTeks").value;
+      const lines = teks.split(/\r?\n/).map(x => x.trim()).filter(x => x !== "");
+      if(!lines.length){ toast("Tampal markah dahulu"); return; }
+      if(!a.bahagian || !a.bahagian.length){ a.bahagian = null; }
+      const penuh = penuhUntuk();
+      padanan = [];
+      let idxUrut = 0;
+      const digunakan = {};
+      lines.forEach(ln => {
+        const pecah = ln.split(/\t|;|,/).map(x => x.trim()).filter(x => x !== "");
+        let nama = "", mk = "";
+        if(pecah.length >= 2 && /[A-Za-z]/.test(pecah[0])){ nama = pecah[0]; mk = pecah[pecah.length - 1]; }
+        else if(pecah.length === 1){
+          const mNum = pecah[0].match(/^(.*?[A-Za-z].*?)[\s]+(-?\d+(?:[.,]\d+)?|TH)$/i);
+          if(mNum){ nama = mNum[1].trim(); mk = mNum[2]; } else { mk = pecah[0]; }
+        } else { mk = pecah[pecah.length - 1]; }
+        let target = null;
+        if(nama){ const h = padanMurid(nama, list.filter(p2 => !digunakan[p2.id])); if(h) target = h.p; }
+        else { while(idxUrut < list.length && digunakan[list[idxUrut].id]) idxUrut++; if(idxUrut < list.length){ target = list[idxUrut]; idxUrut++; } }
+        let nilai = null, status = "langkau";
+        if(target && mk !== ""){
+          if(/^th$/i.test(mk)){ nilai = "TH"; status = "TH"; }
+          else { let v = parseFloat(String(mk).replace(",", ".")); if(!isNaN(v)){ const asal = v; nilai = Math.max(0, Math.min(penuh, Math.round(v * 10) / 10)); status = asal > penuh ? "potong" : "ok"; } else status = "tak sah"; }
+        }
+        if(target) digunakan[target.id] = 1;
+        padanan.push({p: target, nilai, status, mk});
+      });
+      const baris2 = padanan.map(x => '<tr><td>' + (x.p ? esc(x.p.nama) : '<span style="color:var(--rose)">\u2014 tak dipadankan \u2014</span>') + '</td><td class="num">' + esc(String(x.mk || "")) + '</td><td class="num">' + (x.nilai === "TH" ? "TH" : (x.nilai === null ? "\u2014" : x.nilai)) + '</td><td style="font-size:11.5px;color:' + (x.status === "ok" || x.status === "TH" ? "var(--accent-ink)" : "var(--rose)") + '">' + (x.status === "ok" ? "sedia" : x.status === "potong" ? "dipotong \u2192 " + x.nilai : x.status === "TH" ? "tidak hadir" : "langkau") + '</td></tr>').join("");
+      const sedia = padanan.filter(x => x.p && x.nilai !== null).length;
+      $("tpPraton").innerHTML = '<div class="mini-head">Pratonton padanan</div><div class="tw"><table class="ig"><thead><tr><th class="lapis">Murid</th><th class="num">Input</th><th class="num">Akan simpan</th><th>Status</th></tr></thead><tbody>' + baris2 + '</tbody></table></div><p class="hint">' + sedia + ' markah sedia disimpan.</p>';
+      $("tpSimpan").disabled = !sedia;
+    };
+    $("tpSimpan").onclick = () => {
+      if(!padanan) return;
+      S.markah[a.id] = S.markah[a.id] || {};
+      let n2 = 0;
+      padanan.forEach(x => {
+        if(!x.p || x.nilai === null) return;
+        if(bs.length){
+          const raw = rawOf(a, x.p.id);
+          const o = (raw && typeof raw === "object") ? Object.assign({}, raw) : {};
+          o[bhgId] = x.nilai;
+          S.markah[a.id][x.p.id] = o;
+        } else {
+          S.markah[a.id][x.p.id] = x.nilai;
+        }
+        n2++;
+      });
+      saveState(); render();
+      toast(n2 + " markah disimpan");
+      closeDrawer();
+    };
+  };
+  pasang();
+}
+/* ---------- (3) Momentum murid ---------- */
+function momentumData(){
+  const list = pelajarNow();
+  const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+  const akhir = ber.slice(-4);
+  const hasil = list.map(p => {
+    const siri = akhir.map(a => pct(a, p.id)).filter(v => v !== null);
+    if(siri.length < 3) return null;
+    return {p, delta: siri[siri.length - 1] - siri[0], siri};
+  }).filter(Boolean);
+  return {
+    naik: hasil.filter(x => x.delta >= 3).sort((x, y) => y.delta - x.delta),
+    turun: hasil.filter(x => x.delta <= -3).sort((x, y) => x.delta - y.delta)
+  };
+}
+function kadMomentum(){
+  const M = momentumData();
+  if(!M.naik.length && !M.turun.length) return "";
+  const baris = arr => arr.slice(0, 5).map(x => '<li>' + esc(x.p.nama) + ' <b>(' + (x.delta > 0 ? "+" : "") + x.delta + '%)</b></li>').join("");
+  return '<div class="card"><h2>Momentum Murid <span class="sub">arah merentas 3\u20134 pentaksiran terakhir</span></h2>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">' +
+    '<div><b style="font-size:12.5px;color:var(--accent-ink)">\u25B2 Menaik konsisten</b><ul style="margin:6px 0 0;padding-left:20px;font-size:12.5px">' + (M.naik.length ? baris(M.naik) : '<li style="color:var(--ink-3)">Tiada</li>') + '</ul></div>' +
+    '<div><b style="font-size:12.5px;color:var(--rose)">\u25BC Menurun \u2014 tangkap awal</b><ul style="margin:6px 0 0;padding-left:20px;font-size:12.5px">' + (M.turun.length ? baris(M.turun) : '<li style="color:var(--ink-3)">Tiada</li>') + '</ul></div>' +
+    '</div><p class="hint">Perubahan \u22653% antara pentaksiran pertama dan terkini dalam siri 3\u20134 ujian terakhir.</p></div>';
+}
+/* ---------- (2) Rancangan minggu ---------- */
+function mingguKey(){ const d = new Date(); const t = new Date(d.getFullYear(), d.getMonth(), d.getDate()); const dn = (t.getDay() + 6) % 7; t.setDate(t.getDate() - dn); return t.toISOString().slice(0, 10); }
+function rancanganMingguData(){
+  const senarai = [];
+  const ber = asmtUrut();
+  const tiadaMarkah = ber.filter(x => !Object.keys(S.markah[x.id] || {}).length);
+  if(tiadaMarkah.length) senarai.push({id: "markah", teks: tiadaMarkah.length + " pentaksiran belum ada markah (" + tiadaMarkah.slice(0, 2).map(x => x.nama).join(", ") + (tiadaMarkah.length > 2 ? "\u2026" : "") + ")", aksi: () => { go("markah"); }});
+  const hI = new Date().toISOString().slice(0, 10);
+  const seminggu = new Date(Date.now() - 7 * 86400000).toISOString().slice(0, 10);
+  const sesiMinggu = (S.sesi || []).filter(x => { const t2 = String(x.tarikh || "").slice(0, 10); return t2 >= seminggu && t2 <= hI; }).length;
+  if(!sesiMinggu) senarai.push({id: "sesi", teks: "Belum ada sesi pengajaran dilog minggu ini", aksi: () => { go("pbd"); setTimeout(() => { try{ bukaSesi(); }catch(e){} }, 300); }});
+  let susulan = 0;
+  Object.keys(S.logIbu || {}).forEach(pid => { (S.logIbu[pid] || []).forEach(x => { if(x.susulan && !x.selesai) susulan++; }); });
+  if(susulan) senarai.push({id: "susulan", teks: susulan + " susulan ibu bapa belum selesai", aksi: () => { const pid = Object.keys(S.logIbu).find(k3 => (S.logIbu[k3] || []).some(x => x.susulan && !x.selesai)); if(pid) bukaLogIbu(pid); }});
+  const dek = new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10);
+  const tugasDue = (S.tugas || []).filter(x => !x.siap && x.tarikh && x.tarikh <= dek);
+  if(tugasDue.length) senarai.push({id: "tugas", teks: tugasDue.length + " tugasan hampir/lewat tarikh akhir", aksi: () => bukaTugas()});
+  const M = momentumData();
+  if(M.turun.length) senarai.push({id: "turun", teks: M.turun.length + " murid menurun \u2014 semak senarai momentum", aksi: () => go("analisis")});
+  const hadirHari = (S.hadir || {})[hI];
+  if(!hadirHari || hadirHari.kelasId !== S.aktifKelas) senarai.push({id: "hadir", teks: "Kehadiran kelas hari ini belum diambil", aksi: () => go("hadir")});
+  return senarai;
+}
+function bukaRancangan(){
+  const WEEK = mingguKey();
+  S.mingguSiap = (S.mingguSiap && S.mingguSiap.minggu === WEEK) ? S.mingguSiap : {minggu: WEEK, siap: {}};
+  const bina = () => {
+    const senarai = rancanganMingguData();
+    if(!senarai.length) return kosongBlok("Semua selesai! \uD83C\uDF89", "Tiada tindakan tertunggak dikesan minggu ini. Kerja bagus, cikgu.");
+    return senarai.map(x => '<div style="display:flex;gap:9px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)">' +
+      '<input type="checkbox" data-rn-siap="' + x.id + '"' + (S.mingguSiap.siap[x.id] ? " checked" : "") + ' style="width:18px;height:18px">' +
+      '<span style="flex:1;min-width:0;font-size:13px' + (S.mingguSiap.siap[x.id] ? ";opacity:.5;text-decoration:line-through" : "") + '">' + esc(x.teks) + '</span>' +
+      '<button class="btn btn-sm" data-rn-aksi="' + x.id + '">Buka</button></div>').join("") +
+      '<p class="hint">Senarai dijana automatik daripada data anda. Tanda selesai untuk minggu ini; senarai reset setiap Isnin.</p>';
+  };
+  openDrawer("Rancangan Minggu", "Tindakan automatik untuk minggu ini", '<div id="rnIsi">' + bina() + '</div>', '<button class="btn btn-sm btn-primary" id="rnTutup">Tutup</button>');
+  const pasang = () => {
+    $("rnTutup").onclick = closeDrawer;
+    $("drawerBody").querySelectorAll("[data-rn-siap]").forEach(c => c.onchange = () => { if(c.checked) S.mingguSiap.siap[c.dataset.rnSiap] = 1; else delete S.mingguSiap.siap[c.dataset.rnSiap]; saveState(); $("rnIsi").innerHTML = bina(); pasang(); });
+    $("drawerBody").querySelectorAll("[data-rn-aksi]").forEach(b => b.onclick = () => {
+      const x = rancanganMingguData().find(z => z.id === b.dataset.rnAksi);
+      if(x){ closeDrawer(); setTimeout(() => { try{ x.aksi(); }catch(e){} }, 270); }
+    });
+  };
+  pasang();
+}
+/* ---------- (4) Tiket pujian ---------- */
+function tiketPencapaian(pid){
+  const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+  const M = momentumData();
+  const naik = M.naik.find(x => x.p.id === pid);
+  if(naik) return "Momentum menaik +" + naik.delta + "% \u2014 teruskan!";
+  const akhir = ber.length ? ber[ber.length - 1] : null;
+  const v = akhir ? pct(akhir, pid) : null;
+  if(v !== null && (gredOf(v) || {}).i <= 1) return "Cemerlang \u2014 " + Math.round(v) + "% dalam " + akhir.nama + "!";
+  if(v !== null && v >= ambangLulus()) return "Prestasi memberangsangkan \u2014 " + Math.round(v) + "% (" + (gredOf(v) || {}).g + ")";
+  return "Usaha anda dihargai \u2014 teruskan belajar!";
+}
+function cetakTiket(){
+  const list = pelajarNow();
+  if(!list.length){ toast("Tiada pelajar"); return; }
+  const M = momentumData();
+  const cadang = {};
+  M.naik.slice(0, 6).forEach(x => { cadang[x.p.id] = 1; });
+  const bina = () => list.map(p2 => '<label style="display:flex;gap:8px;align-items:center;padding:5px 0;border-bottom:1px solid var(--line)"><input type="checkbox" data-tt="' + p2.id + '"' + (cadang[p2.id] ? " checked" : "") + '><span style="flex:1;min-width:0;font-size:13px">' + esc(p2.nama) + '</span><span class="hint" style="margin:0;font-size:11px;max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(tiketPencapaian(p2.id)) + '</span></label>').join("");
+  openDrawer("Tiket Pujian", "Hadiah kecil untuk usaha murid \u00b7 4 tiket / A4", '<p class="hint" style="margin-top:0">Cadangan automatik: murid momentum menaik. Pilih sesiapa sahaja.</p><div id="ttIsi">' + bina() + '</div>',
+    '<button class="btn btn-sm btn-accent" id="ttCetak">Cetak tiket dipilih</button><button class="btn btn-sm btn-primary" id="ttTutup">Tutup</button>');
+  $("ttTutup").onclick = closeDrawer;
+  $("ttCetak").onclick = () => {
+    const pilih = list.filter(p2 => { const c = document.querySelector('[data-tt="' + p2.id + '"]'); return c && c.checked; });
+    if(!pilih.length){ toast("Pilih sekurang-kurangnya seorang murid"); return; }
+    let html = "", kira = 0;
+    pilih.forEach(p2 => {
+      if(kira % 4 === 0) html += '<div class="slip slip-halaman"><div class="tiket-grid">';
+      html += '<div class="tiket"><div class="tiket-kepala"><span>\u2B50 TIKET PUJIAN</span><span class="tiket-gunting">\u2702</span></div>' +
+        '<b>' + esc(p2.nama) + '</b>' +
+        '<span class="tiket-ayat">' + esc(tiketPencapaian(p2.id)) + '</span>' +
+        '<span class="tiket-kaki">' + esc(S.subjek) + ' \u00b7 ' + new Date().toLocaleDateString("ms-MY") + '</span>' +
+        '<div class="tiket-ttd">' + esc(S.guru) + '</div>' +
+        '<div class="tiket-qr">' + qrHTMLMurid(p2.id, 54) + '</div></div>';
+      kira++;
+      if(kira % 4 === 0 || kira === pilih.length) html += '</div></div>';
+    });
+    $("slipArea").innerHTML = html;
+    closeDrawer(); cetakMula("cetak-slip");
+  };
+}
+/* ---------- (5) Mesej pintar ---------- */
+function mesejTemplat(jenis, p, konteks){
+  const akhir = konteks.akhir, v = konteks.v, g = v === null ? "\u2014" : (gredOf(v) || {}).g;
+  const kh = konteks.hd ? konteks.hd.peratus + "%" : "\u2014";
+  const sasaran = konteks.gt ? konteks.gt.g : "\u2014";
+  const salam = "Assalamualaikum / Salam sejahtera";
+  const T = {
+    pujian: salam + ",\n\nTahniah! " + p.nama + " menunjukkan prestasi yang baik dalam " + S.subjek + " \u2014 markah terkini " + (v === null ? "\u2014" : Math.round(v) + "%") + " (" + g + ")" + (akhir ? " dalam " + akhir.nama : "") + ".\n\nTerima kasih atas sokongan berterusan di rumah.\n\n\u2014 " + S.guru,
+    turun: salam + ",\n\nSaya ingin berkongsi bahawa markah " + p.nama + " dalam " + S.subjek + " menurun" + (akhir ? " dalam " + akhir.nama : "") + " kepada " + (v === null ? "\u2014" : Math.round(v) + "%") + " (" + g + ").\n\nSaya mencadangkan kita tetapkan sasaran " + sasaran + " untuk ujian seterusnya. Boleh kita berbincang?\n\n\u2014 " + S.guru,
+    kehadiran: salam + ",\n\nKehadiran " + p.nama + " dalam kelas " + S.subjek + " kini " + kh + (konteks.hd && konteks.hd.th ? " (" + konteks.hd.th + " hari tidak hadir)" : "") + ".\n\nKehadiran yang konsisten amat membantu prestasi. Mohon kerjasama tuan/puan.\n\n\u2014 " + S.guru,
+    mesyuarat: salam + ",\n\nSaya ingin menjemput tuan/puan ke sesi pertemuan untuk membincangkan perkembangan " + p.nama + " dalam " + S.subjek + ".\n\nCadangan masa: [SILA ISI TARIKH & MASA]\nTempat: [SILA ISI TEMPAT]\n\nKerjasama tuan/puan amat dihargai.\n\n\u2014 " + S.guru,
+    ulangan: salam + ",\n\nMakluman: " + p.nama + " akan menjalani ujian ulangan " + S.subjek + ". Sila pastikan persiapan dibuat.\n\nMarkah terkini: " + (v === null ? "\u2014" : Math.round(v) + "%") + " (" + g + "). Sasaran: " + sasaran + ".\n\n\u2014 " + S.guru,
+    terima: salam + ",\n\nTerima kasih atas sokongan tuan/puan terhadap pembelajaran " + p.nama + " dalam " + S.subjek + ". Kerjasama kita jelas membantu.\n\n\u2014 " + S.guru
+  };
+  return T[jenis] || T.pujian;
+}
+function bukaMesej(pidAwal){
+  const list = pelajarNow();
+  if(!list.length){ toast("Tiada pelajar"); return; }
+  const bina = () => {
+    const p2 = list.find(x => x.id === window.__mesejPid) || list.find(x => x.id === pidAwal) || list[0];
+    const jenis = window.__mesejJenis || "pujian";
+    return '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+      '<label class="fld" style="margin:0"><span>Murid</span><select id="msMurid" style="min-width:200px">' + list.map(x => '<option value="' + x.id + '"' + (x.id === p2.id ? " selected" : "") + '>' + esc(x.nama) + '</option>').join("") + '</select></label>' +
+      '<label class="fld" style="margin:0"><span>Situasi</span><select id="msJenis" style="min-width:190px">' + [["pujian", "Pujian (prestasi baik)"], ["turun", "Markah menurun"], ["kehadiran", "Isu kehadiran"], ["mesyuarat", "Jemputan mesyuarat"], ["ulangan", "Makluman ujian ulangan"], ["terima", "Terima kasih"]].map(o => '<option value="' + o[0] + '"' + (o[0] === jenis ? " selected" : "") + '>' + o[1] + '</option>').join("") + '</select></label></div>' +
+      '<label class="fld"><span>Mesej (boleh sunting)</span><textarea id="msTeks" rows="9"></textarea></label>' +
+      '<label style="display:flex;gap:8px;align-items:center;margin:4px 0 0"><input type="checkbox" id="msLog" checked><span>Simpan ke Log Komunikasi ibu bapa</span></label>' +
+      '<div class="row-actions" style="margin-top:10px"><button class="btn btn-sm btn-accent" id="msWA">Hantar WhatsApp</button><button class="btn btn-sm" id="msSalin">Salin</button></div>' +
+      '<p class="hint">Mesej dihantar melalui WhatsApp tuan/puan sendiri (nombor penjaga tidak disimpan dalam app).</p>';
+  };
+  openDrawer("Mesej Ibu Bapa", "Templat pintar + hantar WhatsApp", '<div id="msIsi">' + bina() + '</div>', '<button class="btn btn-sm btn-primary" id="msTutup">Tutup</button>');
+  const isiTeks = () => {
+    const list2 = pelajarNow();
+    const p2 = list2.find(x => x.id === $("msMurid").value) || list2[0];
+    window.__mesejPid = p2.id; window.__mesejJenis = $("msJenis").value;
+    const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+    const akhir = ber.length ? ber[ber.length - 1] : null;
+    const v = akhir ? pct(akhir, p2.id) : null;
+    const e = sasaranOf(p2.id, "etr");
+    const gt = (e === undefined || e === null) ? null : (GREDS().find(g2 => g2.i === e) || null);
+    $("msTeks").value = mesejTemplat($("msJenis").value, p2, {akhir, v, gt, hd: kehadiranMurid(p2.id)});
+  };
+  $("msTutup").onclick = closeDrawer;
+  $("msMurid").onchange = isiTeks;
+  $("msJenis").onchange = isiTeks;
+  isiTeks();
+  $("msWA").onclick = () => {
+    const teks = $("msTeks").value;
+    if($("msLog").checked){
+      const pid2 = $("msMurid").value;
+      const baris2 = teks.split("\n").map(x => x.trim()).filter((x, i) => x && i < 3);
+      logIbuData(pid2).push({id: "li" + Date.now(), tarikh: new Date().toISOString().slice(0, 10), cara: "WhatsApp", isi: (baris2[2] || "Mesej WhatsApp").slice(0, 90), tindakan: "", susulan: false, selesai: false});
+      saveState();
+    }
+    window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(teks), "_blank");
+    toast("WhatsApp dibuka" + ($("msLog").checked ? " \u00b7 catatan disimpan ke log" : ""));
+  };
+  $("msSalin").onclick = () => salinFallback($("msTeks").value, () => toast("Mesej disalin"));
+}
+/* ---------- (8) Papan kelas ---------- */
+function papanKelasLukis(){
+  const list = pelajarNow();
+  const k2 = kelasNow() || {};
+  const hI = new Date().toISOString().slice(0, 10);
+  const hariIni = (S.pbdLog || []).filter(l => String(l.tarikh || "").slice(0, 10) === hI);
+  const direkod = {};
+  hariIni.forEach(l => { if(l.pelajarId) direkod[l.pelajarId] = 1; });
+  const belum = list.filter(p2 => !direkod[p2.id]);
+  let d = {streak: 0};
+  try{ d = streakData() || d; }catch(e){}
+  const hadirHari = (S.hadir || {})[hI];
+  let kh = null;
+  if(hadirHari && hadirHari.kelasId === S.aktifKelas){
+    const isi2 = hadirHari.isi || {};
+    const tidak = list.filter(p2 => { const st = isi2[p2.id] || "H"; return st === "TH" || st === "MC"; }).length;
+    kh = list.length ? Math.round((list.length - tidak) / list.length * 100) : null;
+  }
+  const set2 = setAktiviti();
+  const minggu = [];
+  for(let i5 = 6; i5 >= 0; i5--){ const tg = new Date(Date.now() - i5 * 86400000).toISOString().slice(0, 10); minggu.push(!!set2[tg]); }
+  const jam = new Date().toLocaleTimeString("ms-MY", {hour: "2-digit", minute: "2-digit"});
+  return '<div class="pk-atas"><span>' + esc(k2.nama || "") + " \u00b7 " + esc(S.subjek) + '</span><span class="pk-jam">' + jam + '</span></div>' +
+    '<div class="pk-tajuk"><h1>Papan Kelas</h1><p>Kemas kini automatik setiap 5 saat \u00b7 rekod PBD hari ini</p></div>' +
+    '<div class="pk-grid">' +
+    '<div class="pk-kotak"><span>\uD83D\uDD25 Streak</span><b>' + d.streak + ' hari</b></div>' +
+    '<div class="pk-kotak"><span>TP direkod hari ini</span><b>' + hariIni.length + '</b></div>' +
+    '<div class="pk-kotak"><span>Belum direkod</span><b>' + belum.length + ' murid</b></div>' +
+    '<div class="pk-kotak"><span>Kehadiran hari ini</span><b>' + (kh === null ? "belum diambil" : kh + "%") + '</b></div>' +
+    '</div>' +
+    '<div class="pk-minggu">' + minggu.map((x, i5) => '<i class="' + (x ? "on" : "") + '" title="' + (6 - i5) + ' hari lalu"></i>').join("") + '<span>7 hari terakhir</span></div>' +
+    (belum.length ? '<div class="pk-belum"><b>Belum direkod hari ini:</b> ' + belum.slice(0, 10).map(p2 => esc(p2.nama.split(" ")[0])).join(" \u00b7 ") + (belum.length > 10 ? " +" + (belum.length - 10) : "") + '</div>' : '<div class="pk-belum ok">\u2705 Semua murid direkod hari ini!</div>');
+}
+function bukaPapanKelas(){
+  if(!pelajarNow().length){ toast("Tiada pelajar"); return; }
+  const ada = document.getElementById("papanKelas"); if(ada) ada.remove();
+  document.body.insertAdjacentHTML("beforeend", '<div id="papanKelas"><div id="pkIsi"></div><button class="btn btn-sm" id="pkTutup">Tutup (Esc)</button></div>');
+  const segar = () => { const el = document.getElementById("pkIsi"); if(el) el.innerHTML = papanKelasLukis(); };
+  segar();
+  if(window.__pkTimer) clearInterval(window.__pkTimer);
+  window.__pkTimer = setInterval(segar, 5000);
+  $("pkTutup").onclick = () => { if(window.__pkTimer) clearInterval(window.__pkTimer); const el = document.getElementById("papanKelas"); if(el) el.remove(); };
+}
+document.addEventListener("keydown", e => { if(e.key === "Escape" && document.getElementById("papanKelas")){ if(window.__pkTimer) clearInterval(window.__pkTimer); const el = document.getElementById("papanKelas"); if(el) el.remove(); } });
 /* ================= FASA 14 — Sentuhan Studio ================= */
 function kosongBlok(tajuk, ayat, aksi){
   return '<div class="kosong"><svg viewBox="0 0 120 92" width="104" height="80" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ink-3);opacity:.8"><rect x="27" y="12" width="66" height="64" rx="7"/><path d="M38 30h44M38 42h44M38 54h24"/><path d="m78 68 9-9 8 8-9 9-11 3z" style="color:var(--accent-ink)"/><path d="M84 62l8 8" style="color:var(--accent-ink)"/></svg><b>' + tajuk + '</b><span>' + ayat + '</span>' + (aksi || "") + '</div>';
@@ -7251,12 +7621,14 @@ function cetakPoster(){
 }
 /* ---------- Log komunikasi ibu bapa ---------- */
 function logIbuData(pid){ S.logIbu = S.logIbu || {}; S.logIbu[pid] = S.logIbu[pid] || []; return S.logIbu[pid]; }
-function bukaLogIbu(pid){
+function bukaLogIbu(pid, jenis){
   const p2 = S.pelajar.find(x => x.id === pid);
   if(!p2){ toast("Murid tidak dijumpai"); return; }
+  jenis = jenis || "ibu bapa";
   const bina = () => {
-    const arr = logIbuData(pid).slice().sort((x, y) => String(y.tarikh).localeCompare(String(x.tarikh)));
-    return '<div class="mini-head">' + esc(p2.nama) + ' \u2014 ' + arr.length + ' catatan</div>' +
+    const arr = logIbuData(pid).filter(x => (x.jenis || "ibu bapa") === jenis).slice().sort((x, y) => String(y.tarikh).localeCompare(String(x.tarikh)));
+      return '<div class="chip-list" style="margin-bottom:6px"><button class="btn btn-sm' + (jenis === "ibu bapa" ? " btn-accent" : "") + '" id="liTabIbu">📞 Ibu bapa</button><button class="btn btn-sm' + (jenis === "murid" ? " btn-accent" : "") + '" id="liTabMurid">👤 Murid</button></div>' +
+      '<div class="mini-head">' + esc(p2.nama) + ' \u2014 ' + arr.length + ' catatan</div>' +
       (arr.length ? arr.map(x => '<div style="display:flex;gap:9px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--line)">' +
         '<span style="flex:1;min-width:0"><b style="font-size:13px">' + esc(x.cara) + ' \u00b7 ' + esc(x.tarikh) + '</b>' + (x.susulan && !x.selesai ? ' <span class="badge b-mid">susulan</span>' : "") + (x.selesai ? ' <span class="badge b-ok">selesai</span>' : "") +
         '<span class="hint" style="display:block;margin:2px 0 0">' + esc(x.isi || "") + (x.tindakan ? " \u2192 " + esc(x.tindakan) : "") + '</span></span>' +
@@ -7273,27 +7645,30 @@ function bukaLogIbu(pid){
       '<label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="liSusulan"><span>Perlu susulan</span></label>' +
       '<div class="row-actions" style="margin-top:10px"><button class="btn btn-sm btn-accent" id="liSimpan">Simpan catatan</button><button class="btn btn-sm" id="liCetak">Cetak log murid ini</button></div>';
   };
-  openDrawer("Log Komunikasi Ibu Bapa", "Dokumentasi setiap komunikasi dengan penjaga", '<div id="liIsi">' + bina() + '</div>', '<button class="btn btn-sm btn-primary" id="liTutup">Tutup</button>');
+  openDrawer(jenis === "murid" ? "Log Perbualan Murid" : "Log Komunikasi Ibu Bapa", jenis === "murid" ? "Rekod teguran / kaunseling ringkas dengan murid" : "Dokumentasi setiap komunikasi dengan penjaga", '<div id="liIsi">' + bina() + '</div>', '<button class="btn btn-sm btn-primary" id="liTutup">Tutup</button>');
   const pasang = () => {
     $("liTutup").onclick = closeDrawer;
     $("liSimpan").onclick = () => {
       const isi = $("liIsi").value.trim();
       if(!isi){ toast("Isi perkara dahulu"); return; }
-      logIbuData(pid).push({id: "li" + Date.now(), tarikh: $("liTarikh").value || new Date().toISOString().slice(0, 10), cara: $("liCara").value, isi, tindakan: $("liTindakan").value.trim(), susulan: $("liSusulan").checked, selesai: false});
+      logIbuData(pid).push({id: "li" + Date.now(), jenis: jenis, tarikh: $("liTarikh").value || new Date().toISOString().slice(0, 10), cara: $("liCara").value, isi, tindakan: $("liTindakan").value.trim(), susulan: $("liSusulan").checked, selesai: false});
       saveState(); $("liIsi").innerHTML = bina(); pasang(); toast("Catatan disimpan");
     };
-    $("liCetak").onclick = () => cetakLogIbu(pid);
+    $("liCetak").onclick = () => cetakLogIbu(pid, jenis);
+    $("liTabIbu").onclick = () => bukaLogIbu(pid, "ibu bapa");
+    $("liTabMurid").onclick = () => bukaLogIbu(pid, "murid");
     $("drawerBody").querySelectorAll("[data-li-del]").forEach(b => b.onclick = () => { S.logIbu[pid] = logIbuData(pid).filter(x => x.id !== b.dataset.liDel); saveState(); $("liIsi").innerHTML = bina(); pasang(); });
     $("drawerBody").querySelectorAll("[data-li-selesai]").forEach(b => b.onclick = () => { const x = logIbuData(pid).find(y => y.id === b.dataset.liSelesai); if(x){ x.selesai = true; saveState(); $("liIsi").innerHTML = bina(); pasang(); } });
   };
   pasang();
 }
-function cetakLogIbu(pid){
+function cetakLogIbu(pid, jenis){
+  jenis = jenis || "ibu bapa";
   const p2 = S.pelajar.find(x => x.id === pid);
-  const arr = logIbuData(pid).slice().sort((x, y) => String(x.tarikh).localeCompare(String(y.tarikh)));
+  const arr = logIbuData(pid).filter(x => (x.jenis || "ibu bapa") === jenis).slice().sort((x, y) => String(x.tarikh).localeCompare(String(y.tarikh)));
   if(!arr.length){ toast("Tiada catatan"); return; }
   $("slipArea").innerHTML = '<div class="slip slip-halaman">' + kopHtml() +
-    '<header class="slip-head"><div><h1>' + hd("Log Komunikasi Ibu Bapa", "Parent Communication Log") + '</h1><p>' + esc(p2.nama) + " \u00b7 " + esc(S.subjek) + " \u00b7 " + esc(S.guru) + '</p></div><div class="slip-cop">LOG</div></header>' +
+    '<header class="slip-head"><div><h1>' + hd(jenis === "murid" ? "Log Perbualan Murid" : "Log Komunikasi Ibu Bapa", jenis === "murid" ? "Student Conference Log" : "Parent Communication Log") + '</h1><p>' + esc(p2.nama) + " \u00b7 " + esc(S.subjek) + " \u00b7 " + esc(S.guru) + '</p></div><div class="slip-cop">LOG</div></header>' +
     '<table><thead><tr><th>Tarikh</th><th>Cara</th><th>Perkara</th><th>Tindakan</th><th>Status</th></tr></thead><tbody>' +
     arr.map(x => '<tr><td>' + esc(x.tarikh) + '</td><td>' + esc(x.cara) + '</td><td>' + esc(x.isi) + '</td><td>' + esc(x.tindakan || "\u2014") + '</td><td>' + (x.selesai ? "Selesai" : x.susulan ? "Susulan" : "\u2014") + '</td></tr>').join("") +
     '</tbody></table><p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
@@ -7374,6 +7749,7 @@ function cetakProfilKelas(){
     '<div class="mini-head">Topik terkuat / terlemah (purata TP)</div>' +
     '<p style="font-size:10.5pt;margin:4px 0">Kuat: ' + (kuat2.map(x => esc(x.t.kod) + " (" + (Math.round(x.avg * 10) / 10) + ")").join(", ") || "\u2014") + '</p>' +
     '<p style="font-size:10.5pt;margin:4px 0">Lemah: ' + (lemah2.map(x => esc(x.t.kod) + " (" + (Math.round(x.avg * 10) / 10) + ")").join(", ") || "\u2014") + '</p>' +
+    (function(){ try{ const M = momentumData(); return '<div class="mini-head">Momentum (3\u20134 ujian terakhir)</div><p style="font-size:10.5pt;margin:4px 0">Menaik: ' + (M.naik.slice(0, 4).map(x => esc(x.p.nama) + " (+" + x.delta + ")").join(", ") || "\u2014") + '</p><p style="font-size:10.5pt;margin:4px 0">Menurun: ' + (M.turun.slice(0, 4).map(x => esc(x.p.nama) + " (" + x.delta + ")").join(", ") || "\u2014") + '</p>'; }catch(e){ return ""; } })() +
     '<p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + ' \u00b7 Untuk mesyuarat panitia / minggu pertama sesi</p></div>';
   closeDrawer(); cetakMula("cetak-slip");
 }
