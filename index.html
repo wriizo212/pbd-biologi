@@ -1783,7 +1783,7 @@ html[data-padat="1"] th{position:sticky;top:0}
    ========================================================= */
 const KEY = "pbd-biologi-v1";
 const KEY_BUKU = "pbd.buku.v1";
-const VERSI_APP = "Fasa 16 · 21 Sep 2026";
+const VERSI_APP = "Fasa 17 · 21 Sep 2026";
 const URL_APP = "https://wriizo212.github.io/pbd-biologi/";
 const QR_APP = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASgAAAEoAQMAAADRyf5aAAAABlBMVEUUPW7///+/1iNXAAABRklEQVR42u2ayw7CMAwEV/z/PxtE/ErblBxBTCpVpPJpZK/XFrKdI6KIIoqo74zSOK/LeM9fX+ehnfMPUSq0b1KBeXCLO7wOvCK7/KeNJFNQg9clL/OyVEMHrw/5NW7k14Z+DQELFUO/lryqP/aH/rjg1f2Fa9f8HV7HetSUY+oKBq9zfpWJqA7Z8gxex3p0Nkp27iiox6WfcEh1q9EIXsd6jAkosypqEV5XfsJS30PCmLd35m3n5fhSweA112MYieQUoOC1qMdQLOWttUd4neYha77eNaw0H15XvHwv0cQeP7Huj7mfbpvVtBvwOuWXTYIvm/oBvC73E8121SoMXnf7r4ZK8PrkV3Pkrg0rer+at9NNSD3l4HXDK/c5mVrk15pXyZbUxnB4LfTLwkdYjNvMj7f9MSchw09s+C/+eUMUUUT9UNQTL+itheYoi98AAAAASUVORK5CYII=";
 const KEY_CFG = "pbd-supabase-config";
@@ -4164,7 +4164,7 @@ function renderAnalisis(){
     '<p class="hint" style="margin-top:var(--sp-4)">Ini penilaian guru. Analisis Bahagian di atas ialah bukti markah. Bila kedua-duanya sepakat, kesimpulannya kukuh.</p></div>' +
     '<div class="card"><h2>Headcount <span class="sub">' + bilCapai + ' / ' + bilAda + ' sudah mencapai ETR</span></h2>' + headHtml +
     '<p class="hint" style="margin-top:var(--sp-3)">TOV daripada pentaksiran terawal. OTI1 dan OTI2 ialah sasaran berperingkat menuju ETR — tetapkan melalui panel pelajar. Jurang positif bermakna masih di bawah sasaran akhir.</p></div>' +
-    kadUnjuran() + kadRasmi() + kadRisikoTopik() + kadMomentum() + kadPerjalanan() + '<div class="card"><h2>Perbandingan Antara Kelas <span class="sub">' + esc(a ? a.nama : "—") + '</span></h2>' + kelasHtml + '<div class="row-actions" style="margin-top:var(--sp-3)"><button class="btn btn-sm" id="btnHaba">Peta haba kelas × topik…</button></div>' + '</div>';
+    kadUnjuran() + kadRasmi() + kadRisikoTopik() + kadMomentum() + kadBahagian() + kadPerjalanan() + '<div class="card"><h2>Perbandingan Antara Kelas <span class="sub">' + esc(a ? a.nama : "—") + '</span></h2>' + kelasHtml + '<div class="row-actions" style="margin-top:var(--sp-3)"><button class="btn btn-sm" id="btnHaba">Peta haba kelas × topik…</button></div>' + '</div>';
 
   $("analisisArea").querySelectorAll("[data-open]").forEach(b => b.onclick = () => openPelajar(b.dataset.open));
   const bh = $("btnHaba"); if(bh) bh.onclick = petaHabaTopik;
@@ -4354,7 +4354,7 @@ function openPelajar(pid){
   }).join("");
 
   let body =
-    '<div class="row-actions" style="margin-bottom:6px"><button class="btn btn-sm" data-logibu="' + pid + '">📞 Log ibu bapa</button><button class="btn btn-sm" data-logmurid="' + pid + '">👤 Log murid</button><button class="btn btn-sm" data-mesej="' + pid + '">💬 Mesej</button><button class="btn btn-sm" data-pngsijil="' + pid + '">⬇ Sijil PNG</button></div>' +
+    '<div class="row-actions" style="margin-bottom:6px"><button class="btn btn-sm" data-logibu="' + pid + '">📞 Log ibu bapa</button><button class="btn btn-sm" data-logmurid="' + pid + '">👤 Log murid</button><button class="btn btn-sm" data-mesej="' + pid + '">💬 Mesej</button><button class="btn btn-sm" data-sikap="' + pid + '">😊 Sikap</button><button class="btn btn-sm" data-pngsijil="' + pid + '">⬇ Sijil PNG</button></div>' +
     '<div class="mini-head">Sasaran berperingkat</div>' +
     '<div class="row-actions" style="gap:var(--sp-2);align-items:flex-start">' + sasaranSel + '</div>' +
     '<p class="hint" style="margin-top:0">OTI1 dan OTI2 ialah batu tanda pertengahan menuju ETR. Sasaran berperingkat lebih berkesan daripada satu sasaran akhir yang jauh.</p>' +
@@ -6377,7 +6377,7 @@ function cetakKitKongsi(){
   cetakMula("cetak-slip");
 }
 /* ---------- VERSI & CHANGELOG ---------- */
-const VERSI_APLIKASI = "Fasa 16 · 21 Sep 2026";
+const VERSI_APLIKASI = "Fasa 17 · 21 Sep 2026";
 const APA_BAHARU = [
   {v:"Fasa 10 · Sep 2026", p:["Pemilih 3 gaya sijil (Klasik Emas / Navy / Minimal)", "Lencana murid automatik + helaian lencana", "Denyut Rekod (streak) + Kalendar PBD", "Mod Kiosk auto-slaid untuk majlis", "Carian murid dalam palet (Ctrl+K)", "Pusat Cetak Pantas di Utama", "Tandatangan Ketua Panitia & Pengetua di skrin"]},
   {v:"Fasa 9.1 · Sep 2026", p:["Butang tema kini menu pilihan penuh (auto/siang/malam/royale)", "Tandatangan guru boleh dilukis terus di skrin — tiada muat naik gambar", "Template sijil premium baharu (bingkai emas, mohor, no. rekod)"]},
@@ -6775,6 +6775,13 @@ document.addEventListener("click", e => {
   const cpx22 = t.closest("#cpRawak"); if(cpx22){ bukaRawak(); return; }
   const cpx23 = t.closest("#cpEksekutif"); if(cpx23){ bukaEksekutif(); return; }
   const cpx24 = t.closest("#cpPemasa"); if(cpx24){ bukaPemasa(); return; }
+  const cpx25 = t.closest("#cpKumpulan"); if(cpx25){ bukaKumpulan(); return; }
+  const cpx26 = t.closest("#cpPBL"); if(cpx26){ bukaPBL(); return; }
+  const cpx27 = t.closest("#cpSikap"); if(cpx27){ bukaSikap(); return; }
+  const cpx28 = t.closest("#cpPeperiksaan"); if(cpx28){ cetakJadualPeperiksaan(); return; }
+  const cpx29 = t.closest("#cpBuletin"); if(cpx29){ bukaBuletin(); return; }
+  const cpx30 = t.closest("#cpDuduk"); if(cpx30){ bukaDuduk(); return; }
+  const csk = t.closest("[data-sikap]"); if(csk){ bukaSikap(csk.dataset.sikap); return; }
   const clm2 = t.closest("[data-logmurid]"); if(clm2){ bukaLogIbu(clm2.dataset.logmurid, "murid"); return; }
   const cms2 = t.closest("[data-mesej]"); if(cms2){ bukaMesej(cms2.dataset.mesej); return; }
   const cpSl = t.closest("#cpSlip"); if(cpSl){ go("markah"); setTimeout(() => { const b2 = document.getElementById("btnSlipPukal"); if(b2) b2.click(); }, 300); return; }
@@ -7055,8 +7062,351 @@ function kadCetakPantas(){
     '<button class="btn btn-sm btn-accent" id="cpSlip">\uD83D\uDDA8 Slip kelas</button>' +
     '<button class="btn btn-sm" id="cpSijil">\uD83C\uDFC5 Sijil</button>' +
     '<button class="btn btn-sm" id="cpMatriks">\uD83D\uDCCB Matriks</button>' +
-    '<button class="btn btn-sm" id="cpLapor">\uD83D\uDCCA Pelaporan</button><button class="btn btn-sm" id="cpSasaran">\uD83C\uDFAF Papan Sasaran</button><button class="btn btn-sm" id="cpTugas">\u2705 Tugas</button><button class="btn btn-sm" id="cpMinggu">\uD83D\uDCDD Ringkasan minggu</button><button class="btn btn-sm" id="cpMingguWA">\uD83D\uDCAC WhatsApp minggu</button><button class="btn btn-sm" id="cpQR">📱 QR ibu bapa</button><button class="btn btn-sm" id="cpPakej">📦 Pakej cetak</button><button class="btn btn-sm" id="cpJadual">🗓 Jadual waktu</button><button class="btn btn-sm" id="cpLabel">🏷 Label meja</button><button class="btn btn-sm" id="cpKonsol">👨‍👩‍👧 Konsultasi</button><button class="btn btn-sm" id="cpRasmi">📊 Markah rasmi</button><button class="btn btn-sm" id="cpPoster">🖼 Poster kelas</button><button class="btn btn-sm" id="cpSimulasi">🔮 Simulasi naik gred</button><button class="btn btn-sm" id="cpProfil">👥 Profil kelas</button><button class="btn btn-sm" id="cpRancangan">🗒 Rancangan minggu</button><button class="btn btn-sm" id="cpTiket">🎟 Tiket pujian</button><button class="btn btn-sm" id="cpMesej">💬 Mesej ibu bapa</button><button class="btn btn-sm" id="cpPapan">📺 Papan kelas</button><button class="btn btn-sm" id="cpBuku">📚 Buku tahunan</button><button class="btn btn-sm" id="cpPelan">🧭 Pelan ulang kaji</button><button class="btn btn-sm" id="cpHW">🏠 Tugasan rumah</button><button class="btn btn-sm" id="cpRawak">🎲 Soalan rawak</button><button class="btn btn-sm" id="cpEksekutif">📝 Ringkasan eksekutif</button><button class="btn btn-sm" id="cpPemasa">⏱ Pemasa ujian</button></div>' +
+    '<button class="btn btn-sm" id="cpLapor">\uD83D\uDCCA Pelaporan</button><button class="btn btn-sm" id="cpSasaran">\uD83C\uDFAF Papan Sasaran</button><button class="btn btn-sm" id="cpTugas">\u2705 Tugas</button><button class="btn btn-sm" id="cpMinggu">\uD83D\uDCDD Ringkasan minggu</button><button class="btn btn-sm" id="cpMingguWA">\uD83D\uDCAC WhatsApp minggu</button><button class="btn btn-sm" id="cpQR">📱 QR ibu bapa</button><button class="btn btn-sm" id="cpPakej">📦 Pakej cetak</button><button class="btn btn-sm" id="cpJadual">🗓 Jadual waktu</button><button class="btn btn-sm" id="cpLabel">🏷 Label meja</button><button class="btn btn-sm" id="cpKonsol">👨‍👩‍👧 Konsultasi</button><button class="btn btn-sm" id="cpRasmi">📊 Markah rasmi</button><button class="btn btn-sm" id="cpPoster">🖼 Poster kelas</button><button class="btn btn-sm" id="cpSimulasi">🔮 Simulasi naik gred</button><button class="btn btn-sm" id="cpProfil">👥 Profil kelas</button><button class="btn btn-sm" id="cpRancangan">🗒 Rancangan minggu</button><button class="btn btn-sm" id="cpTiket">🎟 Tiket pujian</button><button class="btn btn-sm" id="cpMesej">💬 Mesej ibu bapa</button><button class="btn btn-sm" id="cpPapan">📺 Papan kelas</button><button class="btn btn-sm" id="cpBuku">📚 Buku tahunan</button><button class="btn btn-sm" id="cpPelan">🧭 Pelan ulang kaji</button><button class="btn btn-sm" id="cpHW">🏠 Tugasan rumah</button><button class="btn btn-sm" id="cpRawak">🎲 Soalan rawak</button><button class="btn btn-sm" id="cpEksekutif">📝 Ringkasan eksekutif</button><button class="btn btn-sm" id="cpPemasa">⏱ Pemasa ujian</button><button class="btn btn-sm" id="cpKumpulan">🧩 Kumpulan</button><button class="btn btn-sm" id="cpPBL">🎞 Projek PBL</button><button class="btn btn-sm" id="cpSikap">😊 Sikap</button><button class="btn btn-sm" id="cpPeperiksaan">🗓 Jadual peperiksaan</button><button class="btn btn-sm" id="cpBuletin">📰 Buletin bulanan</button><button class="btn btn-sm" id="cpDuduk">🪑 Tempat duduk</button></div>' +
     '<p class="hint">Slip = untuk HBMP \u00b7 Matriks & Pelaporan = fail panitia \u00b7 Sijil = pengiktirafan.</p></div>';
+}
+/* ================= FASA 17 ================= */
+/* ---------- (1) Modul PBL ---------- */
+const PBL_KRIT = ["Idea & penyelesaian", "Kolaborasi kumpulan", "Produk / hasil", "Pembentangan"];
+function pblData(){ return (S.pbl = S.pbl || []); }
+function pblPurata(pid){
+  const arr = [];
+  pblData().forEach(a => { const o = (a.markah || {})[pid] || []; if(PBL_KRIT.some((_, i9) => o[i9] !== undefined)) arr.push(PBL_KRIT.reduce((n, _, i9) => n + (+o[i9] || 0), 0)); });
+  return arr.length ? arr.reduce((x, y) => x + y, 0) / arr.length : null;
+}
+function bukaPBL(){
+  const list = pelajarNow();
+  if(!list.length){ toast("Tiada pelajar"); return; }
+  const bina = () => {
+    const senarai = pblData().map(a => {
+      const pur2 = list.map(p2 => { const o = (a.markah || {})[p2.id] || []; return PBL_KRIT.some((_, i9) => o[i9] !== undefined) ? PBL_KRIT.reduce((n, _, i9) => n + (+o[i9] || 0), 0) : null; }).filter(v => v !== null);
+      const pur = pur2.length ? pur2.reduce((x, y) => x + y, 0) / pur2.length : null;
+      return '<div style="display:flex;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line)"><span style="flex:1;min-width:0"><b style="font-size:13px">' + esc(a.tajuk) + '</b><span class="hint" style="display:block;margin:0">' + esc(a.tarikh) + (pur !== null ? " \u00b7 purata kelas " + pur.toFixed(1) + "/20" : "") + '</span></span>' +
+        '<button class="btn btn-sm" data-pbl-isi="' + a.id + '">Isi markah</button><button class="btn btn-sm" data-pbl-del="' + a.id + '" style="border-color:#E0BDB8;color:var(--rose)">Padam</button></div>';
+    }).join("");
+    return '<div class="mini-head">Projek PBL (' + pblData().length + ')</div>' +
+      (pblData().length ? senarai : '<p class="hint">Belum ada projek. Tambah di bawah (cth: Projek 1 — Pencemaran Air).</p>') +
+      '<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">' +
+      '<input type="text" id="pblTajuk" placeholder="Tajuk projek" style="flex:1;min-width:150px">' +
+      '<input type="date" id="pblTarikh" value="' + new Date().toISOString().slice(0, 10) + '" style="max-width:170px">' +
+      '<button class="btn btn-sm btn-primary" id="pblTambah" style="flex:none">Tambah</button></div>' +
+      '<p class="hint">4 kriteria \u00d7 5 markah = 20 markah (selari penilaian PBD/PBL). Boleh guna Kumpulan (Pusat Pantas) untuk agihkan projek.</p>';
+  };
+  const binaIsi = aid => {
+    const a = pblData().find(x => x.id === aid);
+    if(!a) return "";
+    a.markah = a.markah || {};
+    return '<button class="btn btn-sm" id="pblKembali" style="margin-bottom:8px">\u2039 Senarai projek</button>' +
+      '<div class="mini-head">' + esc(a.tajuk) + ' \u2014 ' + esc(a.tarikh) + '</div>' +
+      '<div class="tw" style="max-height:330px;overflow:auto"><table class="ig"><thead><tr><th class="lapis">Pelajar</th>' +
+      PBL_KRIT.map((k4, i9) => '<th class="num" title="' + k4 + '">K' + (i9 + 1) + '</th>').join("") + '<th class="num">Jumlah</th></tr></thead><tbody>' +
+      list.map(p2 => {
+        const o = a.markah[p2.id] || [];
+        const adaR = PBL_KRIT.some((_, i9) => o[i9] !== undefined);
+        const jum = PBL_KRIT.reduce((n, _, i9) => n + (+o[i9] || 0), 0);
+        return '<tr><td class="lapis">' + esc(p2.nama) + '</td>' +
+          PBL_KRIT.map((k4, i9) => '<td><input type="number" min="0" max="5" step="1" data-pblm="' + aid + '|' + p2.id + '|' + i9 + '" value="' + (o[i9] !== undefined ? o[i9] : "") + '"></td>').join("") +
+          '<td class="num" data-pbljum="' + p2.id + '"><b>' + (adaR ? jum : "\u2014") + '</b></td></tr>';
+      }).join("") + '</tbody></table></div>' +
+      '<p class="hint">K1 ' + PBL_KRIT[0] + ' \u00b7 K2 ' + PBL_KRIT[1] + ' \u00b7 K3 ' + PBL_KRIT[2] + ' \u00b7 K4 ' + PBL_KRIT[3] + '</p>' +
+      '<div class="row-actions" style="margin-top:6px"><button class="btn btn-sm" id="pblCetak">Cetak kad projek</button></div>';
+  };
+  openDrawer("Rekod Projek PBL", "Rubrik projek \u2014 4 kriteria \u00d7 5 markah", '<div id="pblIsi">' + bina() + '</div>', '<button class="btn btn-sm btn-primary" id="pblTutup">Tutup</button>');
+  const pasang = () => {
+    $("pblTutup").onclick = closeDrawer;
+    $("pblTambah").onclick = () => {
+      const tj = $("pblTajuk").value.trim();
+      if(!tj){ toast("Isi tajuk projek"); return; }
+      pblData().push({id: "pb" + Date.now(), tajuk: tj, tarikh: $("pblTarikh").value || new Date().toISOString().slice(0, 10), markah: {}});
+      saveState(); $("pblIsi").innerHTML = bina(); pasang(); toast("Projek ditambah");
+    };
+    $("drawerBody").querySelectorAll("[data-pbl-isi]").forEach(b => b.onclick = () => { $("pblIsi").innerHTML = binaIsi(b.dataset.pblIsi); pasangIsi(b.dataset.pblIsi); });
+    $("drawerBody").querySelectorAll("[data-pbl-del]").forEach(b => b.onclick = async () => {
+      if(!(await tanya("Padam projek ini berserta markahnya?", {bahaya:true, ya:"Padam"}))) return;
+      S.pbl = pblData().filter(x => x.id !== b.dataset.pblDel);
+      saveState(); $("pblIsi").innerHTML = bina(); pasang();
+    });
+  };
+  const pasangIsi = aid => {
+    $("pblKembali").onclick = () => { $("pblIsi").innerHTML = bina(); pasang(); };
+    $("pblCetak").onclick = () => cetakPBL(aid);
+    $("drawerBody").querySelectorAll("[data-pblm]").forEach(inp => inp.onchange = () => {
+      const z = inp.dataset.pblm.split("|");
+      const a = pblData().find(x => x.id === z[0]);
+      if(!a) return;
+      a.markah = a.markah || {};
+      a.markah[z[1]] = a.markah[z[1]] || [];
+      let v = inp.value.trim();
+      if(v === "") delete a.markah[z[1]][+z[2]];
+      else { v = Math.max(0, Math.min(5, +v)); inp.value = v; a.markah[z[1]][+z[2]] = v; }
+      saveState();
+      const sel = document.querySelector('[data-pbljum="' + z[1] + '"] b');
+      if(sel){ const o = a.markah[z[1]]; const s2 = PBL_KRIT.reduce((n, _, i9) => n + (+o[i9] || 0), 0); sel.textContent = PBL_KRIT.some((_, i9) => o[i9] !== undefined) ? s2 : "\u2014"; }
+    });
+  };
+  pasang();
+}
+function cetakPBL(aid){
+  const a = pblData().find(x => x.id === aid);
+  const list = pelajarNow();
+  $("slipArea").innerHTML = '<div class="slip slip-halaman">' + kopHtml() +
+    '<header class="slip-head"><div><h1>' + hd("Rekod Projek PBL", "PBL Project Record") + ' \u2014 ' + esc(a.tajuk) + '</h1><p>' + esc(S.subjek) + " \u00b7 " + esc(kelasNow() ? kelasNow().nama : "") + " \u00b7 " + esc(a.tarikh) + '</p></div><div class="slip-cop">PBL</div></header>' +
+    '<table><thead><tr><th>Pelajar</th>' + PBL_KRIT.map((k4, i9) => '<th class="num">K' + (i9 + 1) + '</th>').join("") + '<th class="num">Jumlah /20</th></tr></thead><tbody>' +
+    list.map(p2 => {
+      const o = (a.markah || {})[p2.id] || [];
+      const adaR = PBL_KRIT.some((_, i9) => o[i9] !== undefined);
+      const jum = PBL_KRIT.reduce((n, _, i9) => n + (+o[i9] || 0), 0);
+      return '<tr><td>' + esc(p2.nama) + '</td>' + PBL_KRIT.map((k4, i9) => '<td class="num">' + (o[i9] !== undefined ? o[i9] : "\u2014") + '</td>').join("") + '<td class="num"><b>' + (adaR ? jum : "\u2014") + '</b></td></tr>';
+    }).join("") + '</tbody></table>' +
+    '<p class="slip-kaki">K1 ' + PBL_KRIT[0] + ' \u00b7 K2 ' + PBL_KRIT[1] + ' \u00b7 K3 ' + PBL_KRIT[2] + ' \u00b7 K4 ' + PBL_KRIT[3] + ' \u00b7 Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+  cetakMula("cetak-slip");
+}
+/* ---------- (2) Pembahagi kumpulan ---------- */
+function kumpulanJana(){
+  const list = pelajarNow();
+  const bil = Math.max(2, Math.min(8, +($("kuBil").value) || 4));
+  const mod = $("kuMod").value;
+  const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+  const akhir = ber.length ? ber[ber.length - 1] : null;
+  let urut = list.slice();
+  if(mod === "rawak"){ for(let i9 = urut.length - 1; i9 > 0; i9--){ const j4 = Math.floor(Math.random() * (i9 + 1)); const t5 = urut[i9]; urut[i9] = urut[j4]; urut[j4] = t5; } }
+  else if(mod === "markah" && akhir){ urut.sort((x, y) => (pct(akhir, y.id) === null ? -1 : pct(akhir, y.id)) - (pct(akhir, x.id) === null ? -1 : pct(akhir, x.id))); }
+  else if(mod === "tp"){ urut.sort((x, y) => { let a4 = null, b4 = null; try{ a4 = tpPurata(x.id); }catch(e){} try{ b4 = tpPurata(y.id); }catch(e){} return (b4 === null ? -1 : b4) - (a4 === null ? -1 : a4); }); }
+  const kump2 = [];
+  for(let i9 = 0; i9 < bil; i9++) kump2.push([]);
+  if(mod === "rawak"){ urut.forEach((p2, i9) => kump2[i9 % bil].push(p2)); }
+  else { urut.forEach((p2, i9) => { const pusingan = Math.floor(i9 / bil), dalam = i9 % bil; const idx = pusingan % 2 === 0 ? dalam : bil - 1 - dalam; kump2[idx].push(p2); }); }
+  return {kump2, bil, mod, akhir};
+}
+function bukaKumpulan(){
+  const list = pelajarNow();
+  if(!list.length){ toast("Tiada pelajar"); return; }
+  window.__kump = null;
+  const bina = () => {
+    let g = '<div class="row-actions" style="align-items:flex-end;flex-wrap:wrap"><label class="fld" style="margin:0;max-width:135px"><span>Bil. kumpulan</span><input type="number" id="kuBil" min="2" max="8" value="' + ((window.__kump && window.__kump.bil) || 4) + '" class="mono"></label>' +
+      '<label class="fld" style="margin:0;max-width:215px"><span>Cara</span><select id="kuMod"><option value="seimbang">Seimbang ikut markah</option><option value="rawak">Rawak</option><option value="tp">Ikut purata TP</option></select></label>' +
+      '<button class="btn btn-sm btn-accent" id="kuJana" style="flex:none">Jana kumpulan</button></div>';
+    if(window.__kump){
+      g += '<div class="mini-head">Hasil \u2014 ' + window.__kump.bil + ' kumpulan</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px">' +
+        window.__kump.kump2.map((kk, i9) => {
+          const avg = kk.map(p2 => window.__kump.akhir ? pct(window.__kump.akhir, p2.id) : null).filter(v => v !== null);
+          const avgV = avg.length ? Math.round(avg.reduce((x, y) => x + y, 0) / avg.length) : null;
+          return '<div style="border:1px solid var(--border);border-radius:11px;padding:9px 11px;background:var(--card)"><b style="font-size:12.5px">Kumpulan ' + (i9 + 1) + (avgV !== null ? ' <span class="hint" style="margin:0">purata ' + avgV + '%</span>' : "") + '</b><ol style="margin:6px 0 0;padding-left:18px;font-size:12px">' + kk.map(p2 => '<li>' + esc(p2.nama) + '</li>').join("") + '</ol></div>';
+        }).join("") + '</div>' +
+        '<div class="row-actions" style="margin-top:10px"><button class="btn btn-sm" id="kuSimpan">Simpan set</button><button class="btn btn-sm" id="kuCetak">Cetak senarai</button></div>';
+    }
+    const set = (S.kumpulan || []);
+    if(set.length) g += '<div class="mini-head">Set disimpan (' + set.length + ')</div>' + set.map(x => '<div style="display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)"><span style="flex:1;min-width:0;font-size:13px"><b>' + esc(x.nama) + '</b><span class="hint" style="display:block;margin:0">' + esc(x.tarikh) + " \u00b7 " + x.bil + ' kumpulan</span></span><button class="btn btn-sm" data-ku-lihat="' + x.id + '">Lihat</button><button class="btn btn-sm" data-ku-del="' + x.id + '" style="border-color:#E0BDB8;color:var(--rose)">Padam</button></div>').join("");
+    return g;
+  };
+  openDrawer("Pembahagi Kumpulan", "Rawak \u00b7 seimbang ikut markah \u00b7 ikut TP", '<div id="kuIsi">' + bina() + '</div>', '<button class="btn btn-sm btn-primary" id="kuTutup">Tutup</button>');
+  const pasang = () => {
+    $("kuTutup").onclick = closeDrawer;
+    $("kuJana").onclick = () => { window.__kump = kumpulanJana(); $("kuIsi").innerHTML = bina(); pasang(); };
+    const ks = $("kuSimpan"); if(ks) ks.onclick = () => {
+      if(!window.__kump) return;
+      S.kumpulan = S.kumpulan || [];
+      S.kumpulan.push({id: "kg" + Date.now(), nama: "Kumpulan " + new Date().toLocaleDateString("ms-MY"), tarikh: new Date().toISOString().slice(0, 10), bil: window.__kump.bil, set: window.__kump.kump2.map(kk => kk.map(p2 => p2.id))});
+      saveState(); $("kuIsi").innerHTML = bina(); pasang(); toast("Set kumpulan disimpan");
+    };
+    const kc = $("kuCetak"); if(kc) kc.onclick = () => cetakKumpulan(window.__kump);
+    $("drawerBody").querySelectorAll("[data-ku-lihat]").forEach(b => b.onclick = () => {
+      const x = (S.kumpulan || []).find(z => z.id === b.dataset.kuLihat);
+      if(x){ window.__kump = {kump2: x.set.map(arr => arr.map(pid2 => S.pelajar.find(z => z.id === pid2)).filter(Boolean)), bil: x.bil, akhir: null}; $("kuIsi").innerHTML = bina(); pasang(); }
+    });
+    $("drawerBody").querySelectorAll("[data-ku-del]").forEach(b => b.onclick = () => { S.kumpulan = (S.kumpulan || []).filter(z => z.id !== b.dataset.kuDel); saveState(); $("kuIsi").innerHTML = bina(); pasang(); });
+  };
+  pasang();
+}
+function cetakKumpulan(K){
+  if(!K){ toast("Jana kumpulan dahulu"); return; }
+  $("slipArea").innerHTML = '<div class="slip slip-halaman">' + kopHtml() + '<header class="slip-head"><div><h1>' + hd("Senarai Kumpulan", "Group List") + '</h1><p>' + esc(kelasNow() ? kelasNow().nama : "") + " \u00b7 " + esc(S.subjek) + " \u00b7 " + K.bil + ' kumpulan</p></div><div class="slip-cop">PBD</div></header>' +
+    K.kump2.map((kk, i9) => '<h2 style="font-size:11pt;margin-top:10px">Kumpulan ' + (i9 + 1) + '</h2><table><tbody>' + kk.map((p2, j4) => '<tr><td style="width:34px">' + (j4 + 1) + '</td><td>' + esc(p2.nama) + '</td></tr>').join("") + '</tbody></table>').join("") +
+    '<p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+  closeDrawer(); cetakMula("cetak-slip");
+}
+/* ---------- (3) Rekod sikap ---------- */
+const SIKAP_POS = ["Bantu rakan", "Aktif bertanya", "Kepimpinan", "Kerja berpasukan", "Fokus cemerlang"];
+const SIKAP_NEG = ["Tidak fokus", "Lewat", "Tidak bawa bahan", "Bising", "Kerja tidak siap"];
+function sikapData(pid){ S.sikap = S.sikap || {}; S.sikap[pid] = S.sikap[pid] || []; return S.sikap[pid]; }
+function bukaSikap(pidAwal){
+  const list = pelajarNow();
+  if(!list.length){ toast("Tiada pelajar"); return; }
+  window.__sikapPid = pidAwal || window.__sikapPid || (list[0] && list[0].id);
+  const bina = () => {
+    const p2 = list.find(x => x.id === window.__sikapPid) || list[0];
+    const arr = sikapData(p2.id).slice().sort((x, y) => String(y.tarikh).localeCompare(String(x.tarikh))).slice(0, 12);
+    const bilPos = Object.keys(S.sikap || {}).reduce((n, pid2) => n + (S.sikap[pid2] || []).filter(x => x.tanda > 0 && x.tarikh >= new Date(Date.now() - 7 * 86400000).toISOString().slice(0, 10)).length, 0);
+    const bilNeg = Object.keys(S.sikap || {}).reduce((n, pid2) => n + (S.sikap[pid2] || []).filter(x => x.tanda < 0 && x.tarikh >= new Date(Date.now() - 7 * 86400000).toISOString().slice(0, 10)).length, 0);
+    return '<div class="row-actions" style="align-items:flex-end;flex-wrap:wrap"><label class="fld" style="margin:0;flex:1;min-width:190px"><span>Murid</span><select id="skMurid">' + list.map(x => '<option value="' + x.id + '"' + (x.id === p2.id ? " selected" : "") + '>' + esc(x.nama) + '</option>').join("") + '</select></label></div>' +
+      '<div class="chip-list" style="margin:10px 0 4px"><span class="tag tag-siap">+ ' + bilPos + ' minggu ini</span><span class="tag tag-th">\u2212 ' + bilNeg + ' minggu ini</span></div>' +
+      '<div class="mini-head">Positif \u2014 ketuk untuk rekod</div><div class="chip-list">' + SIKAP_POS.map((t3, i9) => '<button class="btn btn-sm" data-sk-p="' + i9 + '" style="border-color:var(--accent-ink);color:var(--accent-ink)">+ ' + t3 + '</button>').join("") + '</div>' +
+      '<div class="mini-head">Perlu perhatian \u2014 ketuk untuk rekod</div><div class="chip-list">' + SIKAP_NEG.map((t3, i9) => '<button class="btn btn-sm" data-sk-n="' + i9 + '" style="border-color:#E0BDB8;color:var(--rose)">\u2212 ' + t3 + '</button>').join("") + '</div>' +
+      '<div class="mini-head">Rekod terkini \u2014 ' + esc(p2.nama) + '</div>' +
+      (arr.length ? arr.map(x => '<div style="display:flex;gap:8px;align-items:center;padding:5px 0;border-bottom:1px solid var(--line)"><span style="flex:1;font-size:12.5px"><b style="color:' + (x.tanda > 0 ? "var(--accent-ink)" : "var(--rose)") + '">' + (x.tanda > 0 ? "+" : "\u2212") + '</b> ' + esc(x.isi) + '</span><span class="hint" style="margin:0">' + esc(x.tarikh) + '</span><button class="btn btn-sm" data-sk-del="' + x.id + '">Padam</button></div>').join("") : '<p class="hint">Belum ada rekod sikap untuk murid ini.</p>') +
+      '<div class="row-actions" style="margin-top:8px"><button class="btn btn-sm" id="skCetak">Cetak rekod murid ini</button></div>';
+  };
+  openDrawer("Rekod Sikap & Sahsiah", "Ketik pantas \u2014 dokumentasi positif & perhatian", '<div id="skIsi">' + bina() + '</div>', '<button class="btn btn-sm btn-primary" id="skTutup">Tutup</button>');
+  const pasang = () => {
+    $("skTutup").onclick = closeDrawer;
+    $("skMurid").onchange = e => { window.__sikapPid = e.target.value; $("skIsi").innerHTML = bina(); pasang(); };
+    const rekod = (tanda, isi) => {
+      sikapData(window.__sikapPid).push({id: "sk" + Date.now() + Math.random().toString(36).slice(2, 5), tarikh: new Date().toISOString().slice(0, 10), tanda, isi});
+      saveState(); getar(6);
+      $("skIsi").innerHTML = bina(); pasang();
+      toast((tanda > 0 ? "+ " : "\u2212 ") + isi + " direkod");
+    };
+    $("drawerBody").querySelectorAll("[data-sk-p]").forEach(b => b.onclick = () => rekod(1, SIKAP_POS[+b.dataset.skP]));
+    $("drawerBody").querySelectorAll("[data-sk-n]").forEach(b => b.onclick = () => rekod(-1, SIKAP_NEG[+b.dataset.skN]));
+    $("drawerBody").querySelectorAll("[data-sk-del]").forEach(b => b.onclick = () => { S.sikap[window.__sikapPid] = sikapData(window.__sikapPid).filter(x => x.id !== b.dataset.skDel); saveState(); $("skIsi").innerHTML = bina(); pasang(); });
+    $("skCetak").onclick = () => cetakSikap(window.__sikapPid);
+  };
+  pasang();
+}
+function cetakSikap(pid){
+  const p2 = S.pelajar.find(x => x.id === pid);
+  const arr = sikapData(pid).slice().sort((x, y) => String(x.tarikh).localeCompare(String(y.tarikh)));
+  if(!arr.length){ toast("Tiada rekod"); return; }
+  $("slipArea").innerHTML = '<div class="slip slip-halaman">' + kopHtml() + '<header class="slip-head"><div><h1>' + hd("Rekod Sikap & Sahsiah", "Behaviour Record") + '</h1><p>' + esc(p2.nama) + " \u00b7 " + esc(S.subjek) + " \u00b7 " + esc(S.guru) + '</p></div><div class="slip-cop">PBD</div></header>' +
+    '<table><thead><tr><th>Tarikh</th><th>Sifat</th><th>Catatan</th></tr></thead><tbody>' + arr.map(x => '<tr><td>' + esc(x.tarikh) + '</td><td>' + (x.tanda > 0 ? "Positif" : "Perhatian") + '</td><td>' + esc(x.isi) + '</td></tr>').join("") + '</tbody></table>' +
+    '<p class="slip-kaki">' + arr.filter(x => x.tanda > 0).length + ' positif \u00b7 ' + arr.filter(x => x.tanda < 0).length + ' perlu perhatian \u00b7 Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+  closeDrawer(); cetakMula("cetak-slip");
+}
+/* ---------- (5) Trend bahagian ---------- */
+function miniLine(vals, saiz){
+  const w2 = saiz || 120, h2 = 34;
+  const ada = vals.filter(v => v !== null);
+  if(ada.length < 2) return '<span class="hint">data belum cukup</span>';
+  const lo = Math.min.apply(null, ada), hi = Math.max.apply(null, ada);
+  const x = i9 => 4 + i9 * (w2 - 8) / (vals.length - 1);
+  const y = v => h2 - 5 - (hi === lo ? .5 : (v - lo) / (hi - lo)) * (h2 - 12);
+  const pts = vals.map((v, i9) => v === null ? null : x(i9).toFixed(1) + "," + y(v).toFixed(1)).filter(Boolean).join(" ");
+  return '<svg width="' + w2 + '" height="' + h2 + '" viewBox="0 0 ' + w2 + ' ' + h2 + '"><polyline points="' + pts + '" fill="none" stroke="var(--accent-ink)" stroke-width="2" stroke-linecap="round"/></svg>';
+}
+function kadBahagian(){
+  const ber = asmtUrut().filter(a => a.bahagian && a.bahagian.length && Object.keys(S.markah[a.id] || {}).length >= 2);
+  if(ber.length < 2) return "";
+  const list = pelajarNow();
+  const bhg = ber[ber.length - 1].bahagian.slice(0, 3);
+  const kad2 = bhg.map(b => {
+    const vals = ber.slice(-6).map(a => {
+      const b2 = (a.bahagian || []).find(z => z.id === b.id) || (a.bahagian || [])[bhg.indexOf(b)];
+      if(!b2) return null;
+      const vs = list.map(p2 => { const raw = rawOf(a, p2.id); if(!raw || typeof raw !== "object" || raw[b2.id] === undefined || raw[b2.id] === "" || raw[b2.id] === "TH") return null; return (+raw[b2.id]) / b2.penuh * 100; }).filter(v => v !== null);
+      return vs.length ? Math.round(vs.reduce((x, y) => x + y, 0) / vs.length) : null;
+    });
+    const ada = vals.filter(v => v !== null);
+    const delta = ada.length >= 2 ? Math.round(ada[ada.length - 1] - ada[0]) : 0;
+    return '<div style="text-align:center;border:1px solid var(--border);border-radius:11px;padding:10px 8px;background:var(--card)"><div style="font-size:11.5px;color:var(--ink-3)">' + esc(b.nama.slice(0, 16)) + '</div>' + miniLine(vals, 132) + '<div style="font-size:13px"><b>' + (ada.length ? ada[ada.length - 1] + "%" : "\u2014") + '</b>' + (ada.length >= 2 ? ' <span style="color:' + (delta >= 0 ? "var(--accent-ink)" : "var(--rose)") + '">' + (delta >= 0 ? "+" : "") + delta + '</span>' : "") + '</div></div>';
+  }).join("");
+  return '<div class="card"><h2>Trend Bahagian <span class="sub">K1 \u00b7 K2 \u00b7 K3 merentas ' + ber.length + ' ujian</span></h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">' + kad2 + '</div><p class="hint">Purata % setiap kertas. Angka \u00b1 = perubahan dari ujian berbahagian terawal.</p></div>';
+}
+/* ---------- (6) Jadual peperiksaan ---------- */
+function cetakJadualPeperiksaan(){
+  const list2 = asmtUrut().filter(a => a.tarikh).slice().sort((x, y) => String(x.tarikh).localeCompare(String(y.tarikh)));
+  if(!list2.length){ toast("Tiada pentaksiran bertarikh"); return; }
+  $("slipArea").innerHTML = '<div class="slip slip-halaman">' + kopHtml() + '<header class="slip-head"><div><h1>' + hd("Jadual Peperiksaan", "Examination Timetable") + '</h1><p>' + esc(kelasNow() ? kelasNow().nama : "") + " \u00b7 " + esc(S.subjek) + " \u00b7 " + esc(S.guru) + '</p></div><div class="slip-cop">PBD</div></header>' +
+    '<table><thead><tr><th>Tarikh</th><th>Pentaksiran</th><th>Skop</th><th class="num">Markah penuh</th></tr></thead><tbody>' +
+    list2.map(a => '<tr><td><b>' + esc(a.tarikh) + '</b></td><td>' + esc(a.nama) + '</td><td>' + esc(a.wajaran || "\u2014") + '</td><td class="num">' + penuhOf(a) + '</td></tr>').join("") +
+    '</tbody></table><p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+  closeDrawer(); cetakMula("cetak-slip");
+}
+/* ---------- (7) Buletin bulanan ---------- */
+function buletinMuridHtml(pid, bulan){
+  const p2 = S.pelajar.find(x => x.id === pid);
+  if(!p2) return "";
+  const k2 = S.kelas.find(x => x.id === p2.kelasId) || {};
+  const ber = asmtUrut().filter(a => String(a.tarikh || "").slice(0, 7) === bulan);
+  const sk = sikapData(pid).filter(x => String(x.tarikh).slice(0, 7) === bulan);
+  const pos = sk.filter(x => x.tanda > 0).length, neg = sk.length - pos;
+  const hariK = hariHadirKelas(p2.kelasId).filter(t3 => t3.slice(0, 7) === bulan);
+  let hd2 = null;
+  if(hariK.length){ let th = 0; hariK.forEach(t3 => { const st = ((S.hadir[t3] || {}).isi || {})[pid] || "H"; if(st === "TH" || st === "MC") th++; }); hd2 = Math.round((hariK.length - th) / hariK.length * 100); }
+  const e = sasaranOf(pid, "etr");
+  const gt = (e === undefined || e === null) ? null : (GREDS().find(g2 => g2.i === e) || null);
+  const baris2 = ber.map(a => '<tr><td>' + esc(a.nama) + '</td><td class="num">' + (pct(a, pid) === null ? "TH" : pct(a, pid) + "%") + '</td><td class="num">' + ((pct(a, pid) === null) ? "\u2014" : (gredOf(pct(a, pid)) || {}).g || "\u2014") + '</td></tr>').join("");
+  return '<div class="slip slip-halaman">' + kopHtml() + '<header class="slip-head"><div><h1>' + hd("Buletin Bulanan", "Monthly Bulletin") + ' \u2014 ' + esc(bulan) + '</h1><p>' + esc(p2.nama) + " \u00b7 " + esc(k2.nama || "") + " \u00b7 " + esc(S.subjek) + '</p></div><div class="slip-cop">IBU BAPA</div></header>' +
+    (baris2 ? '<table><thead><tr><th>Pentaksiran bulan ini</th><th class="num">Markah</th><th class="num">Gred</th></tr></thead><tbody>' + baris2 + '</tbody></table>' : '<p class="hint">Tiada pentaksiran direkod bulan ini.</p>') +
+    '<table style="margin-top:6px"><tbody>' +
+    '<tr><td>Kehadiran bulan ini</td><td class="num"><b>' + (hd2 === null ? "\u2014" : hd2 + "%") + '</b></td></tr>' +
+    '<tr><td>Sikap direkod</td><td class="num"><b>' + pos + ' positif \u00b7 ' + neg + ' perlu perhatian</b></td></tr>' +
+    '<tr><td>Sasaran (ETR)</td><td class="num"><b>' + (gt ? gt.g : "\u2014") + '</b></td></tr>' +
+    '</tbody></table>' +
+    '<p style="font-size:9.5pt;margin-top:8px;line-height:1.6">Fokus bulan hadapan: ' + esc((hd2 !== null && hd2 < 90) ? "kehadiran konsisten" : "kekalkan momentum dan siapkan latihan tepat masa") + '. Sila hubungi guru untuk sebarang pertanyaan.</p>' +
+    (qrHTMLMurid(pid, 88) ? '<div class="slip-qr">' + qrHTMLMurid(pid, 88) + '<span>Ringkasan digital</span></div>' : "") +
+    '<p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + ' \u00b7 ' + esc(S.guru) + '</p></div>';
+}
+function bukaBuletin(){
+  openDrawer("Buletin Bulanan", "Ringkasan sebulan untuk ibu bapa", '<div id="buIsi"><label class="fld"><span>Bulan (YYYY-MM)</span><input type="month" id="buBulan" value="' + new Date().toISOString().slice(0, 7) + '"></label><p class="hint">Satu halaman per murid \u2014 sedia untuk mesyuarat atau dihantar kepada ibu bapa.</p><div class="row-actions" style="margin-top:8px"><button class="btn btn-sm btn-accent" id="buCetak">Cetak semua murid</button></div></div>', '<button class="btn btn-sm btn-primary" id="buTutup">Tutup</button>');
+  $("buTutup").onclick = closeDrawer;
+  $("buCetak").onclick = () => {
+    const bulan = $("buBulan").value || new Date().toISOString().slice(0, 7);
+    const list = pelajarNow();
+    if(!list.length){ toast("Tiada pelajar"); return; }
+    $("slipArea").innerHTML = list.map(p2 => buletinMuridHtml(p2.id, bulan)).join("");
+    closeDrawer(); cetakMula("cetak-slip");
+  };
+}
+/* ---------- (8) Peta tempat duduk ---------- */
+function bukaDuduk(){
+  const list = pelajarNow();
+  if(!list.length){ toast("Tiada pelajar"); return; }
+  window.__duduk = window.__duduk || null;
+  const bina = () => {
+    let g = '<div class="row-actions" style="align-items:flex-end;flex-wrap:wrap"><label class="fld" style="margin:0;max-width:110px"><span>Baris</span><input type="number" id="ddBaris" min="2" max="10" value="' + ((window.__duduk && window.__duduk.baris) || 4) + '" class="mono"></label><label class="fld" style="margin:0;max-width:110px"><span>Lajur</span><input type="number" id="ddLajur" min="2" max="10" value="' + ((window.__duduk && window.__duduk.lajur) || 4) + '" class="mono"></label>' +
+      '<label class="fld" style="margin:0;max-width:220px"><span>Susunan</span><select id="ddMod"><option value="rawak">Rawak</option><option value="markah">Ikut markah</option><option value="kumpulan">Ikut kumpulan terkini</option></select></label>' +
+      '<button class="btn btn-sm btn-accent" id="ddJana" style="flex:none">Jana peta</button></div>';
+    if(window.__duduk){
+      const D = window.__duduk;
+      g += '<div class="mini-head">Susunan kelas (baris 1 = depan)</div><table class="ig"><tbody>';
+      for(let r2 = 0; r2 < D.baris; r2++){
+        g += '<tr>';
+        for(let c2 = 0; c2 < D.lajur; c2++){
+          const p3 = D.grid[r2][c2];
+          g += '<td style="text-align:center;font-size:11.5px;padding:9px 4px;border:1px solid var(--line)">' + (p3 ? esc(p3.nama.split(" ").slice(0, 2).join(" ")) : '<span style="color:var(--ink-3)">\u2014</span>') + '</td>';
+        }
+        g += '</tr>';
+      }
+      g += '</tbody></table><div class="row-actions" style="margin-top:10px"><button class="btn btn-sm" id="ddCetak">Cetak peta</button></div>';
+    }
+    return g;
+  };
+  openDrawer("Peta Tempat Duduk", "Jana & cetak susunan meja", '<div id="ddIsi">' + bina() + '</div>', '<button class="btn btn-sm btn-primary" id="ddTutup">Tutup</button>');
+  const pasang = () => {
+    $("ddTutup").onclick = closeDrawer;
+    $("ddJana").onclick = () => {
+      const baris = Math.max(2, Math.min(10, +($("ddBaris").value) || 4));
+      const lajur = Math.max(2, Math.min(10, +($("ddLajur").value) || 4));
+      const mod = $("ddMod").value;
+      let urut = list.slice();
+      const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+      const akhir = ber.length ? ber[ber.length - 1] : null;
+      if(mod === "rawak"){ for(let i9 = urut.length - 1; i9 > 0; i9--){ const j4 = Math.floor(Math.random() * (i9 + 1)); const t5 = urut[i9]; urut[i9] = urut[j4]; urut[j4] = t5; } }
+      else if(mod === "markah" && akhir){ urut.sort((x, y) => (pct(akhir, y.id) === null ? -1 : pct(akhir, y.id)) - (pct(akhir, x.id) === null ? -1 : pct(akhir, x.id))); }
+      else if(mod === "kumpulan" && (S.kumpulan || []).length){
+        const setAkhir = S.kumpulan[S.kumpulan.length - 1];
+        const urutId = [];
+        setAkhir.set.forEach(arr => arr.forEach(pid2 => { if(urutId.indexOf(pid2) < 0) urutId.push(pid2); }));
+        urut.filter(p3 => urutId.indexOf(p3.id) < 0).forEach(p3 => urutId.push(p3.id));
+        urut = urutId.map(pid2 => S.pelajar.find(p3 => p3.id === pid2)).filter(Boolean);
+      }
+      const grid = [];
+      let k4 = 0;
+      for(let r2 = 0; r2 < baris; r2++){ grid.push([]); for(let c2 = 0; c2 < lajur; c2++) grid[r2].push(urut[k4++] || null); }
+      window.__duduk = {baris, lajur, grid};
+      $("ddIsi").innerHTML = bina(); pasang();
+    };
+    const dc = $("ddCetak"); if(dc) dc.onclick = cetakDuduk;
+  };
+  pasang();
+}
+function cetakDuduk(){
+  const D = window.__duduk;
+  if(!D){ toast("Jana peta dahulu"); return; }
+  $("slipArea").innerHTML = '<div class="slip slip-halaman">' + kopHtml() + '<header class="slip-head"><div><h1>' + hd("Peta Tempat Duduk", "Seating Plan") + '</h1><p>' + esc(kelasNow() ? kelasNow().nama : "") + " \u00b7 " + esc(S.subjek) + " \u00b7 " + esc(S.guru) + '</p></div><div class="slip-cop">PBD</div></header>' +
+    '<table><tbody>' + D.grid.map(row => '<tr>' + row.map(p3 => '<td style="text-align:center;font-size:9pt;padding:10px 4px;border:1px solid #C9C2B2;min-width:30mm">' + (p3 ? esc(p3.nama) : "") + '</td>').join("") + '</tr>').join("") + '</tbody></table>' +
+    '<p class="slip-kaki">Baris atas = depan kelas \u00b7 Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+  closeDrawer(); cetakMula("cetak-slip");
 }
 /* ================= FASA 16 ================= */
 /* ---------- (7) Ringkasan eksekutif ---------- */
@@ -9085,7 +9435,7 @@ function bukaItemAnalisis(){
       stat.filter(x => x.purata !== null && x.purata < 0.6 && x.gagal.length)
         .map(x => '<details style="margin-top:6px"><summary>' + esc(x.x.nama) + ' — ' + x.gagal.length + ' murid bawah 50%</summary><ul style="margin:6px 0 0;padding-left:20px">' +
           x.gagal.slice(0, 10).map(g => '<li>' + esc(g.p.nama) + ' — ' + g.v + '/' + x.x.penuh + '</li>').join("") + '</ul></details>').join("") +
-      (stat.filter(x => x.purata !== null).length > 1 ? '<div class="mini-head">Turutan keutamaan ulang kaji</div><ol style="margin:4px 0 0;padding-left:20px;font-size:12.5px">' + stat.filter(x => x.purata !== null).slice().sort((x, y) => x.purata - y.purata).map(x => '<li><b>' + esc(x.x.nama) + '</b> — ' + Math.round(x.purata * 100) + '% (' + x.gagal.length + ' murid <50%)</li>').join("") + '</ol>' : "") + '<p class="hint">Merah = bawah 50%. Soalan merah dengan senarai murid panjang = sasaran ulang kaji kelas seterusnya.</p>' + (function(){ const it2 = a.item || []; const bil2 = {R: 0, S: 0, T: 0}; it2.forEach(x => { if(bil2[x.aras] !== undefined) bil2[x.aras]++; }); return (bil2.R + bil2.S + bil2.T) ? '<p class="hint">Taburan aras kognitif: Rendah ' + bil2.R + ' \u00b7 Sederhana ' + bil2.S + ' \u00b7 Tinggi ' + bil2.T + ' soalan</p>' : ""; })();
+      (stat.filter(x => x.purata !== null).length > 1 ? '<div class="mini-head">Turutan keutamaan ulang kaji</div><ol style="margin:4px 0 0;padding-left:20px;font-size:12.5px">' + stat.filter(x => x.purata !== null).slice().sort((x, y) => x.purata - y.purata).map(x => '<li><b>' + esc(x.x.nama) + '</b> — ' + Math.round(x.purata * 100) + '% (' + x.gagal.length + ' murid <50%)</li>').join("") + '</ol>' : "") + '<p class="hint">Merah = bawah 50%. Soalan merah dengan senarai murid panjang = sasaran ulang kaji kelas seterusnya.</p>' + (function(){ const it2 = a.item || []; const bil2 = {R: 0, S: 0, T: 0}; it2.forEach(x => { if(bil2[x.aras] !== undefined) bil2[x.aras]++; }); return (bil2.R + bil2.S + bil2.T) ? '<p class="hint">Taburan aras kognitif: Rendah ' + bil2.R + ' \u00b7 Sederhana ' + bil2.S + ' \u00b7 Tinggi ' + bil2.T + ' soalan</p>' : ""; })()+ (function(){ const ada2 = list.filter(p2 => (a.itemMarkah && a.itemMarkah[p2.id] && Object.keys(a.itemMarkah[p2.id]).length)); if(ada2.length < 5 || !(a.item || []).length) return ""; const jumlah2 = p2 => (a.item || []).reduce((n3, x) => n3 + (+((a.itemMarkah[p2.id] || {})[x.id]) || 0), 0); const urut2 = ada2.slice().sort((x, y) => jumlah2(y) - jumlah2(x)); const n27 = Math.max(1, Math.round(urut2.length * 0.27)); const atas = urut2.slice(0, n27), bawah = urut2.slice(-n27); const baris3 = (a.item || []).map(x => { const pt = atas.map(p2 => (+((a.itemMarkah[p2.id] || {})[x.id]) || 0) / (x.penuh || 1)).reduce((s2, v) => s2 + v, 0) / atas.length; const pb = bawah.map(p2 => (+((a.itemMarkah[p2.id] || {})[x.id]) || 0) / (x.penuh || 1)).reduce((s2, v) => s2 + v, 0) / bawah.length; const D2 = pt - pb; const lab = D2 >= 0.3 ? '<span class="badge b-ok">Baik</span>' : D2 >= 0.1 ? '<span class="badge b-mid">Sederhana</span>' : '<span class="badge" style="background:var(--rose);color:#fff">Lemah</span>'; return '<tr><td>' + esc(x.nama) + '</td><td class="num">' + Math.round(pt * 100) + '%</td><td class="num">' + Math.round(pb * 100) + '%</td><td class="num"><b>' + (Math.round(D2 * 100) / 100) + '</b></td><td>' + lab + '</td></tr>'; }).join(""); return '<div class="mini-head">Kualiti soalan \u2014 indeks diskriminasi (D)</div><div class="tw"><table class="ig"><thead><tr><th>Soalan</th><th class="num">Atas 27%</th><th class="num">Bawah 27%</th><th class="num">D</th><th>Kualiti</th></tr></thead><tbody>' + baris3 + '</tbody></table></div><p class="hint">D tinggi = soalan membezakan murid kuat/lemah (baik). D bawah 0.1 = semak semula soalan.</p>'; })();
   };
   openDrawer("Analisis Item", "Markah per soalan — cari punca sebenar markah hilang",
     '<div id="iaIsi">' + tetapanHtml() + markahHtml() + '<div id="iaAnalisis">' + analisisHtml() + '</div></div>' +
