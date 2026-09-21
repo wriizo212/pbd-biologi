@@ -974,6 +974,40 @@ details.pasang p{margin:4px 0 2px}
 .tour-kad p{margin:0 0 10px;font-size:13px;color:var(--ink-3);line-height:1.5}
 .tour-kad .row-actions{margin:0}
 
+/* ============ 17g. WOW (Fasa 9) ============ */
+.tahun{position:fixed;inset:0;z-index:11000;background:linear-gradient(160deg,#0B1626 0%,#143D6E 55%,#0B1626 100%);color:#F5F1E6;display:flex;flex-direction:column;padding:4vh 5vw}
+.tahun-head{display:flex;align-items:baseline;gap:14px;flex:none}
+.tahun-head h1{font-size:clamp(18px,2vw,26px);margin:0;letter-spacing:.08em;text-transform:uppercase;color:#E8C766}
+.tahun-head .sub{color:rgba(245,241,230,.6)}
+.tahun .panggung{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;position:relative}
+.tahun .babak{display:none;max-width:840px}
+.tahun .babak.on{display:block;animation:rise .5s cubic-bezier(.2,.7,.3,1) both}
+.tahun .angka{font-size:clamp(62px,11vw,150px);letter-spacing:-.04em;line-height:1;font-weight:700;background:linear-gradient(180deg,#F5E9C6,#C9A227);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tahun .label-l{font-size:clamp(16px,1.6vw,22px);color:#F5F1E6;margin-top:10px}
+.tahun .kecil{font-size:clamp(12px,1.2vw,16px);color:rgba(245,241,230,.62);margin-top:8px}
+.tahun .tokoh{font-size:clamp(28px,4.4vw,62px);font-weight:700;color:#F5E9C6;letter-spacing:-.02em}
+.tahun-nav{display:flex;align-items:center;gap:14px;flex:none}
+.tahun-nav button{border:1px solid rgba(245,241,230,.3);background:rgba(255,255,255,.06);color:#F5F1E6;border-radius:50%;width:42px;height:42px;font-size:17px;cursor:pointer}
+.tahun-dots{display:flex;gap:7px}
+.tahun-dots i{width:8px;height:8px;border-radius:50%;background:rgba(245,241,230,.25);display:block}
+.tahun-dots i.on{background:#C9A227}
+.lap-unjur{font-size:9.5pt;color:#4E5A64;margin:4px 0 0}
+.lap-unjur b{color:#143D6E}
+.lap-foto{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0}
+.lap-foto figure{margin:0;width:52mm}
+.lap-foto img{width:52mm;height:38mm;object-fit:cover;border-radius:6px;border:1px solid #D7DEE3}
+.lap-foto figcaption{font-size:7.5pt;color:#4E5A64;margin-top:3px}
+.podium{display:flex;gap:14px;align-items:flex-end;justify-content:center;height:42vh;margin-top:2vh}
+.podium-s{width:22%;background:linear-gradient(180deg,rgba(201,162,39,.9),rgba(201,162,39,.22));border-radius:10px 10px 0 0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:12px;color:#241E06;min-height:60px}
+.podium-s b{font-size:clamp(20px,2.6vw,36px);line-height:1;margin-bottom:6px}
+.podium-s span{font-size:clamp(12px,1.3vw,17px);font-weight:600;color:#3A2E08;text-align:center}
+.podium-s i{font-size:clamp(11px,1.1vw,14px);color:#4A3A0C;font-style:normal}
+#kunciLapisan{position:fixed;inset:0;z-index:15000;background:rgba(9,14,22,.92);display:grid;place-items:center}
+.kunci-kad{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px 30px;max-width:330px;width:88vw;text-align:center}
+.kunci-ikon{font-size:34px}
+.kunci-kad input{margin:10px 0;text-align:center;font-size:20px;letter-spacing:.4em;width:100%}
+html[data-royale="1"]{--accent-ink:#C9A227;--accent-soft:rgba(201,162,39,.18);--accent-mist:rgba(201,162,39,.10);--primary:#C9A227}
+
 /* ============ 18. CETAK: SLIP & LAPORAN (dokumen rasmi) ============ */
 #slipArea{display:none}
 #laporanArea{display:none}
@@ -1324,7 +1358,9 @@ html[data-padat="1"] th{position:sticky;top:0}
   var t=j.tema||"auto";
   if(t==="auto") t=(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)?"malam":"siang";
   var d=document.documentElement;
-  d.setAttribute("data-theme",t);
+  var ro = t==="royale";
+  d.setAttribute("data-theme", ro?"malam":t);
+  d.setAttribute("data-royale", ro?"1":"0");
   d.setAttribute("data-padat", j.padat?"1":"0");
 }catch(e){document.documentElement.setAttribute("data-theme","siang");}})();
 </script>
@@ -1381,6 +1417,10 @@ html[data-padat="1"] th{position:sticky;top:0}
       <button class="btn btn-sm no-print" id="btnBentang">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5h16v10H4z"/><path d="M9 19.5h6M12 15.5v4"/></svg>
         Mod Pembentangan
+      </button>
+      <button class="btn btn-sm no-print" id="btnTahun">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.6l2.6 5.2 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.6 9.6l5.8-.8Z"/></svg>
+        Tahun Saya
       </button>
     </div>
 
@@ -1519,7 +1559,7 @@ html[data-padat="1"] th{position:sticky;top:0}
    ========================================================= */
 const KEY = "pbd-biologi-v1";
 const KEY_BUKU = "pbd.buku.v1";
-const VERSI_APP = "Fasa 8 · 21 Sep 2026";
+const VERSI_APP = "Fasa 9 · 21 Sep 2026";
 const URL_APP = "https://wriizo212.github.io/pbd-biologi/";
 const QR_APP = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASgAAAEoAQMAAADRyf5aAAAABlBMVEUUPW7///+/1iNXAAABRklEQVR42u2ayw7CMAwEV/z/PxtE/ErblBxBTCpVpPJpZK/XFrKdI6KIIoqo74zSOK/LeM9fX+ehnfMPUSq0b1KBeXCLO7wOvCK7/KeNJFNQg9clL/OyVEMHrw/5NW7k14Z+DQELFUO/lryqP/aH/rjg1f2Fa9f8HV7HetSUY+oKBq9zfpWJqA7Z8gxex3p0Nkp27iiox6WfcEh1q9EIXsd6jAkosypqEV5XfsJS30PCmLd35m3n5fhSweA112MYieQUoOC1qMdQLOWttUd4neYha77eNaw0H15XvHwv0cQeP7Huj7mfbpvVtBvwOuWXTYIvm/oBvC73E8121SoMXnf7r4ZK8PrkV3Pkrg0rer+at9NNSD3l4HXDK/c5mVrk15pXyZbUxnB4LfTLwkdYjNvMj7f9MSchw09s+C/+eUMUUUT9UNQTL+itheYoi98AAAAASUVORK5CYII=";
 const KEY_CFG = "pbd-supabase-config";
@@ -3727,6 +3767,7 @@ function sijilPenghargaan(){
     closeDrawer();
     $("slipArea").innerHTML = senarai.map(x => sijilHtml(x)).join("");
     cetakMula("cetak-slip");
+    konfeti(80);
   };
 }
 /* ---------- Peta haba kelas x topik (pandangan panitia) ---------- */
@@ -3861,7 +3902,7 @@ function renderAnalisis(){
     '<p class="hint" style="margin-top:var(--sp-4)">Ini penilaian guru. Analisis Bahagian di atas ialah bukti markah. Bila kedua-duanya sepakat, kesimpulannya kukuh.</p></div>' +
     '<div class="card"><h2>Headcount <span class="sub">' + bilCapai + ' / ' + bilAda + ' sudah mencapai ETR</span></h2>' + headHtml +
     '<p class="hint" style="margin-top:var(--sp-3)">TOV daripada pentaksiran terawal. OTI1 dan OTI2 ialah sasaran berperingkat menuju ETR — tetapkan melalui panel pelajar. Jurang positif bermakna masih di bawah sasaran akhir.</p></div>' +
-    '<div class="card"><h2>Perbandingan Antara Kelas <span class="sub">' + esc(a ? a.nama : "—") + '</span></h2>' + kelasHtml + '<div class="row-actions" style="margin-top:var(--sp-3)"><button class="btn btn-sm" id="btnHaba">Peta haba kelas × topik…</button></div>' + '</div>';
+    kadUnjuran() + '<div class="card"><h2>Perbandingan Antara Kelas <span class="sub">' + esc(a ? a.nama : "—") + '</span></h2>' + kelasHtml + '<div class="row-actions" style="margin-top:var(--sp-3)"><button class="btn btn-sm" id="btnHaba">Peta haba kelas × topik…</button></div>' + '</div>';
 
   $("analisisArea").querySelectorAll("[data-open]").forEach(b => b.onclick = () => openPelajar(b.dataset.open));
   const bh = $("btnHaba"); if(bh) bh.onclick = petaHabaTopik;
@@ -4053,6 +4094,7 @@ function openPelajar(pid){
       }).join("") + '</ul>' : '<p class="hint">Belum ada rekod.</p>');
 
   body += '<div id="evidenWrap" data-eviden-wrap="' + pid + '">' + evidenSeksyenHtml(pid) + "</div>";
+  body += seksyenHubunganHtml(pid);
   openDrawer(p.nama, p.noMaktab + " · " + (S.kelas.find(k => k.id === p.kelasId) || {}).nama, body,
     '<button class="btn btn-sm" id="dSlip">Slip laporan</button>' +
     '<button class="btn btn-sm" id="dRingkas">Salin ringkasan</button>' +
@@ -4213,7 +4255,7 @@ function slipHtml(pid, kelasKhas){
       ((S.ulasan[pid] || "").trim() ? '<h2>Ulasan guru mata pelajaran</h2><p class="slip-ulasan-teks">' + esc(S.ulasan[pid].trim()) + '</p>' : "") +
       (inter.length ? '<h2>Sokongan yang diberikan</h2><ul>' + inter.map(i => '<li>' + esc(i.tindakan) + ' <i>(' + esc(i.tarikh) + ')</i></li>').join("") + '</ul>' : "") +
       '<h2>Ulasan guru</h2><div class="slip-ulasan"></div>' +
-      '<div class="slip-tandatangan"><div>' + ((S.kop && S.kop.tt) ? '<img class="tt-img" src="' + esc(S.kop.tt) + '" alt="">' : "") + '<span>Tandatangan guru</span></div><div><span>Tandatangan ibu bapa / penjaga</span></div></div>' +
+      '<div class="slip-tandatangan"><div>' + ((S.kop && S.kop.tt) ? '<img class="tt-img" src="' + esc(S.kop.tt) + '" alt="">' : "") + '<span>Tandatangan guru</span></div>' + (((S.ttIbu || {})[pid]) ? '<img class="tt-img" src="' + esc(S.ttIbu[pid]) + '" alt="">' : "") + '<div><span>Tandatangan ibu bapa / penjaga</span></div></div>' +
       '<p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + ' · Rekod Pentaksiran Bilik Darjah · Dokumen ini tidak sah tanpa tandatangan guru.</p>' +
     '</div>';
 
@@ -4672,6 +4714,11 @@ function secUmum(){
   return secBuku() +
     '<label class="fld"><span>Nama guru</span><input type="text" id="sGuru" value="' + esc(S.guru) + '"></label>' +
     '<label class="fld"><span>Nama aplikasi (pilihan)</span><input type="text" id="sAppNama" value="' + esc(S.appNama || "") + '" placeholder="' + esc(namaApp()) + '"><span class="hint">Kosongkan untuk ikut subjek — kini: “' + esc(namaApp()) + '”.</span></label>' +
+    '<div class="mini-head">Kunci aplikasi</div>' +
+    '<div class="row-actions"><button class="btn btn-sm" id="pinSet">' + ((kunciTetap() && kunciTetap().hash) ? "Tukar PIN" : "Tetapkan PIN…") + '</button>' +
+    ((kunciTetap() && kunciTetap().hash) ? '<button class="btn btn-sm" id="pinBuang" style="border-color:#E0BDB8;color:var(--rose)">Buang PIN</button>' : '') +
+    '<select id="pinMinit" style="max-width:190px" aria-label="Auto-kunci">' + [[5, "Auto-kunci: 5 minit"], [10, "Auto-kunci: 10 minit"], [30, "Auto-kunci: 30 minit"], [0, "Auto-kunci: mati"]].map(o => '<option value="' + o[0] + '"' + ((((kunciTetap() || {}).minit !== undefined ? kunciTetap().minit : 10) === o[0]) ? " selected" : "") + '>' + o[1] + '</option>').join("") + '</select></div>' +
+    '<p class="hint">PIN melindungi daripada pandangan sekali lalu — bukan penyulitan. Sesuai untuk peranti yang dikongsi.</p>' +
     secKop() +
     secSubjek() +
     (() => { return '<label class="fld"><span>Tingkatan</span><select id="sTingkatan">' +
@@ -4709,6 +4756,9 @@ function wireUmum(){
   $("sGuru").onchange = e => { S.guru = e.target.value.trim() || "Cikgu"; saveState(); paintHeader(); };
   const anm = $("sAppNama");
   if(anm) anm.onchange = () => { S.appNama = anm.value.trim(); saveState(); setMerek(); toast("Nama aplikasi dikemas kini"); };
+  const ps2 = $("pinSet"); if(ps2) ps2.onclick = tetapkanPIN;
+  const pb3 = $("pinBuang"); if(pb3) pb3.onclick = buangPIN;
+  const pm2 = $("pinMinit"); if(pm2) pm2.onchange = () => setAutoKunci(+pm2.value);
   wireBuku();
   wireKop();
   wireNotif();
@@ -5764,6 +5814,14 @@ function laporanIndividuHtml(pid){
     return {k:t.kod, v, lbl: v ? String(v) : "–", c: !v ? "var(--surface-2)" : (v < 3 ? "var(--rose)" : v < 4 ? "var(--amber)" : "var(--accent-ink)")};
   }), 6);
   const ulasan = (S.ulasan[pid] || "").trim() || ulasanAuto(p);
+  const evid = (S.eviden && S.eviden[pid]) || [];
+  const fotos = evid.filter(e2 => e2.adaFoto && EVID.cache && EVID.cache[e2.id]).slice(0, 4);
+  const sekatEviden = evid.length ? ('<h2>Evidens</h2>' +
+    (fotos.length ? '<div class="lap-foto">' + fotos.map(e2 => '<figure><img src="' + EVID.cache[e2.id] + '" alt=""><figcaption>' + esc(e2.tajuk) + '</figcaption></figure>').join("") + '</div>' : "") +
+    '<ul style="font-size:9.5pt;line-height:1.7;padding-left:20px">' + evid.slice(0, 8).map(e2 => '<li>' + esc(e2.tajuk) + (e2.nota ? " — " + esc(e2.nota) : "") + ' <i>(' + new Date(e2.masa).toLocaleDateString("ms-MY") + ')</i></li>').join("") + '</ul>') : "";
+  const inter2 = (S.intervensi || []).filter(ix => ix.pelajarId === pid);
+  const sekatInter = inter2.length ? ('<h2>Intervensi & Sokongan</h2><div class="tw"><table><thead><tr><th>Tarikh</th><th>Tindakan</th></tr></thead><tbody>' +
+    inter2.map(ix => '<tr><td>' + esc(ix.tarikh || "") + '</td><td style="white-space:normal">' + esc(ix.tindakan) + '</td></tr>').join("") + '</tbody></table></div>') : "";
   const markahRows = urut.map(x => {
     const th = isTH(x, pid);
     const v = pct(x, pid);
@@ -5778,11 +5836,11 @@ function laporanIndividuHtml(pid){
     '<span><b>' + (posA[pid] ? posA[pid] + "/" + kelasList.length : "—") + '</b>Kedudukan kelas</span>' +
     '<span><b>' + (tpAvg === null ? "—" : tpAvg.toFixed(1)) + '</b>TP purata (maks 6)</span>' +
     '<span><b>' + (akhir ? esc(akhir.nama.split(" ").slice(0, 2).join(" ")) : "—") + '</b>Pentaksiran akhir</span></div>' +
-    '<h2>Trend Markah — murid vs purata kelas</h2>' + graf +
+    ((u2 => u2 ? '<p class="lap-unjur">Unjuran SPM: <b>' + u2.ramal + '%</b> (julat ' + u2.bawah + "–" + u2.atas + '%, gred dijangka <b>' + u2.gred + '</b>) — berdasarkan trend murid sendiri.</p>' : "")(unjuranMurid(pid))) + '<h2>Trend Markah — murid vs purata kelas</h2>' + graf +
     '<h2>Penguasaan Standard Kandungan (TP)</h2>' + barTp +
     '<h2>Ulasan</h2><p class="lap-ulasan">' + esc(ulasan) + '</p>' +
     '<h2>Butiran Pentaksiran</h2><div class="tw"><table><thead><tr><th>Pentaksiran</th><th class="num">Tarikh</th><th class="num">Markah</th><th class="num">Gred</th><th class="num">Ked.</th></tr></thead><tbody>' + markahRows + '</tbody></table></div>' +
-    '<div class="slip-tandatangan"><div>' + ((S.kop && S.kop.tt) ? '<img class="tt-img" src="' + esc(S.kop.tt) + '" alt="">' : "") + '<span>Tandatangan guru</span></div><div><span>Tandatangan ibu bapa / penjaga</span></div></div>' +
+    sekatEviden + sekatInter + '<div class="slip-tandatangan"><div>' + ((S.kop && S.kop.tt) ? '<img class="tt-img" src="' + esc(S.kop.tt) + '" alt="">' : "") + '<span>Tandatangan guru</span></div>' + (((S.ttIbu || {})[pid]) ? '<img class="tt-img" src="' + esc(S.ttIbu[pid]) + '" alt="">' : "") + '<div><span>Tandatangan ibu bapa / penjaga</span></div></div>' +
     '<p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + ((S.kop && S.kop.nama) ? ' · ' + esc(S.kop.nama) : "") + '</p></div>';
 }
 function pilihLaporanIndividu(){
@@ -5803,12 +5861,16 @@ function pilihLaporanIndividu(){
   $("lpSemua").onclick = () => $("drawerBody").querySelectorAll(".lapPil").forEach(c => c.checked = true);
   $("lpKosong").onclick = () => $("drawerBody").querySelectorAll(".lapPil").forEach(c => c.checked = false);
   $("lpBatal").onclick = closeDrawer;
-  $("lpCetak").onclick = () => {
+  $("lpCetak").onclick = async () => {
     const ids = Array.from($("drawerBody").querySelectorAll(".lapPil")).filter(c => c.checked).map(c => c.value);
     if(!ids.length){ toast("Tiada pelajar dipilih"); return; }
+    const fotoIds = [];
+    ids.forEach(id => ((S.eviden || {})[id] || []).forEach(e2 => { if(e2.adaFoto) fotoIds.push(e2.id); }));
+    if(fotoIds.length) await EVID.pramuat(fotoIds);
     closeDrawer();
     $("slipArea").innerHTML = ids.map(id => laporanIndividuHtml(id)).join("");
     cetakMula("cetak-slip");
+    konfeti(60);
     toast("Menyediakan " + ids.length + " laporan individu");
   };
 }
@@ -5853,9 +5915,17 @@ const EVID = {
   async simpanFoto(id, data){
     try{ const db = await this.buka(); await new Promise((res, rej) => { const r = db.transaction("foto", "readwrite").objectStore("foto").put({id, data}); r.onsuccess = res; r.onerror = rej; }); return true; }catch(e){ return false; }
   },
+  cache: {},
   async ambilFoto(id){
-    try{ const db = await this.buka(); return await new Promise(res => { const r = db.transaction("foto").objectStore("foto").get(id); r.onsuccess = () => res(r.result ? r.result.data : null); r.onerror = () => res(null); }); }catch(e){ return null; }
+    try{
+      if(this.cache[id]) return this.cache[id];
+      const db = await this.buka();
+      const d = await new Promise(res => { const r = db.transaction("foto").objectStore("foto").get(id); r.onsuccess = () => res(r.result ? r.result.data : null); r.onerror = () => res(null); });
+      if(d) this.cache[id] = d;
+      return d;
+    }catch(e){ return null; }
   },
+  async pramuat(ids){ try{ await Promise.all(ids.map(id => this.ambilFoto(id))); }catch(e){} },
   async padamFoto(id){
     try{ const db = await this.buka(); await new Promise(res => { const r = db.transaction("foto", "readwrite").objectStore("foto").delete(id); r.onsuccess = res; r.onerror = res; }); }catch(e){}
   }
@@ -6010,8 +6080,9 @@ function cetakKitKongsi(){
   cetakMula("cetak-slip");
 }
 /* ---------- VERSI & CHANGELOG ---------- */
-const VERSI_APLIKASI = "Fasa 8 · 21 Sep 2026";
+const VERSI_APLIKASI = "Fasa 9 · 21 Sep 2026";
 const APA_BAHARU = [
+  {v:"Fasa 9 · Sep 2026 (WOW)", p:["Tahun Saya — recap beranimasi hujung tahun", "Tandatangan ibu bapa di skrin (jari)", "Unjuran SPM setiap murid (regresi)", "WhatsApp ibu bapa + baca ringkasan dengan suara", "Portfolio murid bergambar evidens", "Tema Royale (hitam-emas) + konfeti + podium", "Kunci PIN + auto-lock"]},
   {v:"Fasa 8 · Sep 2026", p:["Laporan individu bergraf (trend + TP + ulasan)", "Cetak Pelaporan PBD rasmi + jana ulasan automatik", "Evidens teks & foto ringan untuk audit PBD", "Walkthrough kali pertama untuk guru baharu", "Kit kongsi rakan guru + nama aplikasi boleh dikustom", "Sandaran ke folder pilihan (Chrome desktop)"]},
   {v:"Fasa 7 · Sep 2026", p:["Sandaran JSON merangkumi semua buku", "Cetak matriks PBD A4 landskap", "Analisis item (per soalan)", "Eksport Excel 3 helaian", "Bantuan & panduan awan dalam app", "Arkib / tutup tahun / naik kelas", "Mod pembentangan + share target"]},
   {v:"Fasa 6 · Sep 2026", p:["Gerakan halus + haptik + animasi carta", "Tandatangan guru pada dokumen", "Sijil penghargaan", "Papan semua kelas + peta haba + paling meningkat", "Titik Pulih automatik (7 hari)", "Splash iOS + toast kemas kini"]},
@@ -6111,6 +6182,346 @@ async function statusFolder(){
     el.textContent = "Folder: " + (h.name || "(dipilih)") + " · " + (p === "granted" ? "aktif — ditulis automatik setiap hari" : "perlu kebenaran semula (tekan Simpan sekarang)");
   }catch(e){ el.textContent = "—"; }
 }
+/* ================= FASA 9 — WOW ================= */
+/* (1) Tahun Saya — recap beranimasi */
+function tahunSayaData(){
+  const list = S.pelajar || [];
+  let tpBil = 0;
+  Object.keys(S.pbd || {}).forEach(t => { tpBil += Object.keys(S.pbd[t] || {}).length; });
+  const log = S.pbdLog || [];
+  const hari = new Set(log.map(l => String(l.tarikh || "").slice(0, 10)).filter(Boolean)).size;
+  let mkBil = 0;
+  Object.keys(S.markah || {}).forEach(a => { mkBil += Object.keys(S.markah[a] || {}).length; });
+  const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+  let meningkat = null;
+  if(ber.length >= 2){
+    const a1 = ber[0], a2 = ber[ber.length - 1];
+    list.forEach(pp => {
+      const v1 = pct(a1, pp.id), v2 = pct(a2, pp.id);
+      if(v1 !== null && v2 !== null){ const dd = v2 - v1; if(!meningkat || dd > meningkat.d) meningkat = {p:pp, d:dd, v1, v2}; }
+    });
+  }
+  let topikLemah = null, topikKuat = null;
+  S.topik.forEach(t => {
+    const vv = list.map(pp => S.pbd[t.id] && S.pbd[t.id][pp.id]).filter(Boolean);
+    if(!vv.length) return;
+    const av = vv.reduce((x, y) => x + y, 0) / vv.length;
+    if(!topikLemah || av < topikLemah.av) topikLemah = {t, av};
+    if(!topikKuat || av > topikKuat.av) topikKuat = {t, av};
+  });
+  let kelasNaik = null;
+  if(ber.length >= 2){
+    const avK = ax => { const vv = list.map(pp => pct(ax, pp.id)).filter(v => v !== null); return vv.length ? vv.reduce((x, y) => x + y, 0) / vv.length : null; };
+    const v1 = avK(ber[0]), v2 = avK(ber[ber.length - 1]);
+    if(v1 !== null && v2 !== null) kelasNaik = Math.round(v2 - v1);
+  }
+  let terbaik = null;
+  const akhir = ber.length ? ber[ber.length - 1] : null;
+  if(akhir) list.forEach(pp => { const v = pct(akhir, pp.id); if(v !== null && (!terbaik || v > terbaik.v)) terbaik = {p:pp, v}; });
+  return {list, tpBil, hari, mkBil, ber:ber.length, meningkat, topikLemah, topikKuat, kelasNaik, terbaik};
+}
+function konfeti(bil){
+  try{
+    if(kurangGerakMQ.matches) return;
+    const warna = ["#C9A227", "#143D6E", "#E8C766", "#5B8DEF", "#F1F3F2"];
+    const wrap = document.createElement("div");
+    wrap.style.cssText = "position:fixed;inset:0;pointer-events:none;z-index:12000;overflow:hidden";
+    document.body.appendChild(wrap);
+    for(let i = 0; i < (bil || 90); i++){
+      const s = document.createElement("i");
+      const size = 5 + Math.random() * 7;
+      s.style.cssText = "position:absolute;top:-24px;left:" + (Math.random() * 100) + "%;width:" + size + "px;height:" + (size * 0.6) + "px;background:" + warna[i % warna.length] + ";border-radius:1.5px;opacity:.95";
+      wrap.appendChild(s);
+      s.animate([
+        {transform: "translateY(0) rotate(0deg)", opacity: 1},
+        {transform: "translateY(" + (60 + Math.random() * 45) + "vh) rotate(" + (Math.random() * 720 - 360) + "deg)", opacity: .85}
+      ], {duration: 1600 + Math.random() * 1500, easing: "cubic-bezier(.2,.5,.4,1)", fill: "forwards", delay: Math.random() * 450});
+    }
+    setTimeout(() => wrap.remove(), 3800);
+  }catch(e){}
+}
+function bukaTahunSaya(){
+  const d = tahunSayaData();
+  if(!d.list.length){ toast("Belum ada data untuk recap"); return; }
+  const thn = new Date().getFullYear();
+  const sl = [];
+  sl.push('<div class="tokoh">' + esc(S.subjek) + " · " + thn + '</div><div class="label-l">Tahun PBD anda — jom imbas kembali ✨</div><div class="kecil">' + d.list.length + " murid · " + S.asmt.length + " pentaksiran · " + S.topik.length + " standard kandungan</div>");
+  sl.push('<div class="angka" data-kira="' + d.tpBil + '">0</div><div class="label-l">Tahap Penguasaan direkod</div><div class="kecil">' + (d.hari ? "merentas " + d.hari + " hari merekod · " : "") + "setiap satu detik kecil yang mengubah anak-anak</div>");
+  sl.push('<div class="angka" data-kira="' + d.mkBil + '">0</div><div class="label-l">markah direkod</div><div class="kecil">dalam ' + d.ber + " pentaksiran yang dianalisis sepanjang tahun</div>");
+  if(d.meningkat) sl.push('<div class="kecil">Lonjakan terbesar tahun ini</div><div class="tokoh">' + esc(d.meningkat.p.nama) + '</div><div class="angka" style="font-size:clamp(46px,7vw,92px)" data-kira="' + Math.round(d.meningkat.d) + '" data-tanda="+">0</div><div class="label-l">mata peningkatan</div><div class="kecil">' + Math.round(d.meningkat.v1) + "% → " + Math.round(d.meningkat.v2) + "%</div>");
+  if(d.topikLemah && d.topikKuat) sl.push('<div class="kecil">Topik paling mencabar</div><div class="tokoh" style="font-size:clamp(22px,3.2vw,42px)">' + esc(d.topikLemah.t.nama) + '</div><div class="kecil">TP purata ' + d.topikLemah.av.toFixed(1) + '</div><div style="height:18px"></div><div class="kecil">Paling dikuasai</div><div class="tokoh" style="font-size:clamp(20px,2.6vw,34px);color:#8FD3A2">' + esc(d.topikKuat.t.nama) + '</div><div class="kecil">TP purata ' + d.topikKuat.av.toFixed(1) + '</div>');
+  if(d.kelasNaik !== null || d.terbaik) sl.push(
+    (d.kelasNaik !== null ? '<div class="angka" style="font-size:clamp(46px,7vw,88px)" data-kira="' + Math.abs(d.kelasNaik) + '" data-tanda="' + (d.kelasNaik >= 0 ? "+" : "-") + '">0</div><div class="label-l">mata perubahan purata kelas</div>' : "") +
+    (d.terbaik ? '<div class="kecil" style="margin-top:18px">Markah tertinggi</div><div class="tokoh" style="font-size:clamp(22px,3vw,38px)">' + esc(d.terbaik.p.nama) + " — " + d.terbaik.v + "%</div>" : ""));
+  sl.push('<div class="tokoh">Syabas, cikgu! 🎉</div><div class="label-l">Setiap rekod ini bermakna untuk seorang murid.</div><div class="kecil">Tahun hadapan bermula dengan satu ketukan.</div>');
+  const el = document.createElement("div");
+  el.className = "tahun"; el.id = "tahunSaya";
+  el.innerHTML = '<div class="tahun-head"><h1>Tahun Saya ✨</h1><span class="sub">' + esc((S.kop && S.kop.nama) || S.guru || "") + '</span><button class="btn btn-sm" id="thKeluar" style="margin-left:auto;border-color:rgba(245,241,230,.35);color:#F5F1E6;background:rgba(255,255,255,.06)">Keluar (Esc)</button></div>' +
+    '<div class="panggung" id="thPanggung">' + sl.map((x, i) => '<section class="babak' + (i === 0 ? " on" : "") + '">' + x + '</section>').join("") + '</div>' +
+    '<div class="tahun-nav"><button id="thLalu" aria-label="Sebelumnya">‹</button><button id="thMaju" aria-label="Seterusnya">›</button>' +
+    '<span class="tahun-dots" id="thDots">' + sl.map((x, i) => '<i' + (i === 0 ? ' class="on"' : "") + '></i>').join("") + '</span>' +
+    '<button class="btn btn-sm" id="thCetak" style="margin-left:auto;border-color:rgba(245,241,230,.35);color:#F5F1E6;background:rgba(255,255,255,.06)">Cetak ringkasan</button></div>';
+  document.body.appendChild(el);
+  let idx = 0;
+  const kiraSatu = el2 => {
+    const sas = +el2.dataset.kira; const tanda = el2.dataset.tanda || "";
+    if(kurangGerakMQ.matches){ el2.textContent = tanda + sas; return; }
+    const t0 = performance.now();
+    const l = t => {
+      const q = Math.min(1, (t - t0) / 950);
+      el2.textContent = tanda + Math.round(sas * (1 - Math.pow(1 - q, 3)));
+      if(q < 1) requestAnimationFrame(l);
+    };
+    requestAnimationFrame(l);
+  };
+  const tunjuk = () => {
+    el.querySelectorAll(".babak").forEach((s, i) => s.classList.toggle("on", i === idx));
+    el.querySelectorAll("#thDots i").forEach((dd, i) => dd.classList.toggle("on", i === idx));
+    const aktif = el.querySelectorAll(".babak")[idx];
+    if(aktif){ aktif.querySelectorAll("[data-kira]").forEach(k2 => { k2.textContent = "0"; kiraSatu(k2); }); }
+    if(idx === sl.length - 1) konfeti(120);
+  };
+  const tutup = () => { el.remove(); document.removeEventListener("keydown", kunci); document.body.style.overflow = ""; };
+  const kunci = e => {
+    if(e.key === "Escape") tutup();
+    else if(e.key === "ArrowRight" || e.key === " "){ idx = Math.min(sl.length - 1, idx + 1); tunjuk(); }
+    else if(e.key === "ArrowLeft"){ idx = Math.max(0, idx - 1); tunjuk(); }
+  };
+  document.addEventListener("keydown", kunci);
+  document.body.style.overflow = "hidden";
+  $("thKeluar").onclick = tutup;
+  $("thLalu").onclick = () => { idx = Math.max(0, idx - 1); tunjuk(); };
+  $("thMaju").onclick = () => { if(idx === sl.length - 1){ tutup(); } else { idx++; tunjuk(); } };
+  $("thCetak").onclick = () => { tutup(); cetakTahunSaya(); };
+  tunjuk();
+}
+function cetakTahunSaya(){
+  const d = tahunSayaData();
+  const baris = [
+    "TP direkod: " + d.tpBil + (d.hari ? " (merentas " + d.hari + " hari merekod)" : ""),
+    "Markah: " + d.mkBil + " dalam " + d.ber + " pentaksiran",
+    d.meningkat ? "Paling meningkat: " + d.meningkat.p.nama + " (+" + Math.round(d.meningkat.d) + " mata)" : "",
+    d.topikLemah ? "Topik paling mencabar: " + d.topikLemah.t.nama + " (TP purata " + d.topikLemah.av.toFixed(1) + ")" : "",
+    d.topikKuat ? "Paling dikuasai: " + d.topikKuat.t.nama + " (TP purata " + d.topikKuat.av.toFixed(1) + ")" : "",
+    d.kelasNaik !== null ? "Perubahan purata kelas: " + (d.kelasNaik >= 0 ? "+" : "") + d.kelasNaik + " mata" : "",
+    d.terbaik ? "Markah tertinggi: " + d.terbaik.p.nama + " (" + d.terbaik.v + "%)" : ""
+  ].filter(Boolean);
+  $("slipArea").innerHTML = '<div class="slip slip-halaman">' + kopHtml() +
+    '<header class="slip-head"><div><h1>Ringkasan Tahun — ' + esc(S.subjek) + " " + new Date().getFullYear() + '</h1><p>' + esc(S.guru) + " · " + esc(kelasNow() ? kelasNow().nama : "") + '</p></div><div class="slip-cop">PBD</div></header>' +
+    '<ul style="font-size:11pt;line-height:1.95;padding-left:22px">' + baris.map(x => "<li>" + esc(x) + "</li>").join("") + '</ul>' +
+    '<p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+  cetakMula("cetak-slip");
+}
+/* (3) Unjuran SPM */
+function regresiTitik(points){
+  const n = points.length;
+  if(n < 2) return null;
+  let sx = 0, sy = 0, sxx = 0, sxy = 0;
+  points.forEach(pt => { sx += pt[0]; sy += pt[1]; sxx += pt[0] * pt[0]; sxy += pt[0] * pt[1]; });
+  const den = n * sxx - sx * sx;
+  if(!den) return null;
+  const m = (n * sxy - sx * sy) / den;
+  const b = (sy - m * sx) / n;
+  const std = Math.sqrt(points.reduce((a, pt) => a + Math.pow(pt[1] - (m * pt[0] + b), 2), 0) / n) || 0;
+  return {m, b, std};
+}
+function unjuranMurid(pid){
+  const rows = asmtUrut().map((a, i) => ({i, v:pct(a, pid)})).filter(r => r.v !== null);
+  if(rows.length < 2) return null;
+  const pakai = rows.slice(-4);
+  const r = regresiTitik(pakai.map(x => [x.i, x.v]));
+  if(!r) return null;
+  let ramal = r.m * (pakai[pakai.length - 1].i + 1) + r.b;
+  ramal = Math.max(0, Math.min(100, ramal));
+  const kini = rows[rows.length - 1].v;
+  const s = Math.max(3, Math.min(14, r.std * 1.6 + (rows.length === 2 ? 6 : 0)));
+  const g = gredOf(Math.round(ramal));
+  return {
+    kini: Math.round(kini), ramal: Math.round(ramal),
+    bawah: Math.max(0, Math.round(ramal - s)), atas: Math.min(100, Math.round(ramal + s)),
+    gred: g ? g.g : "—",
+    arah: r.m > 0.5 ? "naik" : r.m < -0.5 ? "turun" : "stabil",
+    n: rows.length
+  };
+}
+function kadUnjuran(){
+  const rows = pelajarNow().map(pp => ({p:pp, u:unjuranMurid(pp.id)})).filter(x => x.u);
+  if(!rows.length) return "";
+  rows.sort((a, b) => b.u.ramal - a.u.ramal);
+  return '<div class="card"><h2>Unjuran SPM <span class="sub">regresi mudah daripada markah murid sendiri — petunjuk, bukan ramalan rasmi</span></h2>' +
+    '<div class="tw"><table><thead><tr><th>Murid</th><th class="num">Kini</th><th class="num">Unjuran</th><th class="num">Julat</th><th class="num">Gred dijangka</th><th class="num">Arah</th></tr></thead><tbody>' +
+    rows.map(x => '<tr><td style="white-space:normal">' + esc(x.p.nama) + '</td>' +
+      '<td class="num">' + x.u.kini + '%</td><td class="num"><b>' + x.u.ramal + '%</b></td>' +
+      '<td class="num">' + x.u.bawah + "–" + x.u.atas + '%</td>' +
+      '<td class="num">' + esc(x.u.gred) + '</td>' +
+      '<td class="num">' + (x.u.arah === "naik" ? '<span class="badge b-ok">▲ naik</span>' : x.u.arah === "turun" ? '<span class="badge b-mid">▼ turun</span>' : '<span class="badge b-neutral">• stabil</span>') + '</td></tr>').join("") +
+    '</tbody></table></div><p class="hint">Unjuran guna trend sehingga 4 pentaksiran terakhir (tanpa TH). Julat melebar bila data sedikit.</p></div>';
+}
+/* (4) WhatsApp ibu bapa */
+function waPenjaga(pid){
+  const pp = S.pelajar.find(x => x.id === pid);
+  const hp = String(pp.hp || "").replace(/\D/g, "");
+  if(!hp){ toast("Isi no. telefon penjaga dahulu"); const el = document.getElementById("pHp"); if(el) el.focus(); return; }
+  const no = hp.charAt(0) === "0" ? "6" + hp : hp;
+  const teks = String(ringkasanTeks(pid));
+  window.open("https://wa.me/" + no + "?text=" + encodeURIComponent(teks), "_blank");
+}
+/* (5) Baca dengan suara */
+function bacaRingkasan(pid){
+  if(!("speechSynthesis" in window)){ toast("Pelayar ini tiada fungsi suara"); return; }
+  try{
+    const ss = window.speechSynthesis;
+    if(ss.speaking){ ss.cancel(); toast("Berhenti membaca"); return; }
+    const pp = S.pelajar.find(x => x.id === pid);
+    const ul = ((S.ulasan || {})[pid] || "").trim() || ulasanAuto(pp);
+    const teks = "Ringkasan untuk " + pp.nama + ". " + String(ringkasanTeks(pid)) + ". " + ul;
+    const u = new SpeechSynthesisUtterance(teks);
+    u.lang = "ms-MY";
+    u.rate = 0.95;
+    const vv = ss.getVoices() || [];
+    const v = vv.find(x2 => /^ms/i.test(x2.lang)) || vv.find(x2 => /^id/i.test(x2.lang));
+    if(v) u.voice = v;
+    ss.speak(u);
+    toast("Membaca ringkasan — tekan 🔊 lagi untuk berhenti");
+  }catch(e){ toast("Gagal membaca"); }
+}
+/* (2) Tandatangan ibu bapa di skrin */
+function bukaTandaTangan(pid){
+  const pp = S.pelajar.find(x => x.id === pid);
+  if(!pp) return;
+  const ada = (S.ttIbu || {})[pid];
+  openDrawer("Tandatangan ibu bapa / penjaga", esc(pp.nama),
+    (ada ? '<div class="mini-head">Tandatangan tersimpan</div><img src="' + esc(ada) + '" alt="" style="height:70px;border:1px dashed var(--line);border-radius:6px;background:#fff"><div class="row-actions" style="margin:8px 0"><button class="btn btn-sm" id="ttHapus" style="border-color:#E0BDB8;color:var(--rose)">Padam tandatangan</button></div>' : "") +
+    '<div class="mini-head">Tandatangan baharu</div>' +
+    '<canvas id="ttKanvas" width="640" height="220" style="width:100%;max-width:520px;background:#fff;border:1px solid var(--line);border-radius:8px;touch-action:none;cursor:crosshair;display:block"></canvas>' +
+    '<div class="row-actions" style="margin-top:8px"><button class="btn btn-sm" id="ttKosong">Kosongkan</button></div>' +
+    '<p class="hint">Tandatangan dengan jari pada telefon atau tetikus pada komputer. Ia muncul pada slip dan laporan murid ini — sesuai untuk HBMP tanpa kertas.</p>',
+    '<button class="btn btn-sm" id="ttBatal">Batal</button><button class="btn btn-sm btn-primary" id="ttSimpan">Simpan tandatangan</button>');
+  const cv = document.getElementById("ttKanvas");
+  const ctx = cv.getContext("2d");
+  ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, cv.width, cv.height);
+  ctx.strokeStyle = "#14213D"; ctx.lineWidth = 2.6; ctx.lineCap = "round"; ctx.lineJoin = "round";
+  let melukis = false, adaLukis = false;
+  const pos = e => {
+    const r = cv.getBoundingClientRect();
+    return [(e.clientX - r.left) * cv.width / r.width, (e.clientY - r.top) * cv.height / r.height];
+  };
+  cv.onpointerdown = e => { melukis = true; adaLukis = true; try{ cv.setPointerCapture(e.pointerId); }catch(x){} const pt = pos(e); ctx.beginPath(); ctx.moveTo(pt[0], pt[1]); };
+  cv.onpointermove = e => { if(!melukis) return; const pt = pos(e); ctx.lineTo(pt[0], pt[1]); ctx.stroke(); };
+  cv.onpointerup = () => { melukis = false; };
+  cv.onpointerleave = () => { melukis = false; };
+  document.getElementById("ttKosong").onclick = () => { ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, cv.width, cv.height); adaLukis = false; };
+  const hb = document.getElementById("ttHapus");
+  if(hb) hb.onclick = () => { S.ttIbu = S.ttIbu || {}; delete S.ttIbu[pid]; saveState(); closeDrawer(); render(); toast("Tandatangan dipadam"); };
+  document.getElementById("ttBatal").onclick = closeDrawer;
+  document.getElementById("ttSimpan").onclick = () => {
+    if(!adaLukis){ toast("Tandatangan dahulu"); return; }
+    S.ttIbu = S.ttIbu || {};
+    S.ttIbu[pid] = cv.toDataURL("image/png");
+    saveState(); closeDrawer(); render();
+    toast("Tandatangan disimpan");
+  };
+}
+/* (2b) Seksyen hubungan dalam kad pelajar */
+function seksyenHubunganHtml(pid){
+  const pp = S.pelajar.find(x => x.id === pid);
+  const adaTt = !!((S.ttIbu || {})[pid]);
+  const sokongSuara = ("speechSynthesis" in window);
+  return '<div class="mini-head">Hubungan & dokumen</div>' +
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">' +
+    '<input type="text" id="pHp" data-hp="' + pid + '" value="' + esc(pp.hp || "") + '" placeholder="No. WhatsApp penjaga (cth: 0123456789)" class="mono" style="flex:1;min-width:170px">' +
+    '<button class="btn btn-sm" data-wa="' + pid + '">Hantar WhatsApp</button>' +
+    '<button class="btn btn-sm" data-salin="' + pid + '">Salin ringkasan</button>' +
+    (sokongSuara ? '<button class="btn btn-sm" data-baca="' + pid + '">🔊 Baca</button>' : "") +
+    '<button class="btn btn-sm" data-tt="' + pid + '">✍ Tandatangan ibu bapa' + (adaTt ? " ✓" : "") + '</button>' +
+    '</div>' +
+    '<p class="hint">WhatsApp membuka app dengan ringkasan sedia ditaip. Tiada data dihantar automatik — murid kekal dalam peranti anda.</p>';
+}
+document.addEventListener("click", e => {
+  const t = e.target;
+  if(!t || !t.closest) return;
+  const w = t.closest("[data-wa]"); if(w){ waPenjaga(w.dataset.wa); return; }
+  const sa = t.closest("[data-salin]"); if(sa){ salinRingkasan(sa.dataset.salin); return; }
+  const ba = t.closest("[data-baca]"); if(ba){ bacaRingkasan(ba.dataset.baca); return; }
+  const tt = t.closest("[data-tt]"); if(tt){ bukaTandaTangan(tt.dataset.tt); return; }
+});
+document.addEventListener("change", e => {
+  const t = e.target;
+  if(t && t.dataset && t.dataset.hp){
+    const pp2 = S.pelajar.find(x => x.id === t.dataset.hp);
+    if(pp2){ pp2.hp = String(t.value || "").trim(); saveState(); toast("No. telefon disimpan"); }
+  }
+}, true);
+/* (8) Kunci PIN + auto-lock */
+function hashPin(s){ let h = 5381; const t = "pbd9|" + s; for(let i = 0; i < t.length; i++){ h = ((h << 5) + h + t.charCodeAt(i)) >>> 0; } return "h" + h + "|" + t.length; }
+function kunciTetap(){ try{ return JSON.parse(lsGet("pbd.kunci") || "null"); }catch(e){ return null; } }
+function kunciSimpan(o){ lsSet("pbd.kunci", JSON.stringify(o)); }
+function paparLock(){
+  const st = kunciTetap();
+  if(!st || !st.hash) return;
+  if(document.getElementById("kunciLapisan")) return;
+  const el = document.createElement("div");
+  el.id = "kunciLapisan";
+  el.innerHTML = '<div class="kunci-kad"><div class="kunci-ikon">🔒</div><h2 style="margin:8px 0 4px">Rekod PBD dikunci</h2><p class="hint">Masukkan PIN untuk membuka</p>' +
+    '<input type="password" inputmode="numeric" id="pinMasuk" maxlength="8" autocomplete="off" placeholder="••••">' +
+    '<div class="row-actions" style="justify-content:center"><button class="btn btn-sm btn-primary" id="pinBuka">Buka</button></div>' +
+    '<p class="hint" id="pinSalah" style="color:var(--rose);display:none">PIN salah — cuba lagi</p></div>';
+  document.body.appendChild(el);
+  const cuba = () => {
+    const v = document.getElementById("pinMasuk").value;
+    if(hashPin(String(v)) === st.hash){ el.remove(); resetKunciTimer(); }
+    else {
+      document.getElementById("pinSalah").style.display = "block";
+      const k2 = el.querySelector(".kunci-kad");
+      if(k2 && k2.animate && !kurangGerakMQ.matches){ try{ k2.animate([{transform:"translateX(-8px)"},{transform:"translateX(8px)"},{transform:"translateX(0)"}], {duration:220}); }catch(e){} }
+    }
+  };
+  document.getElementById("pinBuka").onclick = cuba;
+  document.getElementById("pinMasuk").onkeydown = e => { if(e.key === "Enter") cuba(); };
+  setTimeout(() => { const i2 = document.getElementById("pinMasuk"); if(i2) i2.focus(); }, 80);
+}
+let kunciTimer = null;
+function resetKunciTimer(){
+  try{
+    const st = kunciTetap();
+    clearTimeout(kunciTimer);
+    if(!st || !st.hash) return;
+    const minit = +st.minit || 10;
+    if(minit <= 0) return;
+    kunciTimer = setTimeout(() => { try{ paparLock(); }catch(e){} }, minit * 60000);
+  }catch(e){}
+}
+["pointerdown", "keydown", "touchstart"].forEach(ev2 => document.addEventListener(ev2, () => { if(!document.getElementById("kunciLapisan")) resetKunciTimer(); }, {passive:true}));
+function tetapkanPIN(){
+  (async () => {
+    const st = kunciTetap();
+    const v = await tanyaTeks(st && st.hash ? "Masukkan PIN baharu (4–8 angka):" : "Tetapkan PIN (4–8 angka) untuk mengunci app:", {tajuk:"Kunci aplikasi", ya:"Simpan", label:"PIN", medan:'<label class="fld"><span>PIN (4–8 angka)</span><input type="text" inputmode="numeric" maxlength="8" id="dlgMedan" autocomplete="off"></label>', semak: x => /^[0-9]{4,8}$/.test(String(x || "").trim()) ? true : "PIN mesti 4–8 angka"});
+    if(!v) return;
+    const v2 = await tanyaTeks("Taip semula PIN untuk sahkan:", {tajuk:"Sahkan PIN", ya:"Simpan", label:"Ulang PIN", medan:'<label class="fld"><span>Ulang PIN</span><input type="text" inputmode="numeric" maxlength="8" id="dlgMedan" autocomplete="off"></label>'});
+    if(String(v2) !== String(v)){ toast("PIN tidak sepadan"); return; }
+    const minit = st && st.minit !== undefined ? st.minit : 10;
+    kunciSimpan({hash:hashPin(String(v).trim()), minit});
+    toast("PIN ditetapkan");
+    if($("drawer").classList.contains("on")) drawSettings();
+    resetKunciTimer();
+  })();
+}
+function buangPIN(){
+  (async () => {
+    if(!(await tanya("Buang PIN dan buka kunci aplikasi?", {bahaya:true, ya:"Buang PIN"}))) return;
+    kunciSimpan({hash:"", minit:0});
+    clearTimeout(kunciTimer);
+    toast("PIN dibuang");
+    if($("drawer").classList.contains("on")) drawSettings();
+  })();
+}
+function setAutoKunci(minit){
+  const st = kunciTetap() || {};
+  st.minit = +minit;
+  kunciSimpan(st);
+  resetKunciTimer();
+  toast(!st.hash ? "PIN belum ditetapkan" : (minit > 0 ? "Auto-kunci: " + minit + " minit" : "Auto-kunci dimatikan"));
+}
 function bukaBantuan(){
   const langkah = (n, t) => '<li style="margin-bottom:6px">' + t + '</li>';
   const html =
@@ -6140,7 +6551,7 @@ function bukaBantuan(){
     '<div class="row-actions" style="margin-top:8px"><button class="btn btn-sm" id="btSalinSql">Salin skrip SQL</button></div>' +
     '<div class="mini-head">Soalan lain</div>' +
     '<p class="hint">Rekod contoh: Tetapan → Umum → Buang data contoh. Sebelum cetak untuk ibu bapa: pastikan nama guru & maktab telah diisi.</p>' +
-    '<div class="row-actions" style="margin-top:10px"><button class="btn btn-sm" id="btWalk">Walkthrough pantas</button><button class="btn btn-sm" id="btBaharu">Apa yang baharu</button><button class="btn btn-sm" id="btKongsi">Cetak kit kongsi</button></div>';
+    '<div class="row-actions" style="margin-top:10px"><button class="btn btn-sm" id="btWalk">Walkthrough pantas</button><button class="btn btn-sm" id="btBaharu">Apa yang baharu</button><button class="btn btn-sm" id="btKongsi">Cetak kit kongsi</button><button class="btn btn-sm" id="btTahun9">✨ Tahun Saya</button></div>';
   openDrawer("Bantuan & Panduan", "Panduan pantas penggunaan harian", html,
     '<button class="btn btn-sm btn-primary" id="btTutup">Tutup</button>');
   $("btTutup").onclick = closeDrawer;
@@ -6148,6 +6559,7 @@ function bukaBantuan(){
   $("btWalk").onclick = () => { closeDrawer(); bukaWalkthrough(); };
   $("btBaharu").onclick = () => { closeDrawer(); bukaApaBaharu(); };
   $("btKongsi").onclick = cetakKitKongsi;
+  $("btTahun9").onclick = () => { closeDrawer(); bukaTahunSaya(); };
 }
 /* ---------- CETAK MATRIKS (A4 landskap) ---------- */
 function cetakMatriksPBD(){
@@ -6297,9 +6709,15 @@ function cetakItemAnalisis(a, list){
 }
 /* ---------- MOD PEMBENTANGAN ---------- */
 function bukaPembentangan(){
-  const list = pelajarNow(), a = asmtNow(), k = kelasNow();
+  const list = pelajarNow(), k = kelasNow();
   if(!list.length){ toast("Tiada pelajar untuk dibentangkan"); return; }
   const urut = asmtUrut();
+  let a = asmtNow();
+  /* Jika pentaksiran aktif tiada markah untuk kelas ini, guna pentaksiran terakhir yang ada markah */
+  if(!(a && list.some(pp => pct(a, pp.id) !== null))){
+    const _ber = urut.filter(x => list.some(pp => pct(x, pp.id) !== null));
+    if(_ber.length) a = _ber[_ber.length - 1];
+  }
   const vs = list.map(p => a ? pct(a, p.id) : null).filter(v => v !== null);
   const purata = vs.length ? Math.round(vs.reduce((x, y) => x + y, 0) / vs.length) : null;
   const lulus = vs.length ? Math.round(vs.filter(v => v >= ambangLulus()).length / vs.length * 100) : null;
@@ -6321,6 +6739,8 @@ function bukaPembentangan(){
     slaid.push('<h2>Taburan Gred — ' + esc(a ? a.nama : "—") + '</h2>' +
       barRows(senaraiG.map(g => ({k:g, v:gredBil[g] || 0, lbl:String(gredBil[g] || 0)})), maks));
   }
+  const tiga = list.map(pp => ({p:pp, v:a ? pct(a, pp.id) : null})).filter(x => x.v !== null).sort((x, y) => y.v - x.v).slice(0, 3);
+  if(tiga.length >= 2) slaid.push('<h2>Podium — ' + esc(a ? a.nama : "") + '</h2><div class="podium">' + [tiga[1], tiga[0], tiga[2]].filter(Boolean).map((x, i2) => '<div class="podium-s" style="height:' + (i2 === 1 ? 74 : i2 === 0 ? 56 : 44) + '%"><b>' + (i2 === 1 ? "1" : i2 === 0 ? "2" : "3") + '</b><span>' + esc(x.p.nama.split(" ")[0]) + '</span><i>' + x.v + '%</i></div>').join("") + '</div>');
   if(S.topik.length){
     const tk = S.topik.map(t => {
       const vv = list.map(p => S.pbd[t.id] && S.pbd[t.id][p.id]).filter(Boolean);
@@ -7055,6 +7475,7 @@ async function init(){
   $("btnLaporan").onclick = laporanPanitia;
   $("btnQuickTP").onclick = () => { pbdMode = "topic"; go("pbd"); };
   const bb2 = $("btnBentang"); if(bb2) bb2.onclick = bukaPembentangan;
+  const bt9 = $("btnTahun"); if(bt9) bt9.onclick = bukaTahunSaya;
   const setMod = m => {
     pbdMode = m;
     [["matrix","pbdModeMatrix"],["topic","pbdModeTopic"],["lapor","pbdModeLapor"]].forEach(([k,id]) =>
@@ -7142,7 +7563,7 @@ const Premium = (function(){
     try{
       const j = JSON.parse(localStorage.getItem(PKEY) || "{}");
       if(j && typeof j === "object"){
-        if(j.tema === "siang" || j.tema === "malam" || j.tema === "auto") P.tema = j.tema;
+        if(j.tema === "siang" || j.tema === "malam" || j.tema === "royale" || j.tema === "auto") P.tema = j.tema;
         P.padat = !!j.padat;
       }
     }catch(_){}
@@ -7152,19 +7573,22 @@ const Premium = (function(){
     try{ localStorage.setItem(PKEY, JSON.stringify(P)); }catch(_){}
   }
   function temaBerkesan(){
+    if(P.tema === "royale") return "royale";
     if(P.tema === "auto") return mqGelap.matches ? "malam" : "siang";
     return P.tema;
   }
   function gunaTema(){
     const t = temaBerkesan();
-    document.documentElement.setAttribute("data-theme", t);
+    const royale = t === "royale";
+    document.documentElement.setAttribute("data-theme", royale ? "malam" : t);
+    document.documentElement.setAttribute("data-royale", royale ? "1" : "0");
     document.documentElement.setAttribute("data-padat", P.padat ? "1" : "0");
     const meta = document.querySelector('meta[name="theme-color"]');
-    if(meta) meta.setAttribute("content", t === "malam" ? "#10161C" : "#F1F3F2");
+    if(meta) meta.setAttribute("content", royale ? "#0F1420" : (t === "malam" ? "#10161C" : "#F1F3F2"));
     const b = document.getElementById("btnTema");
     if(b){
       const label = P.tema === "auto" ? "Tema: ikut sistem (" + (t === "malam" ? "malam" : "siang") + ")"
-        : P.tema === "malam" ? "Tema: malam" : "Tema: siang";
+        : P.tema === "royale" ? "Tema: Royale (emas)" : P.tema === "malam" ? "Tema: malam" : "Tema: siang";
       b.setAttribute("aria-label", label + " — tekan untuk tukar");
       b.setAttribute("title", label + " · T");
       b.innerHTML = ik(t === "malam" ? "bulan" : "matahari", 19);
@@ -7172,10 +7596,13 @@ const Premium = (function(){
   }
   function tukarTema(paksa){
     const t = temaBerkesan();
-    P.tema = paksa || (t === "malam" ? "siang" : "malam");
+    const susun = ["siang", "malam", "royale", "auto"];
+    P.tema = paksa || susun[(susun.indexOf(t) + 1) % susun.length];
     simpanPref(); gunaTema();
-    toast(P.tema === "auto" ? "Tema mengikut sistem" : (P.tema === "malam" ? "Mod malam" : "Mod siang"));
+    toast(P.tema === "auto" ? "Tema mengikut sistem" : (P.tema === "royale" ? "Tema Royale — hitam emas" : (P.tema === "malam" ? "Mod malam" : "Mod siang")));
   }
+  /* Untuk integrasi luar & ujian */
+  window.pbdTemaSet = function(t2){ try{ P.tema = t2; simpanPref(); gunaTema(); }catch(e){} };
   function tukarPadat(paksa){
     P.padat = (paksa === undefined) ? !P.padat : !!paksa;
     simpanPref(); gunaTema();
@@ -7867,7 +8294,7 @@ const Premium = (function(){
      H. NOMBOR KPI BERANIMASI
      ========================================================= */
   function kiraKpi(){
-    if(kurangGerak.matches) return;
+    if(kurangGerakMQ.matches) return;
     document.querySelectorAll(".view.on .kpi .val, .view.on .insight-angka b").forEach(el => {
       const teks = (el.textContent || "").trim();
       const m = teks.match(/^([0-9]+(?:\.[0-9]+)?)(.*)$/);
@@ -7972,6 +8399,8 @@ init().then(async () => {
   }catch(e){}
   try{ FOLDER.auto(); }catch(e){}
   try{ if(!lsGet("pbd.tour.v1") && S && S.demo) setTimeout(() => { try{ bukaWalkthrough(); }catch(e){} }, 1200); }catch(e){}
+  try{ if(kunciTetap() && kunciTetap().hash) paparLock(); }catch(e){}
+  try{ resetKunciTimer(); }catch(e){}
   try{
     const lab = lsGet("pbd.apa-baharu");
     if(lab !== VERSI_APLIKASI){
