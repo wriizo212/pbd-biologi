@@ -1009,15 +1009,15 @@ details.pasang p{margin:4px 0 2px}
 html[data-royale="1"]{--accent-ink:#C9A227;--accent-soft:rgba(201,162,39,.18);--accent-mist:rgba(201,162,39,.10);--primary:#C9A227}
 
 /* ============ 17h. SIJIL PREMIUM (Fasa 9.1) ============ */
-.sijil .sijil-bingkai{border:2.5px solid #B08A2E;box-shadow:inset 0 0 0 1px #fff, inset 0 0 0 2.5px #D9C07A;padding:12mm 12mm 9mm;position:relative;min-height:250mm;display:flex}
-.sijil .sijil-dalaman{flex:1;border:.8px solid #D9C07A;padding:9mm 9mm 5mm;text-align:center;display:flex;flex-direction:column}
-.sijil .sijil-sudut{position:absolute;width:26px;height:26px;border:3px solid #B08A2E}
+.sijil .sijil-bingkai{border:2.5px solid var(--sijil-aksen,#B08A2E);box-shadow:inset 0 0 0 1px #fff, inset 0 0 0 2.5px var(--sijil-aksen2,#D9C07A);padding:12mm 12mm 9mm;position:relative;min-height:250mm;display:flex}
+.sijil .sijil-dalaman{flex:1;border:.8px solid var(--sijil-aksen2,#D9C07A);padding:9mm 9mm 5mm;text-align:center;display:flex;flex-direction:column}
+.sijil .sijil-sudut{position:absolute;width:26px;height:26px;border:3px solid var(--sijil-aksen,#B08A2E)}
 .sijil .sijil-sudut.tl{top:-3px;left:-3px;border-right:0;border-bottom:0}
 .sijil .sijil-sudut.tr{top:-3px;right:-3px;border-left:0;border-bottom:0}
 .sijil .sijil-sudut.bl{bottom:-3px;left:-3px;border-right:0;border-top:0}
 .sijil .sijil-sudut.br{bottom:-3px;right:-3px;border-left:0;border-top:0}
 .sijil .sijil-ornamen{margin:4px 0 2px}
-.sijil .sijil-tajuk{font-family:'Source Serif 4',Georgia,serif;font-size:27pt;letter-spacing:.22em;text-transform:uppercase;color:#9A7B22;margin:6px 0 0;font-weight:700}
+.sijil .sijil-tajuk{font-family:'Source Serif 4',Georgia,serif;font-size:27pt;letter-spacing:.22em;text-transform:uppercase;color:var(--sijil-tajuk,#9A7B22);margin:6px 0 0;font-weight:700}
 .sijil .sijil-tajuk-en{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-size:9.5pt;letter-spacing:.34em;text-transform:uppercase;color:#8C8677;margin:2px 0 10px}
 .sijil .sijil-untuk{margin:4px 0 2px;font-size:10pt;color:#4E5A64;letter-spacing:.14em;text-transform:uppercase}
 .sijil .sijil-nama-wrap{margin:2px 0 4px}
@@ -1028,16 +1028,38 @@ html[data-royale="1"]{--accent-ink:#C9A227;--accent-soft:rgba(201,162,39,.18);--
 .sijil .sijil-tarikh{text-align:left;font-size:9pt;color:#4E5A64;display:flex;flex-direction:column;gap:2px}
 .sijil .sijil-tarikh b{font-size:10.5pt;color:#14213D}
 .sijil .sijil-mohor-wrap{position:relative;text-align:center}
-.sijil .sijil-mohor{width:88px;height:88px;border-radius:50%;border:3px double #B08A2E;color:#8A6A12;display:grid;place-items:center;line-height:1.05;background:#FDF9EE;margin:0 auto;font-family:'Source Serif 4',Georgia,serif;box-shadow:0 0 0 4px #fff, 0 0 0 5px #D9C07A}
+.sijil .sijil-mohor{width:88px;height:88px;border-radius:50%;border:3px double var(--sijil-aksen,#B08A2E);color:#8A6A12;display:grid;place-items:center;line-height:1.05;background:var(--sijil-kertas,#FDF9EE);margin:0 auto;font-family:'Source Serif 4',Georgia,serif;box-shadow:0 0 0 4px #fff, 0 0 0 5px var(--sijil-aksen2,#D9C07A)}
 .sijil .sijil-mohor b{font-size:13pt;letter-spacing:.08em}
 .sijil .sijil-mohor small{font-size:7.5pt;display:block}
-.sijil .sijil-reben{display:block;width:10px;height:20px;background:#B08A2E;margin:-2px auto 0;clip-path:polygon(0 0,100% 0,100% 100%,50% 78%,0 100%)}
+.sijil .sijil-reben{display:block;width:10px;height:20px;background:var(--sijil-aksen,#B08A2E);margin:-2px auto 0;clip-path:polygon(0 0,100% 0,100% 100%,50% 78%,0 100%)}
 .sijil .sijil-tt{text-align:center}
 .sijil .sijil-tt img{height:44px;display:block;margin:0 auto 2px}
 .sijil .sijil-tt-line{display:block;height:44px}
 .sijil .sijil-tt > span:not(.sijil-tt-line){display:block;border-top:1px solid #7C8892;padding-top:4px;font-size:9.5pt;color:#14213D;min-width:210px;margin:0 auto}
 .sijil .sijil-tt i{color:#4E5A64}
 .sijil .sijil-no{margin-top:10px;font-size:7.5pt;color:#8C8677;letter-spacing:.08em}
+.sijil{--sijil-aksen:#B08A2E;--sijil-aksen2:#D9C07A;--sijil-kertas:#FDF9EE;--sijil-tajuk:#9A7B22;--sijil-teks:#8A6A12}
+.sijil-ornamen,.sijil-flourish{color:var(--sijil-aksen)}
+.sijil.tema-navy{--sijil-aksen:#143D6E;--sijil-aksen2:#9DB2C9;--sijil-kertas:#F2F6FA;--sijil-tajuk:#143D6E;--sijil-teks:#2B4A73}
+.sijil.tema-navy .sijil-bingkai{border-color:var(--sijil-aksen);box-shadow:inset 0 0 0 1px #fff, inset 0 0 0 2.5px var(--sijil-aksen2)}
+.sijil.tema-navy .sijil-mohor{background:var(--sijil-kertas)}
+.sijil.tema-minimal{--sijil-aksen:#2B2B2B;--sijil-aksen2:#D8D8D8;--sijil-kertas:#FFFFFF;--sijil-tajuk:#161616;--sijil-teks:#3A3A3A}
+.sijil.tema-minimal .sijil-bingkai{border-width:1px;border-color:#2B2B2B;box-shadow:none}
+.sijil.tema-minimal .sijil-dalaman{border-color:#E3E3E3}
+.sijil.tema-minimal .sijil-sudut{display:none}
+.sijil.tema-minimal .sijil-mohor{border-style:solid;border-width:1.5px;box-shadow:none;background:#fff}
+.sijil.tema-minimal .sijil-reben{display:none}
+.kal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:8px}
+.kal-h{text-align:center;font-size:10.5px;color:var(--ink-3);padding:2px 0}
+.kal-hari{border:1px solid var(--line);border-radius:8px;min-height:44px;padding:4px 5px;font-size:12px;position:relative;background:var(--surface)}
+.kal-hari.akt{background:var(--accent-soft)}
+.kal-hari.ujian{border-color:var(--rose);box-shadow:inset 0 -3px 0 var(--rose)}
+.kal-hari.ini{outline:2px solid var(--accent-ink);outline-offset:1px}
+.kal-dot{position:absolute;bottom:5px;left:5px;width:6px;height:6px;border-radius:50%;background:var(--accent-ink);display:block}
+.kal-tanda{position:absolute;bottom:3px;right:5px;font-size:9.5px;font-weight:700;color:var(--rose);font-style:normal}
+.denyut{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0}
+.denyut b{display:block;font-size:22px;letter-spacing:-.02em}
+.denyut span{font-size:11.5px;color:var(--ink-3)}
 .sijil *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .menu-tema{position:fixed;z-index:13000;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 14px 40px rgba(8,18,30,.3);padding:6px;display:flex;flex-direction:column;min-width:212px}
 .menu-tema button{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;border:none;background:none;color:var(--ink);font-size:13.5px;border-radius:var(--r-xs);cursor:pointer;text-align:left;width:100%}
@@ -1462,9 +1484,15 @@ html[data-padat="1"] th{position:sticky;top:0}
 
     <div id="persediaanKad"></div>
 
+    <div id="streakKad"></div>
+
     <div id="pentaksiranKad"></div>
 
     <div id="semuaKelasKad"></div>
+
+    <div id="cetakPantasKad"></div>
+
+    <div id="lencanaKad"></div>
 
     <div class="grid g-kpi" id="kpis"></div>
 
@@ -1595,7 +1623,7 @@ html[data-padat="1"] th{position:sticky;top:0}
    ========================================================= */
 const KEY = "pbd-biologi-v1";
 const KEY_BUKU = "pbd.buku.v1";
-const VERSI_APP = "Fasa 9.1 · 21 Sep 2026";
+const VERSI_APP = "Fasa 10 · 21 Sep 2026";
 const URL_APP = "https://wriizo212.github.io/pbd-biologi/";
 const QR_APP = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASgAAAEoAQMAAADRyf5aAAAABlBMVEUUPW7///+/1iNXAAABRklEQVR42u2ayw7CMAwEV/z/PxtE/ErblBxBTCpVpPJpZK/XFrKdI6KIIoqo74zSOK/LeM9fX+ehnfMPUSq0b1KBeXCLO7wOvCK7/KeNJFNQg9clL/OyVEMHrw/5NW7k14Z+DQELFUO/lryqP/aH/rjg1f2Fa9f8HV7HetSUY+oKBq9zfpWJqA7Z8gxex3p0Nkp27iiox6WfcEh1q9EIXsd6jAkosypqEV5XfsJS30PCmLd35m3n5fhSweA112MYieQUoOC1qMdQLOWttUd4neYha77eNaw0H15XvHwv0cQeP7Huj7mfbpvVtBvwOuWXTYIvm/oBvC73E8121SoMXnf7r4ZK8PrkV3Pkrg0rer+at9NNSD3l4HXDK/c5mVrk15pXyZbUxnB4LfTLwkdYjNvMj7f9MSchw09s+C/+eUMUUUT9UNQTL+itheYoi98AAAAASUVORK5CYII=";
 const KEY_CFG = "pbd-supabase-config";
@@ -1641,6 +1669,7 @@ async function loadState(){
   return bacaBuku(bukuAktif);
 }
 async function saveState(){
+  try{ const _h = new Date().toISOString().slice(0, 10); S.logHarian = S.logHarian || {}; S.logHarian[_h] = (S.logHarian[_h] || 0) + 1; }catch(e){}
   S._ubah = new Date().toISOString();
   const teks = JSON.stringify(S);
   let ok = false;
@@ -2807,6 +2836,9 @@ function renderUtama(){
     $("riskCount").textContent = "—"; $("riskList").innerHTML = "";
     $("pentaksiranKad").innerHTML = "";
     $("semuaKelasKad").innerHTML = "";
+    $("streakKad").innerHTML = kadStreak();
+    $("lencanaKad").innerHTML = "";
+    $("cetakPantasKad").innerHTML = "";
     paparPersediaan();
     return;
   }
@@ -2820,6 +2852,9 @@ function renderUtama(){
   $("semuaKelasKad").querySelectorAll("[data-kelas-tukar]").forEach(b => b.onclick = () => {
     S.aktifKelas = b.dataset.kelasTukar; carian = ""; saveState(); render(); toast("Kelas ditukar: " + b.dataset.nama);
   });
+  $("streakKad").innerHTML = kadStreak();
+  $("lencanaKad").innerHTML = kadLencana();
+  $("cetakPantasKad").innerHTML = kadCetakPantas();
   $("gredSrc").textContent = a ? a.nama : "—";
   $("lblPurata").textContent = puratLabel();
   $("notaPurata").textContent = (tinggiLebihBaik() ? puratLabel() + " tinggi = lebih baik." : puratLabel() + " rendah = lebih baik.") +
@@ -3767,16 +3802,16 @@ function calonSijil(kategori){
 function sijilHtml(x){
   const noSij = "PBD-" + new Date().getFullYear() + "-" + String(x.p.id || "X").slice(-4).toUpperCase();
   const sudut = ["tl", "tr", "bl", "br"].map(c => '<i class="sijil-sudut ' + c + '"></i>').join("");
-  return '<div class="slip slip-halaman sijil">' +
+  return '<div class="slip slip-halaman sijil tema-' + (["klassik", "navy", "minimal"].indexOf(S.sijilTema) >= 0 ? S.sijilTema : "klassik") + '">' +
     '<div class="sijil-bingkai">' + sudut +
     '<div class="sijil-dalaman">' +
     kopHtml() +
-    '<div class="sijil-ornamen"><svg viewBox="0 0 220 14" width="220" height="14" aria-hidden="true"><path d="M4 7h84M132 7h84" stroke="#B08A2E" stroke-width="1.4"/><path d="M110 1l4.2 6-4.2 6-4.2-6z" fill="#B08A2E"/><circle cx="99" cy="7" r="2" fill="#B08A2E"/><circle cx="121" cy="7" r="2" fill="#B08A2E"/></svg></div>' +
+    '<div class="sijil-ornamen"><svg viewBox="0 0 220 14" width="220" height="14" aria-hidden="true"><path d="M4 7h84M132 7h84" stroke="currentColor" stroke-width="1.4"/><path d="M110 1l4.2 6-4.2 6-4.2-6z" fill="currentColor"/><circle cx="99" cy="7" r="2" fill="currentColor"/><circle cx="121" cy="7" r="2" fill="currentColor"/></svg></div>' +
     '<div class="sijil-tajuk">Sijil Penghargaan</div>' +
     '<div class="sijil-tajuk-en">Certificate of Achievement</div>' +
     '<div class="sijil-untuk">Dengan penuh penghargaan disampaikan kepada</div>' +
     '<div class="sijil-nama-wrap"><span class="sijil-nama">' + esc(x.p.nama) + '</span>' +
-      '<svg class="sijil-flourish" viewBox="0 0 320 14" width="320" height="14" aria-hidden="true"><path d="M6 7c40-9 78 9 118 0s74-9 114 0 62 5 76 0" fill="none" stroke="#B08A2E" stroke-width="1.3"/></svg></div>' +
+      '<svg class="sijil-flourish" viewBox="0 0 320 14" width="320" height="14" aria-hidden="true"><path d="M6 7c40-9 78 9 118 0s74-9 114 0 62 5 76 0" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></div>' +
     '<p class="sijil-sebab">' + esc(x.sebab) + '</p>' +
     '<div class="sijil-baris">' +
       '<div class="sijil-tarikh"><span>Diberikan pada</span><b>' + new Date().toLocaleDateString("ms-MY", {day:"numeric", month:"long", year:"numeric"}) + '</b>' + ((S.kop && S.kop.nama) ? '<span>' + esc(S.kop.nama) + '</span>' : "") + '</div>' +
@@ -3795,6 +3830,7 @@ function sijilPenghargaan(){
       '<option value="tp">Tahap Penguasaan tertinggi</option>' +
     '</select></label>' +
     '<label class="fld"><span>Bilangan penerima</span><select id="sjBil">' + [1, 3, 5, 10].map(n => '<option value="' + n + '"' + (n === 3 ? " selected" : "") + '>' + n + ' pelajar</option>').join("") + '</select></label>' +
+    '<label class="fld"><span>Gaya sijil</span><select id="sjGaya">' + [["klassik", "Klasik Emas"], ["navy", "Elegan Navy"], ["minimal", "Moden Minimal"]].map(o => '<option value="' + o[0] + '"' + (((S.sijilTema || "klassik") === o[0]) ? " selected" : "") + '>' + o[1] + '</option>').join("") + '</select></label>' +
     '<div id="sjPratonton" style="margin:var(--sp-3) 0"></div>' +
     '<p class="hint">Satu halaman A4 setiap pelajar' + ((S.kop && S.kop.tt) ? ", dengan tandatangan anda" : "") + ' dan mohor.</p>',
     '<button class="btn btn-sm" id="sjBatal">Batal</button><button class="btn btn-sm btn-primary" id="sjCetak">Cetak sijil</button>');
@@ -3808,6 +3844,7 @@ function sijilPenghargaan(){
   pratonton();
   $("sjKat").onchange = pratonton;
   $("sjBil").onchange = pratonton;
+  $("sjGaya").onchange = () => { S.sijilTema = $("sjGaya").value; saveState(); toast("Gaya sijil dikemas kini"); };
   $("sjBatal").onclick = closeDrawer;
   $("sjCetak").onclick = () => {
     const senarai = calonSijil($("sjKat").value).slice(0, +$("sjBil").value);
@@ -4141,6 +4178,7 @@ function openPelajar(pid){
         return '<li>' + esc(k.i.tindakan) + ' <span class="no-maktab mono">' + esc(k.i.tarikh) + '</span> ' + t + '</li>';
       }).join("") + '</ul>' : '<p class="hint">Belum ada rekod.</p>');
 
+  try{ const _l = lencanaMurid(pid); if(_l.length) body = '<div class="chip-list" style="margin-bottom:var(--sp-2)">' + _l.map(x => '<span class="tag" title="' + esc(x.sebab) + '">' + x.ikon + " " + x.nama + "</span>").join("") + "</div>" + body; }catch(e){}
   body += '<div id="evidenWrap" data-eviden-wrap="' + pid + '">' + evidenSeksyenHtml(pid) + "</div>";
   body += seksyenHubunganHtml(pid);
   openDrawer(p.nama, p.noMaktab + " · " + (S.kelas.find(k => k.id === p.kelasId) || {}).nama, body,
@@ -4664,6 +4702,7 @@ function secKop(){
     '<label class="fld"><span>Logo maktab</span><input type="file" id="kkLogo" accept="image/*"><span class="hint">PNG atau JPG, kecilkan bawah 400KB. Disimpan dalam fail ini sahaja.</span></label>' +
     '<label class="fld"><span>Tandatangan guru</span><input type="file" id="kkTt" accept="image/*"><span class="hint">Imej tandatangan atas kertas putih (bawah 150KB). Muncul pada slip, laporan dan sijil.</span></label>' +
     '<div class="row-actions" style="margin:4px 0 8px"><button class="btn btn-sm btn-accent" id="kkTtLukis">✍ Lukis tandatangan dengan jari / tetikus</button></div>' +
+    '<div class="row-actions" style="margin:0 0 10px"><button class="btn btn-sm" id="kkTtPanitia">✍ Ketua Panitia</button><button class="btn btn-sm" id="kkTtPengetua">✍ Pengetua</button></div>' +
     (S.kop && S.kop.tt ? '<div class="row-actions" style="margin-top:6px"><img src="' + esc(S.kop.tt) + '" alt="Tandatangan" style="height:34px"><button class="btn btn-sm" id="kkTtBuang">Buang tandatangan</button></div>' : "") +
     (k.logo
       ? '<div class="kop-prev"><img src="' + esc(k.logo) + '" alt="Pratonton logo"><button class="btn btn-sm" id="kkBuang">Buang logo</button></div>'
@@ -4697,6 +4736,10 @@ function wireKop(){
     (S.kop && S.kop.tt) || "", 
     d => { S.kop = S.kop || {}; S.kop.tt = d; saveState(); },
     () => { S.kop = S.kop || {}; S.kop.tt = ""; saveState(); });
+  const tp2 = $("kkTtPanitia");
+  if(tp2) tp2.onclick = () => bukaPadTandaTangan("Tandatangan Ketua Panitia", "Muncul pada laporan panitia & pelaporan PBD", (S.ttJabatan || ""), d => { S.ttJabatan = d; saveState(); }, () => { S.ttJabatan = ""; saveState(); });
+  const tg2 = $("kkTtPengetua");
+  if(tg2) tg2.onclick = () => bukaPadTandaTangan("Tandatangan Pengetua", "Muncul pada pelaporan PBD (kolum pengesahan)", (S.ttPengetua || ""), d => { S.ttPengetua = d; saveState(); }, () => { S.ttPengetua = ""; saveState(); });
   const ttBu = $("kkTtBuang");
   if(ttBu) ttBu.onclick = () => { S.kop.tt = ""; saveState(); drawSettings(); toast("Tandatangan dibuang"); };
   if(!S.kop) S.kop = {nama:"", alamat:"", logo:"", tt:""};
@@ -5947,7 +5990,7 @@ function cetakPelaporanPBD(){
     '<table><thead><tr><th>Nama Pelajar</th>' + kepala + '<th class="num">TP Keseluruhan</th><th class="num">Ulasan</th></tr></thead><tbody>' + baris + '</tbody></table>' +
     '<p style="font-size:7.5pt;color:#4E5A64;margin-top:5px">Kunci: ' + S.topik.map(t => esc(t.kod) + " " + esc(t.nama)).join(" · ") + '</p>' +
     '<p class="slip-kaki">Tahap Penguasaan TP1–TP6 mengikut DSKP · Disediakan oleh ' + esc(S.guru) + '</p>' +
-    '<div class="slip-tandatangan" style="grid-template-columns:1fr 1fr 1fr"><div>' + ((S.kop && S.kop.tt) ? '<img class="tt-img" src="' + esc(S.kop.tt) + '" alt="">' : "") + '<span>Guru mata pelajaran</span></div><div><span>Ketua Panitia / Ketua Jabatan</span></div><div><span>Pengesahan Pengetua</span></div></div></div>';
+    '<div class="slip-tandatangan" style="grid-template-columns:1fr 1fr 1fr"><div>' + ((S.kop && S.kop.tt) ? '<img class="tt-img" src="' + esc(S.kop.tt) + '" alt="">' : "") + '<span>Guru mata pelajaran</span></div><div>' + (S.ttJabatan ? '<img class="tt-img" src="' + esc(S.ttJabatan) + '" alt="">' : "") + '<span>Ketua Panitia / Ketua Jabatan</span></div><div>' + (S.ttPengetua ? '<img class="tt-img" src="' + esc(S.ttPengetua) + '" alt="">' : "") + '<span>Pengesahan Pengetua</span></div></div></div>';
   $("slipArea").innerHTML = doc;
   cetakLandskap();
   toast("Menyediakan pelaporan PBD untuk cetakan");
@@ -6134,8 +6177,9 @@ function cetakKitKongsi(){
   cetakMula("cetak-slip");
 }
 /* ---------- VERSI & CHANGELOG ---------- */
-const VERSI_APLIKASI = "Fasa 9.1 · 21 Sep 2026";
+const VERSI_APLIKASI = "Fasa 10 · 21 Sep 2026";
 const APA_BAHARU = [
+  {v:"Fasa 10 · Sep 2026", p:["Pemilih 3 gaya sijil (Klasik Emas / Navy / Minimal)", "Lencana murid automatik + helaian lencana", "Denyut Rekod (streak) + Kalendar PBD", "Mod Kiosk auto-slaid untuk majlis", "Carian murid dalam palet (Ctrl+K)", "Pusat Cetak Pantas di Utama", "Tandatangan Ketua Panitia & Pengetua di skrin"]},
   {v:"Fasa 9.1 · Sep 2026", p:["Butang tema kini menu pilihan penuh (auto/siang/malam/royale)", "Tandatangan guru boleh dilukis terus di skrin — tiada muat naik gambar", "Template sijil premium baharu (bingkai emas, mohor, no. rekod)"]},
   {v:"Fasa 9 · Sep 2026 (WOW)", p:["Tahun Saya — recap beranimasi hujung tahun", "Tandatangan ibu bapa di skrin (jari)", "Unjuran SPM setiap murid (regresi)", "WhatsApp ibu bapa + baca ringkasan dengan suara", "Portfolio murid bergambar evidens", "Tema Royale (hitam-emas) + konfeti + podium", "Kunci PIN + auto-lock"]},
   {v:"Fasa 8 · Sep 2026", p:["Laporan individu bergraf (trend + TP + ulasan)", "Cetak Pelaporan PBD rasmi + jana ulasan automatik", "Evidens teks & foto ringan untuk audit PBD", "Walkthrough kali pertama untuk guru baharu", "Kit kongsi rakan guru + nama aplikasi boleh dikustom", "Sandaran ke folder pilihan (Chrome desktop)"]},
@@ -6499,6 +6543,12 @@ document.addEventListener("click", e => {
   const sa = t.closest("[data-salin]"); if(sa){ salinRingkasan(sa.dataset.salin); return; }
   const ba = t.closest("[data-baca]"); if(ba){ bacaRingkasan(ba.dataset.baca); return; }
   const tt = t.closest("[data-tt]"); if(tt){ bukaTandaTangan(tt.dataset.tt); return; }
+  const kp = t.closest("#btnKalendarPBD"); if(kp){ bukaKalendarPBD(0); return; }
+  const lc = t.closest("#btnLencanaCetak"); if(lc){ cetakLencanaKelas(); return; }
+  const cpS = t.closest("#cpSijil"); if(cpS){ sijilPenghargaan(); return; }
+  const cpM = t.closest("#cpMatriks"); if(cpM){ cetakMatriksPBD(); return; }
+  const cpL = t.closest("#cpLapor"); if(cpL){ cetakPelaporanPBD(); return; }
+  const cpSl = t.closest("#cpSlip"); if(cpSl){ go("markah"); setTimeout(() => { const b2 = document.getElementById("btnSlipPukal"); if(b2) b2.click(); }, 300); return; }
 });
 document.addEventListener("change", e => {
   const t = e.target;
@@ -6608,6 +6658,158 @@ function bukaPadTandaTangan(tajuk, sub, adaData, guna, buang){
     toast("Tandatangan disimpan");
     if(typeof drawSettings === "function" && $("drawer") && $("drawer").classList.contains("on")) drawSettings();
   };
+}
+/* ================= FASA 10 ================= */
+/* (3) Streak & denyut */
+function setAktiviti(){
+  const set = {};
+  (S.pbdLog || []).forEach(l => { const tg = String(l.tarikh || "").slice(0, 10); if(tg) set[tg] = 1; });
+  Object.keys(S.logHarian || {}).forEach(h => { set[h] = 1; });
+  return set;
+}
+function streakData(){
+  const set = setAktiviti();
+  const hariIniS = new Date().toISOString().slice(0, 10);
+  const semalamS = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  let streak = 0;
+  const mula = set[hariIniS] ? 0 : (set[semalamS] ? 1 : -1);
+  if(mula >= 0){
+    let d = new Date(Date.now() - mula * 86400000);
+    while(set[d.toISOString().slice(0, 10)]){ streak++; d = new Date(d.getTime() - 86400000); }
+  }
+  const skrg = new Date();
+  const hariMinggu = (skrg.getDay() + 6) % 7;
+  let minggu = 0;
+  for(let i2 = 0; i2 <= hariMinggu; i2++){ const d2 = new Date(Date.now() - i2 * 86400000); if(set[d2.toISOString().slice(0, 10)]) minggu++; }
+  const bulanS = hariIniS.slice(0, 7);
+  const bulan2 = Object.keys(set).filter(h => h.slice(0, 7) === bulanS).length;
+  return {streak, minggu, bulan: bulan2, jumlah: Object.keys(set).length, hariIni: !!set[hariIniS]};
+}
+function kadStreak(){
+  const d = streakData();
+  return '<div class="card" style="margin-bottom:var(--sp-4)"><h2>Denyut Rekod <span class="sub">' + (d.hariIni ? "anda sudah merekod hari ini \u2713" : "belum merekod hari ini") + '</span></h2>' +
+    '<div class="denyut">' +
+    '<div><b>\uD83D\uDD25 ' + d.streak + '</b><span>hari berturut merekod</span></div>' +
+    '<div><b>' + d.minggu + '</b><span>hari minggu ini</span></div>' +
+    '<div><b>' + d.bulan + '</b><span>hari bulan ' + new Date().toLocaleDateString("ms-MY", {month:"long"}) + '</span></div>' +
+    '<div><b>' + d.jumlah + '</b><span>jumlah hari aktif</span></div></div>' +
+    (d.jumlah ? '<div class="row-actions"><button class="btn btn-sm" id="btnKalendarPBD">\uD83D\uDCC5 Kalendar PBD</button></div>' : '<p class="hint">Mula merekod TP atau markah untuk memulakan denyut anda.</p>') + '</div>';
+}
+/* (6) Kalendar PBD */
+let kalOffset = 0;
+function bukaKalendarPBD(off){
+  kalOffset = off === undefined ? 0 : off;
+  const lukis = () => {
+    const kini2 = new Date();
+    const t = new Date(kini2.getFullYear(), kini2.getMonth() + kalOffset, 1);
+    const thn = t.getFullYear(), bln = t.getMonth();
+    const namaBln = t.toLocaleDateString("ms-MY", {month:"long", year:"numeric"});
+    const hariPertama = new Date(thn, bln, 1).getDay();
+    const bilHari = new Date(thn, bln + 1, 0).getDate();
+    const set = setAktiviti();
+    const ujian = {};
+    (S.asmt || []).forEach(a => { const tg = String(a.tarikh || "").slice(0, 10); if(/^\d{4}-\d{2}-\d{2}$/.test(tg)) ujian[tg] = (ujian[tg] || 0) + 1; });
+    const namaH = ["Ah", "Is", "Se", "Ra", "Kh", "Ju", "Sa"];
+    let sel = namaH.map(h => '<div class="kal-h">' + h + '</div>').join("");
+    for(let i3 = 0; i3 < hariPertama; i3++) sel += '<div></div>';
+    for(let d3 = 1; d3 <= bilHari; d3++){
+      const kunci = thn + "-" + String(bln + 1).padStart(2, "0") + "-" + String(d3).padStart(2, "0");
+      const akt = !!set[kunci];
+      const adaU = ujian[kunci] ? ujian[kunci] : 0;
+      const hariIni = kunci === kini2.toISOString().slice(0, 10);
+      sel += '<div class="kal-hari' + (akt ? " akt" : "") + (adaU ? " ujian" : "") + (hariIni ? " ini" : "") + '"><span>' + d3 + '</span>' + (adaU ? '<i class="kal-tanda">' + adaU + '</i>' : (akt ? '<i class="kal-dot"></i>' : "")) + '</div>';
+    }
+    return '<div class="row-actions" style="justify-content:space-between;align-items:center"><button class="btn btn-sm" id="kalLalu">\u2039</button><b style="text-transform:capitalize">' + esc(namaBln) + '</b><button class="btn btn-sm" id="kalMaju">\u203A</button></div>' +
+      '<div class="kal-grid">' + sel + '</div>' +
+      '<p class="hint">Titik = hari anda merekod \u00b7 angka merah = bilangan pentaksiran \u00b7 bingkai = hari ini</p>';
+  };
+  openDrawer("Kalendar PBD", "Aktiviti merekod & tarikh pentaksiran", '<div id="kalIsi">' + lukis() + '</div>', '<button class="btn btn-sm btn-primary" id="kalTutup">Tutup</button>');
+  const pasang = () => {
+    $("kalLalu").onclick = () => { kalOffset--; $("kalIsi").innerHTML = lukis(); pasang(); };
+    $("kalMaju").onclick = () => { kalOffset++; $("kalIsi").innerHTML = lukis(); pasang(); };
+  };
+  pasang();
+  $("kalTutup").onclick = closeDrawer;
+}
+/* (2) Lencana murid */
+function lencanaKelas(){
+  const list = pelajarNow();
+  const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+  let konsisten = null, pelonjak = null, raja = null;
+  list.forEach(p => {
+    const siri = ber.map(a => pct(a, p.id)).filter(v => v !== null);
+    if(siri.length >= 3){
+      const m2 = siri.reduce((x, y) => x + y, 0) / siri.length;
+      const sd = Math.sqrt(siri.reduce((x, y) => x + Math.pow(y - m2, 2), 0) / siri.length);
+      if(!konsisten || sd < konsisten.sd) konsisten = {id:p.id, sd};
+    }
+    if(siri.length >= 2){
+      const d2 = siri[siri.length - 1] - siri[0];
+      if(d2 > 2 && (!pelonjak || d2 > pelonjak.d)) pelonjak = {id:p.id, d:d2};
+    }
+    const tp = tpPurata(p.id);
+    if(tp !== null && (!raja || tp > raja.tp)) raja = {id:p.id, tp};
+  });
+  return {konsisten: konsisten ? konsisten.id : null, pelonjak: pelonjak ? pelonjak.id : null, raja: raja ? raja.id : null};
+}
+function lencanaMurid(pid){
+  const out = [];
+  const lk = lencanaKelas();
+  if(lk.konsisten === pid) out.push({ikon: "\u2B50", nama: "Paling Konsisten", sebab: "markah paling stabil dalam kelas"});
+  if(lk.pelonjak === pid) out.push({ikon: "\uD83D\uDE80", nama: "Pelonjak Terbaik", sebab: "kenaikan markah tertinggi"});
+  if(lk.raja === pid) out.push({ikon: "\uD83D\uDC51", nama: "Raja Topik", sebab: "TP purata tertinggi"});
+  const tp = tpPurata(pid);
+  if(tp !== null && tp >= 5) out.push({ikon: "\uD83D\uDC8E", nama: "Cemerlang TP", sebab: "TP purata " + tp.toFixed(1)});
+  const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+  const siri = ber.map(a => pct(a, pid)).filter(v => v !== null);
+  if(siri.length >= 3){
+    const m2 = siri.reduce((x, y) => x + y, 0) / siri.length;
+    const sd = Math.sqrt(siri.reduce((x, y) => x + Math.pow(y - m2, 2), 0) / siri.length);
+    if(sd <= 2.4) out.push({ikon: "\uD83C\uDFAF", nama: "Stabil", sebab: "variasi markah kecil (" + sd.toFixed(1) + ")"});
+  }
+  return out;
+}
+function kadLencana(){
+  const lk = lencanaKelas();
+  if(!lk.konsisten && !lk.pelonjak && !lk.raja) return "";
+  const nama = id => { const p2 = S.pelajar.find(x => x.id === id); return p2 ? p2.nama : "\u2014"; };
+  const baris = [];
+  if(lk.raja) baris.push(["\uD83D\uDC51", "Raja Topik", nama(lk.raja), "TP purata tertinggi"]);
+  if(lk.pelonjak) baris.push(["\uD83D\uDE80", "Pelonjak Terbaik", nama(lk.pelonjak), "kenaikan markah terbesar"]);
+  if(lk.konsisten) baris.push(["\u2B50", "Paling Konsisten", nama(lk.konsisten), "markah paling stabil"]);
+  return '<div class="card" style="margin-bottom:var(--sp-4)"><h2>Lencana Kelas <span class="sub">anugerah automatik</span></h2>' +
+    baris.map(b => '<div style="display:flex;gap:10px;align-items:center;padding:var(--sp-2) 0;border-bottom:1px solid var(--line)">' +
+      '<span style="font-size:20px">' + b[0] + '</span>' +
+      '<span style="flex:1;min-width:0"><b style="font-size:13.5px">' + esc(b[2]) + '</b><span class="hint" style="display:block;margin:0">' + b[1] + ' \u00b7 ' + b[3] + '</span></span></div>').join("") +
+    '<div class="row-actions" style="margin-top:8px"><button class="btn btn-sm" id="btnLencanaCetak">Cetak helaian lencana</button></div></div>';
+}
+function cetakLencanaKelas(){
+  const list = pelajarNow();
+  if(!list.length){ toast("Tiada pelajar"); return; }
+  const ber = asmtUrut().filter(a => Object.keys(S.markah[a.id] || {}).length);
+  const rows = list.map(p2 => {
+    const l = lencanaMurid(p2.id);
+    const tp = tpPurata(p2.id);
+    const akhir = ber.length ? pct(ber[ber.length - 1], p2.id) : null;
+    return '<tr><td>' + esc(p2.nama) + '</td><td class="num">' + (akhir === null ? "\u2014" : akhir + "%") + '</td><td class="num">' + (tp === null ? "\u2014" : tp.toFixed(1)) + '</td><td style="white-space:normal">' + (l.length ? l.map(x => x.ikon + " " + x.nama).join(" \u00b7 ") : "\u2014") + '</td></tr>';
+  }).join("");
+  $("slipArea").innerHTML = '<div class="slip slip-halaman">' + kopHtml() +
+    '<header class="slip-head"><div><h1>Helaian Lencana Kelas</h1><p>' + esc(S.subjek) + ' \u00b7 ' + esc(kelasNow() ? kelasNow().nama : "") + ' \u00b7 ' + esc(S.guru) + '</p></div><div class="slip-cop">PBD</div></header>' +
+    '<table><thead><tr><th>Pelajar</th><th class="num">Markah akhir</th><th class="num">TP purata</th><th>Lencana</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+    '<p class="slip-kaki">Lencana automatik: \u2B50 konsisten \u00b7 \uD83D\uDE80 pelonjak \u00b7 \uD83D\uDC51 raja topik \u00b7 \uD83D\uDC8E TP\u22655 \u00b7 \uD83C\uDFAF stabil \u00b7 Dijana ' + new Date().toLocaleDateString("ms-MY") + '</p></div>';
+  cetakMula("cetak-slip");
+  konfeti(50);
+}
+/* (7) Pusat cetak pantas */
+function kadCetakPantas(){
+  if(!pelajarNow().length) return "";
+  return '<div class="card" style="margin-bottom:var(--sp-4)"><h2>Pusat Cetak Pantas <span class="sub">dokumen sedia dalam satu ketikan</span></h2>' +
+    '<div class="row-actions">' +
+    '<button class="btn btn-sm btn-accent" id="cpSlip">\uD83D\uDDA8 Slip kelas</button>' +
+    '<button class="btn btn-sm" id="cpSijil">\uD83C\uDFC5 Sijil</button>' +
+    '<button class="btn btn-sm" id="cpMatriks">\uD83D\uDCCB Matriks</button>' +
+    '<button class="btn btn-sm" id="cpLapor">\uD83D\uDCCA Pelaporan</button></div>' +
+    '<p class="hint">Slip = untuk HBMP \u00b7 Matriks & Pelaporan = fail panitia \u00b7 Sijil = pengiktirafan.</p></div>';
 }
 function bukaBantuan(){
   const langkah = (n, t) => '<li style="margin-bottom:6px">' + t + '</li>';
@@ -6854,7 +7056,7 @@ function bukaPembentangan(){
     '<span class="sub">' + new Date().toLocaleDateString("ms-MY") + '</span>' +
     '<button class="btn btn-sm bentang-keluar" id="btKeluar">Keluar (Esc)</button></div>' +
     '<div id="bentangWrap">' + slaid.map((s, i) => '<section class="slaid' + (i === 0 ? " on" : "") + '">' + s + '</section>').join("") + '</div>' +
-    '<div class="bentang-nav"><button id="btLalu" aria-label="Sebelumnya">‹</button><button id="btMaju" aria-label="Seterusnya">›</button>' +
+    '<div class="bentang-nav"><button id="btLalu" aria-label="Sebelumnya">‹</button><button id="btMaju" aria-label="Seterusnya">›</button><button class="btn btn-sm" id="btAuto" style="border-radius:20px;width:auto;padding:0 14px;font-size:13px">▶ Auto</button>' +
     '<span class="bentang-dots" id="btDots">' + slaid.map((s, i) => '<i' + (i === 0 ? ' class="on"' : "") + '></i>').join("") + '</span></div>';
   document.body.appendChild(el);
   let idx = 0;
@@ -6862,7 +7064,7 @@ function bukaPembentangan(){
     el.querySelectorAll(".slaid").forEach((s, i) => s.classList.toggle("on", i === idx));
     el.querySelectorAll("#btDots i").forEach((d, i) => d.classList.toggle("on", i === idx));
   };
-  const tutup = () => { el.remove(); document.removeEventListener("keydown", kunci); document.body.style.overflow = ""; };
+  const tutup = () => { if(autoTimer) clearInterval(autoTimer); el.remove(); document.removeEventListener("keydown", kunci); document.body.style.overflow = ""; };
   const kunci = e => {
     if(e.key === "Escape") tutup();
     else if(e.key === "ArrowRight" || e.key === " "){ idx = Math.min(slaid.length - 1, idx + 1); tunjuk(); }
@@ -6873,6 +7075,12 @@ function bukaPembentangan(){
   $("btKeluar").onclick = tutup;
   $("btLalu").onclick = () => { idx = Math.max(0, idx - 1); tunjuk(); };
   $("btMaju").onclick = () => { idx = Math.min(slaid.length - 1, idx + 1); tunjuk(); };
+  let autoTimer = null;
+  const autoKhidup = () => {
+    if(autoTimer){ clearInterval(autoTimer); autoTimer = null; const ba = $("btAuto"); if(ba) ba.textContent = "▶ Auto"; }
+    else { autoTimer = setInterval(() => { idx = (idx + 1) % slaid.length; tunjuk(); }, 9000); const bb = $("btAuto"); if(bb) bb.textContent = "■ Auto (kiosk hidup)"; }
+  };
+  $("btAuto").onclick = autoKhidup;
 }
 /* ---------- TUTUP TAHUN / ARKIB / NAIK KELAS ---------- */
 async function arkibBukuAktif(){
@@ -7502,7 +7710,7 @@ function laporanPanitia(){
           '</tbody></table>' : '') +
 
       '<h2>Ulasan dan tindakan susulan</h2><div class="slip-ulasan"></div>' +
-      '<div class="slip-tandatangan"><div>' + ((S.kop && S.kop.tt) ? '<img class="tt-img" src="' + esc(S.kop.tt) + '" alt="">' : "") + '<span>Guru mata pelajaran</span></div><div><span>Ketua Panitia / Ketua Jabatan</span></div></div>' +
+      '<div class="slip-tandatangan"><div>' + ((S.kop && S.kop.tt) ? '<img class="tt-img" src="' + esc(S.kop.tt) + '" alt="">' : "") + '<span>Guru mata pelajaran</span></div><div>' + (S.ttJabatan ? '<img class="tt-img" src="' + esc(S.ttJabatan) + '" alt="">' : "") + '<span>Ketua Panitia / Ketua Jabatan</span></div></div>' +
       '<p class="slip-kaki">Dijana ' + new Date().toLocaleDateString("ms-MY") + ' · Rekod Pentaksiran Bilik Darjah</p>' +
     '</div>';
 
@@ -7778,6 +7986,7 @@ const Premium = (function(){
       () => janaSasaran());
     tambah("Tindakan","Laporan Panitia","Slip ringkasan untuk mesyuarat panitia","cetak","",
       () => laporanPanitia());
+    S.pelajar.forEach(pp => tambah("Murid", pp.nama, (S.kelas.find(kx => kx.id === pp.kelasId) || {}).nama || "Pelajar", "cari", "", () => openPelajar(pp.id)));
     tambah("Tindakan","Tetapan","Kelas, pelajar, topik, ambang, awan, data","gear","",
       () => openSettings());
     tambah("Tindakan", P.tema === "malam" ? "Tema: siang" : "Tema: malam",
